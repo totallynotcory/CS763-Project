@@ -11,3 +11,7 @@ Hello. I am Edward (Eddie) Lee, based in Lexington, MA. This my second year of m
 ### Abbie - Yu Luo
 
 Hi! I'm Abbie currently a 2nd year student in BU MET Graduate Program, I graduated with a B.S. in MIS from University of Delaware. I have experience in Java, HTML, CSS, and JavaScript. I'm planning to enter the web development industry after graduation, so I'm really looking forward to working on this project this semester.
+
+### Alex - Zihao Qian
+
+Hello, I am Zihao Qian, first year METCS student, master in computer science. I have experience in HTML, CSS, JavaScript and Python flask. I love web development. Really looking forward to work with my teammates!
