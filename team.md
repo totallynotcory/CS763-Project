@@ -15,3 +15,8 @@ Hi! I'm Abbie currently a 2nd year student in BU MET Graduate Program, I graduat
 ### Alex - Zihao Qian
 
 Hello, I am Zihao Qian, first year METCS student, master in computer science. I have experience in HTML, CSS, JavaScript and Python flask. I love web development. Really looking forward to work with my teammates!
+
+
+### Chris Ceravolo
+
+Hi, I'm Chris and I'm based in NYC.  I am in my last semester of my MSSD degree, and I am transitioning from a career in graphic design to a career in software development.  I'm skilled with server-side development using Node.JS and creating user interfaces with HTML/CSS/JS.  I have some experience using Vue, and I'm looking forward to adding React to my toolkit through this course.
