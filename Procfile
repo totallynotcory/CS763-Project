@@ -1,0 +1,1 @@
+web: cd seprojects-cs673olf24team3/code && npm start
