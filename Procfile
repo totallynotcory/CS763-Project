@@ -1,1 +1,1 @@
-web: cd seprojects-cs673olf24team3/code/client && npm start
+web: cd code/client && npm start
