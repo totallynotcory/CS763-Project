@@ -17,6 +17,14 @@ RUN npm run build
 
 # Use a lighter image to serve the app
 FROM nginx:alpine
+
+# Copy the default nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
+
+
+
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 
+# Run nginx in the foreground
+CMD ["nginx", "-g", "daemon off;"]
