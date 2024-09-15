@@ -19,6 +19,10 @@ jobs:
       - name: Copy package.json to root
         run: cp ./code/package.json ./
 
+      # Copy heroku.yml to the root directory.
+      - name: Copy heroku.yml to root
+        run: cp ./code/heroku.yml ./
+
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
