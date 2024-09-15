@@ -15,6 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      # Copy package.json to the root directory.
+      - name: Copy package.json to root
+        run: cp code/peak-performace/package.json ./
+
 
 ### ⬇ IMPORTANT PART ⬇ ###
 
