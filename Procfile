@@ -1,1 +1,0 @@
-web: cd code && npm start
