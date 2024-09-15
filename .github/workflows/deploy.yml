@@ -17,7 +17,7 @@ jobs:
 
       # Copy package.json to the root directory.
       - name: Copy package.json to root
-        run: cp code/peak-performace/package.json ./
+        run: cp ./code/package.json ./
 
 
 ### ⬇ IMPORTANT PART ⬇ ###
