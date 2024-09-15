@@ -15,16 +15,18 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Use a lighter image to serve the app
+# Use an official Nginx image as a base
 FROM nginx:alpine
 
-# Copy the default nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copy the Nginx template configuration
+COPY nginx.conf.template /etc/nginx/nginx.conf.template
 
-
-# Expose port 80 (this is fine for Docker, but Heroku uses the PORT environment variable)
+# Copy your web files to the container
 COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
 
-# Run nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Use an entrypoint script to substitute environment variables and start Nginx
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Specify the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
