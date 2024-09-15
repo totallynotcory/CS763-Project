@@ -19,12 +19,13 @@ jobs:
       - name: Copy package.json to root
         run: cp ./code/package.json ./
 
-      # Copy heroku.yml to the root directory.
+      # Copy heroku.yml to the root directory
+      #Trying to get this file to change so I can make a commit
       - name: Copy heroku.yml to root
         run: cp ./code/heroku.yml ./
 
 
-### ⬇ IMPORTANT PART ⬇ ###
+### ⬇ IMPORTANT PART ⬇ #
 
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
