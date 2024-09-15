@@ -22,7 +22,7 @@ FROM nginx:alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 
 
-
+# Expose port 80 (this is fine for Docker, but Heroku uses the PORT environment variable)
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 
