@@ -24,9 +24,13 @@ COPY nginx.conf.template /etc/nginx/nginx.conf.template
 # Copy your web files to the container
 COPY --from=build /app/build /usr/share/nginx/html
 
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
 # Use an entrypoint script to substitute environment variables and start Nginx
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+#COPY entrypoint.sh /entrypoint.sh
+#RUN chmod +x /entrypoint.sh
 
 # Specify the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT ["/entrypoint.sh"]
