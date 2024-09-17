@@ -24,5 +24,11 @@ module.exports = {
 			models = {userModel: userModel}
 		}
 		return models
+	},
+	closeConnection: () => {
+		if (connection != null) {
+			connection.close()
+			console.log("MongoDB connection is closed")
+		}
 	}
 }

@@ -4,23 +4,35 @@ const User = db.getModel().userModel
 
 async function init() {
 
-    let user3 = new User({
-        firstname: "Rebecca",
-        lastname: "Albright"
-    })
-    let user4 = new User({
-        firstname: "James",
-        lastname: "Madison"
-    })
+    try {
+        
+        let user3 = new User({
+            firstname: "Rebecca",
+            lastname: "Albright"
+        })
+        let user4 = new User({
+            firstname: "James",
+            lastname: "Madison"
+        })
+    
+        await Promise.all([
+            user3.save(),
+            user4.save()
+        ])
+    
+        let users = await User.find({})
+    
+        console.log(users)
 
-    await Promise.all([
-        user3.save(),
-        user4.save()
-    ])
+    } catch(error) {
 
-    let users = await User.find({})
+        console.log(error)
 
-    console.log(users)
+    } finally {
+
+        db.closeConnection()
+
+    }
 }
 
 init()
