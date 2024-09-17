@@ -1,3 +1,5 @@
+//This file is for writing data to the database for testing purposes
+
 const db = require("./db.js")
 
 const User = db.getModel().userModel
@@ -5,6 +7,9 @@ const User = db.getModel().userModel
 async function init() {
 
     try {
+
+        // //Option to delete existing data for full reset
+        // await User.deleteMany({})
         
         let user3 = new User({
             firstname: "Rebecca",

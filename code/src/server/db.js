@@ -1,3 +1,5 @@
+//This file is for defining the schema and retrieving data
+
 const mongoose = require('mongoose')
 const credentials = require('./credentials.js')
 

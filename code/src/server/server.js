@@ -1,3 +1,5 @@
+//This file is for opening a connection to the database that the app can use continuously
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -18,13 +20,15 @@ mongoose.connect(credentials.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('Error connecting to MongoDB:', err));
 
-// Basic Route
+
+// WILL IMPLEMENT EXPRESS ROUTER--JUST USING THESE ROUTES FOR SETUP PURPOSES
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
 app.get('/api', async (req, res) => {
-  //basic test, sends all user data
+  //THIS IS JUST A TEST, WILL UPDATE API ROUTE
   allUsers = await User.find({})
   allUsers = JSON.stringify(allUsers)
   res.send(allUsers)

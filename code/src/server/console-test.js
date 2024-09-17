@@ -1,3 +1,5 @@
+//This file is for testing connection to the database.  It will print out data to the console.
+
 const db = require("./db.js")
 
 const User = db.getModel().userModel
