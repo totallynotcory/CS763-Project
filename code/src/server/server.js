@@ -1,4 +1,5 @@
-//This file is for opening a connection to the database that the app can use continuously
+//This file is the main entrypoint for the backend of the application.
+//It sets up and runs the server, it connects to the database, and it defines how the application responds to incoming requests.
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,7 +10,7 @@ const db = require("./db.js")
 
 
 const app = express();
-const PORT = 5000;
+const port = process.env.PORT || 3000
 const User = db.getModel().userModel
 
 app.use(cors());
@@ -34,6 +35,6 @@ app.get('/api', async (req, res) => {
   res.send(allUsers)
 })
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(`Server running on port ${PORT}`);
 });
