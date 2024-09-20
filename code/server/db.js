@@ -13,8 +13,12 @@ let Schema = mongoose.Schema
 mongoose.Promise = global.Promise;
 
 let userSchema = new Schema({
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true }
+	userId: { type: String, required: true },
+	email: { type: String, required: true },
+	password_hashed: { type: String, required: true },
+    name: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+	goals: {type: [String], required: false } //type: [goalSchema] once that is created
 }, {
     collection: 'users'
 })
