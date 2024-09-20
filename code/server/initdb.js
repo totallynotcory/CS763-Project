@@ -38,8 +38,6 @@ async function init() {
             // createdAt: "2024-09-01", // testing the default param in schema works
             goals: []
         })
-
-        
     
         await Promise.all([
             user1.save(),
