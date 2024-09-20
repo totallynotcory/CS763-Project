@@ -1,6 +1,6 @@
 //IN PROGRESS
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import apiClient from '../services/apiClient';
 
 function CreateUser() {
@@ -21,17 +21,11 @@ function CreateUser() {
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
     try {
-      // Send form data using Axios POST request
-      const response = await apiClient.post('/create-user', formData);
-
-      // Log or handle success response
-      console.log('User created:', response.data);
+      await apiClient.post('/create-user', formData);
     } catch (error) {
-      // Handle any errors that occur during the POST request
       console.error('Error creating user:', error);
     }
   };
@@ -58,19 +52,7 @@ function CreateUser() {
       <button type="submit">Submit</button>
     </form>
   )
-  
-  // return (
-  //     <>
-  //       <div>
-  //         <form id="create-user-form">
-  //           <input 
-  //             id="firstname" type="text" placeholder="firstname"/>
-  //           <input id="lastname" type="text" placeholder="lastname"/>
-  //           <input id="test-submit" type="submit" value="Create User" />
-  //         </form>
-  //       </div>
-  //     </>
-  // )
+
 }
 
 export default CreateUser

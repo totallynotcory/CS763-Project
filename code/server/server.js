@@ -11,21 +11,15 @@ const app = express();
 const port = process.env.PORT || 5000
 const User = db.getModel().userModel
 
-app.use(cors('http://localhost:3000')); //update when deploying
+app.use(cors('http://localhost:3000')); //update with environment variable for deployment
 app.use(express.json());
 
 
-// WILL IMPLEMENT EXPRESS ROUTER--JUST USING THESE ROUTES TESTING
+// WILL IMPLEMENT EXPRESS ROUTER--JUST USING THESE ROUTES FOR TESTING
 
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('Server is running...');
 });
-
-app.get('/api', async (req, res) => {
-  allUsers = await User.find({})
-  res.json(allUsers)
-  // res.json({"users": ["hey", "hi"]})
-})
 
 app.get('/view-users', async (req, res) => {
   allUsers = await User.find({})
@@ -33,9 +27,19 @@ app.get('/view-users', async (req, res) => {
 })
 
 app.post('/create-user', async (req, res) => {
-  console.log(req)
+
+  const newUser = new User({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname
+  })
+    
+  await Promise.all([
+    newUser.save()
+  ])
 })
 
+
+//Listen for incoming connections
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
