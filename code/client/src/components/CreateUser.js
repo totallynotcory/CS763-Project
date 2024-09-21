@@ -1,7 +1,7 @@
 //IN PROGRESS
 
 import { useState } from 'react'
-import apiClient from '../services/apiClient';
+import apiClient from '../services/apiClient.js';
 
 function CreateUser() {
   
