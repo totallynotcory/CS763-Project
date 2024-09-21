@@ -23,7 +23,7 @@ function ViewUsers() {
             <p>Loading...</p>
         ) : (
             data.map((user, i) => (
-            <p key={i}>{i+1}.  {user.firstname} {user.lastname}</p>
+            <p key={i}>{i+1}.  ID: {user.userId}  |  Name: {user.name}  |  Email: {user.email}</p>
             ))
         )}
         </>
