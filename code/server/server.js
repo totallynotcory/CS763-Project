@@ -6,12 +6,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const db = require("./db.js")
 
-
 const app = express();
 const port = process.env.PORT || 5000
 const User = db.getModel().userModel
+const Goal = db.getModel().goalModel
 
-app.use(cors('http://localhost:3000')); //update with environment variable for deployment
+app.use(cors({origin: 'http://localhost:3000'})); //update with environment variable for deployment
 app.use(express.json());
 
 
@@ -46,6 +46,25 @@ app.post('/create-user', async (req, res) => {
     console.log(error)
   }
 
+})
+
+app.post('/create-goal', async (req, res) => {
+
+  
+  try {
+    let newGoal = new Goal({
+      goalId: "G10003",
+      type: req.body.type,
+      targetValue: req.body.targetValue,
+      unit: "hours",
+      // createdAt will use current date
+      progress: []
+    })
+    await newGoal.save()
+    
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 

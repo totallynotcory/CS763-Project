@@ -21,13 +21,21 @@ async function init() {
                         {date: new Date("2024-09-12"), value: 8}]
         })
 
+        let goal2 = new Goal({
+            goalId: "G10002",
+            type: "steps",
+            targetValue: 10000,
+            unit: "steps",
+            // will use defaults for createdAt and progress
+        })
+
         let user1 = new User({
             userId: "U10001",
             email: "test@gmail.com",
             passwordHashed: "pa55w0rd",
             name: "John Smith",
             createdAt: "2024-09-01",
-            goals: [goal1]
+            goals: [goal1, goal2]
         })
 
         let user2 = new User({
@@ -42,7 +50,8 @@ async function init() {
         await Promise.all([
             user1.save(),
             user2.save(),
-            goal1.save()
+            goal1.save(),
+            goal2.save()
         ])
     
         let users = await User.find({})
