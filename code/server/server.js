@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
   res.send('Server is running...');
 });
 
+app.get('/check-connection', async (req, res) => {
+  res.sendStatus(200)
+})
+
 app.get('/view-users', async (req, res) => {
   allUsers = await User.find({})
   res.json(allUsers)
@@ -28,14 +32,20 @@ app.get('/view-users', async (req, res) => {
 
 app.post('/create-user', async (req, res) => {
 
-  const newUser = new User({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname
-  })
-    
-  await Promise.all([
-    newUser.save()
-  ])
+  try {
+    const newUser = new User({
+      userId: req.body.userId,
+      name: req.body.name,
+      email: req.body.email,
+      passwordHashed: req.body.passwordHashed
+    })
+    await Promise.all([
+      newUser.save()
+    ])
+  } catch (error) {
+    console.log(error)
+  }
+
 })
 
 

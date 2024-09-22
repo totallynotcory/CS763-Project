@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import Home from './components/Home.js'
-import CreateUser from './components/CreateUser'
-import ViewUsers from './components/ViewUsers'
+import CreateUser from './components/CreateUser.js'
+import ViewUsers from './components/ViewUsers.js'
 
 function App() {
   
