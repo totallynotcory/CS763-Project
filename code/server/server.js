@@ -49,11 +49,12 @@ app.post('/create-user', async (req, res) => {
 })
 
 app.post('/create-goal', async (req, res) => {
-
   try {
-    let lastGoal = await Goal.find().sort({"goalId": -1}).limit(1) // get last goal to obtain max ID
-    let newGoalId = lastGoal[0].goalId + 1
-
+    // generate new ID based on max goal ID
+    let lastGoal = await Goal.find().sort({"goalId": -1}).limit(1) 
+    let newGoalId = lastGoal[0].goalId + 1 
+    
+    // define unit based on this pre-defined list
     let unit;
     switch (req.body.type) {
         case "sleep":
@@ -72,17 +73,16 @@ app.post('/create-goal', async (req, res) => {
             unit = "minutes"; 
             break;
         default:
-            unit = "unknown"; // Default case
+            unit = "unknown"; // default case
     }
-    
 
+    // create new goal and save to DB
     let newGoal = new Goal({
       goalId: newGoalId,
       type: req.body.type,
       targetValue: req.body.targetValue,
       unit: unit,
-      // createdAt will use current date
-      progress: []
+      // createdAt and progress will use defaults
     })
     await newGoal.save()
     

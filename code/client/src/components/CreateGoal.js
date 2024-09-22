@@ -32,14 +32,20 @@ function CreateGoal() {
     <form onSubmit={handleSubmit}>
     
       <label>Goal Type:</label>
-      <input
-        type="text"
+      <select
         name="type"
         value={goalFormData.type}
-        onChange={handleChange}
+        onChange={handleChange} 
         required
-      />
-
+      >
+        <option value="" disabled>Select a goal type</option>
+        <option value="sleep">Sleep (Hours)</option>
+        <option value="weight">Weight (lbs)</option>
+        <option value="steps">Steps (Step Count)</option>
+        <option value="water">Water Intake (Glasses)</option>
+        <option value="exercise">Exercise (Minutes)</option>
+      </select>
+      
       <label>Target Value:</label>
       <input
         type="number"
