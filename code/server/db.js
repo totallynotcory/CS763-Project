@@ -18,7 +18,7 @@ let progressSchema = new Schema({
 });
 
 let goalSchema = new Schema({
-	goalId: { type: String, required: true },
+	goalId: { type: Number, required: true },
 	type: { type: String, required: true },
 	targetValue: { type: String, required: true },
     unit: { type: String, required: true },
@@ -29,7 +29,7 @@ let goalSchema = new Schema({
 })
 
 let userSchema = new Schema({
-	userId: { type: String, required: true },
+	userId: { type: Number, required: true },
 	email: { type: String, required: true },
 	passwordHashed: { type: String, required: true },
     name: { type: String, required: true },
