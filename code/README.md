@@ -15,3 +15,5 @@ npm install
 
 Then make sure you have a terminal split screen and in the server folder type node server
 and in the client folder type npm start
+
+npm install react-icons
