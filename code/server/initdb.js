@@ -29,14 +29,6 @@ async function init() {
             // will use defaults for createdAt and progress
         })
 
-        let goal2 = new Goal({
-            goalId: "G10002",
-            type: "steps",
-            targetValue: 10000,
-            unit: "steps",
-            // will use defaults for createdAt and progress
-        })
-
         let user1 = new User({
             userId: 10001,
             email: "test@gmail.com",
