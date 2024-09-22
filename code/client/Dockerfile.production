@@ -1,5 +1,5 @@
 # Use an official Node.js image as the base image
-FROM node:20.17.0-slim
+FROM node:20.17.0-slim AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -8,9 +8,18 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm Install
+RUN npm install
 
 # Copy the rest of the application source code
 COPY . .
 
-RUN npm build
+RUN npm run build
+
+# Use an Nginx image for serving the app
+FROM nginx:alpine
+
+# Copy the build output to Nginx's html directory
+COPY --from=builder /app/build /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,7 +1,7 @@
 //will update this file with better error handling as per Mosh video
 
 import { useEffect, useState } from 'react'
-import apiClient from '../services/apiClient';
+import apiClient from '../services/apiClient.js';
 
 function ViewUsers() {
 
@@ -23,7 +23,7 @@ function ViewUsers() {
             <p>Loading...</p>
         ) : (
             data.map((user, i) => (
-            <p key={i}>{i+1}.  {user.firstname} {user.lastname}</p>
+            <p key={i}>{i+1}.  ID: {user.userId}  |  Name: {user.name}  |  Email: {user.email}</p>
             ))
         )}
         </>
@@ -31,4 +31,3 @@ function ViewUsers() {
   }
   
   export default ViewUsers
-

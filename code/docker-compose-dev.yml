@@ -12,27 +12,27 @@ services:
       - peak-performance
 
   api: 
+    image: api-dev
+    env_file: ./server/.env.development
     build:
       context: ./server
-      dockerfile: Dockerfile  # This is correct
+      dockerfile: Dockerfile.dev  # This is correct
     volumes:
       - ./server:/app
       - /app/node_modules     
     ports:
       - "5000:5000" 
-    command: nodemon --watch . --exec node server.js  # Use nodemon to watch file changes
+    # command: nodemon --watch . --exec node server.js  # Use nodemon to watch file changes
     depends_on:
       - mongo
-    environment:
-      MONGO_URI: mongodb://mongo:27017/mydatabase  # Environment variable for MongoDB connection
-      NODE_ENV: development
     networks:
       - peak-performance
 
   client:
+    image: client-dev
     build: 
       context: ./client  # Specify context here
-      dockerfile: Dockerfile  # Move dockerfile under build
+      dockerfile: Dockerfile.dev 
     volumes:
       - ./client:/app
       - /app/node_modules   
@@ -40,9 +40,7 @@ services:
       - peak-performance
     ports:
       - "3000:3000"
-    command: npm run start  # Run the development server with hot reloading
-    environment:
-    - CHOKIDAR_USEPOLLING=true  # Necessary for file changes to be detected in Docker
+    # command: npm run start  # Run the development server with hot reloading
     depends_on: 
       - api
 

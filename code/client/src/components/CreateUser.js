@@ -1,14 +1,16 @@
 //IN PROGRESS
 
 import { useState } from 'react'
-import apiClient from '../services/apiClient';
+import apiClient from '../services/apiClient.js';
 
 function CreateUser() {
   
   // State for form input values
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: ''
+    userId: '',
+    name: '',
+    email: '',
+    passwordHashed: ''
   });
 
   // Handle input changes and update formData state
@@ -33,18 +35,34 @@ function CreateUser() {
   return (
     <form onSubmit={handleSubmit}>
 
-      <label>First Name:</label>
+      <label>User ID:</label>
       <input
         type="text"
-        name="firstname"
+        name="userId"
         value={formData.firstname}
         onChange={handleChange}
       />
     
-      <label>Last Name:</label>
+      <label>Name (First & Last)</label>
       <input
         type="text"
-        name="lastname"
+        name="name"
+        value={formData.lastname}
+        onChange={handleChange}
+      />
+
+      <label>Email</label>
+      <input
+        type="text"
+        name="email"
+        value={formData.lastname}
+        onChange={handleChange}
+      />
+
+      <label>Password</label>
+      <input
+        type="text"
+        name="passwordHashed"
         value={formData.lastname}
         onChange={handleChange}
       />
