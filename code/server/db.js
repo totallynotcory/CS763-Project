@@ -2,7 +2,13 @@
 //May turn this into two files moving forward (schema for one file, connection for another)
 
 const mongoose = require('mongoose')
-const credentials = require('./credentials.js')
+const dotenv = require('dotenv');
+//const credentials = require('./credentials.js')
+
+// Load the appropriate .env file based on NODE_ENV
+const result = dotenv.config({
+	path: `.env.${process.env.NODE_ENV}`
+});
 
 let connection = null
 let userModel = null
@@ -42,7 +48,7 @@ let userSchema = new Schema({
 module.exports = {
     getModel: () => {
 		if (connection == null) {
-			connection = mongoose.createConnection(credentials.MONGO_URI)
+			connection = mongoose.createConnection(process.env.MONGO_URI)
 			console.log("Connected to MongoDB!")
 			userModel = connection.model("User", userSchema);
 			goalModel = connection.model("Goal", goalSchema);

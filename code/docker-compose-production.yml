@@ -1,0 +1,31 @@
+name: peak-performance
+
+services:
+  api: 
+    image: api
+    restart: unless-stopped 
+    ports:
+      - "5000:5000" 
+    depends_on:
+      - mongo
+    networks:
+      - peak-performance
+
+  client:
+    image: client-production
+    restart: unless-stopped  
+    networks:
+      - peak-performance
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on: 
+      - api
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  peak-performance:
+    driver: bridge
