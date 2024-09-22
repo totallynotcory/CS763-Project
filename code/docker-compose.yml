@@ -1,10 +1,29 @@
 services:
-  peakperformace:
-    image: peakperformace
+  mongo:
+    image: mongo:4.2.0
+    ports:
+      - 27017:27017
+
+  server:
     build:
-      context: code
-      dockerfile: ./Dockerfile
-    environment:
-      NODE_ENV: production
+      context: .
+      dockerfile: ./server/Dockerfile
+    volumes:
+      - './server:/app'
+      - '/app/node_modules'
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo
+
+  client:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    volumes:
+      - './client:/app'
+      - '/app/node_modules'
+    depends_on:
+      - server
     ports:
       - 3000:3000
