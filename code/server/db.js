@@ -20,7 +20,7 @@ let progressSchema = new Schema({
 let goalSchema = new Schema({
 	goalId: { type: Number, required: true },
 	type: { type: String, required: true },
-	targetValue: { type: String, required: true },
+	targetValue: { type: Number, required: true },
     unit: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 	progress: {type: [progressSchema], default: [] } 
