@@ -18,23 +18,23 @@ let progressSchema = new Schema({
 });
 
 let goalSchema = new Schema({
-	goalId: { type: String, required: true },
+	goalId: { type: Number, required: true },
 	type: { type: String, required: true },
 	targetValue: { type: String, required: true },
     unit: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-	progress: {type: [progressSchema], required: false } //type: [goalSchema] once that is created
+	progress: {type: [progressSchema], default: [] } 
 }, {
     collection: 'goals'
 })
 
 let userSchema = new Schema({
-	userId: { type: String, required: true },
+	userId: { type: Number, required: true },
 	email: { type: String, required: true },
 	passwordHashed: { type: String, required: true },
     name: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-	goals: {type: [goalSchema], required: false } //type: [goalSchema] once that is created
+	goals: {type: [goalSchema], default: [] } 
 }, {
     collection: 'users'
 })
