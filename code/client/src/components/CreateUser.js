@@ -39,7 +39,7 @@ function CreateUser() {
       <input
         type="text"
         name="userId"
-        value={formData.userId || ''}
+        value={formData.userId}
         onChange={handleChange}
       />
     
@@ -47,7 +47,7 @@ function CreateUser() {
       <input
         type="text"
         name="name"
-        value={formData.name || ''}
+        value={formData.name}
         onChange={handleChange}
       />
 
@@ -55,7 +55,7 @@ function CreateUser() {
       <input
         type="text"
         name="email"
-        value={formData.email || ''}
+        value={formData.email}
         onChange={handleChange}
       />
 
@@ -63,7 +63,7 @@ function CreateUser() {
       <input
         type="text"
         name="passwordHashed"
-        value={formData.passwordHashed || ''}
+        value={formData.passwordHashed}
         onChange={handleChange}
       />
 

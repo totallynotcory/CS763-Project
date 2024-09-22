@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000
 const User = db.getModel().userModel
 const Goal = db.getModel().goalModel
 
-app.use(cors({origin: 'http://localhost:3000'})); //update with environment variable for deployment
+app.use(cors('http://localhost:3000')); //update with environment variable for deployment
 app.use(express.json());
 
 
@@ -50,13 +50,37 @@ app.post('/create-user', async (req, res) => {
 
 app.post('/create-goal', async (req, res) => {
 
-  
   try {
+    let lastGoal = await Goal.find().sort({"goalId": -1}).limit(1) // get last goal to obtain max ID
+    let newGoalId = lastGoal[0].goalId + 1
+
+    let unit;
+    switch (req.body.type) {
+        case "sleep":
+            unit = "hours";
+            break;
+        case "weight":
+            unit = "lbs";
+            break;
+        case "steps":
+            unit = "steps";
+            break;
+        case "water":
+            unit = "glasses";
+            break;
+        case "exercise":
+            unit = "minutes"; 
+            break;
+        default:
+            unit = "unknown"; // Default case
+    }
+    
+
     let newGoal = new Goal({
-      goalId: "G10003",
+      goalId: newGoalId,
       type: req.body.type,
       targetValue: req.body.targetValue,
-      unit: "hours",
+      unit: unit,
       // createdAt will use current date
       progress: []
     })

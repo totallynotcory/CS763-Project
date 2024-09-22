@@ -35,7 +35,7 @@ function CreateGoal() {
       <input
         type="text"
         name="type"
-        value={goalFormData.type || ''}
+        value={goalFormData.type}
         onChange={handleChange}
         required
       />
@@ -44,7 +44,7 @@ function CreateGoal() {
       <input
         type="number"
         name="targetValue"
-        value={goalFormData.targetValue || ''}
+        value={goalFormData.targetValue}
         onChange={handleChange}
         required
       />
