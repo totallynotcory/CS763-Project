@@ -33,8 +33,11 @@ app.get('/view-users', async (req, res) => {
 app.post('/create-user', async (req, res) => {
 
   try {
+    let lastUser = await User.find().sort({"userId": -1}).limit(1) 
+    let newUserId = lastUser[0].userId + 1 
+    
     const newUser = new User({
-      userId: req.body.userId,
+      userId: newUserId,
       name: req.body.name,
       email: req.body.email,
       passwordHashed: req.body.passwordHashed

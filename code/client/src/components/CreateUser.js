@@ -35,13 +35,13 @@ function CreateUser() {
   return (
     <form onSubmit={handleSubmit}>
 
-      <label>User ID:</label>
+      {/* <label>User ID:</label>
       <input
         type="text"
         name="userId"
         value={formData.userId}
         onChange={handleChange}
-      />
+      /> */}
     
       <label>Name (First & Last)</label>
       <input
