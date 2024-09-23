@@ -20,7 +20,7 @@ COPY . .
 EXPOSE 5000
 
 # Run the server using the node command
-CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev"]
 
 # Use nodemon to run the server and watch for file changes
 # CMD ["nodemon", "--watch", "./src", "src/index.js"]
