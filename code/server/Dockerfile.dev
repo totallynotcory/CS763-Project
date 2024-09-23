@@ -1,0 +1,27 @@
+# Use the official Node.js v20.17.0 image
+FROM node:20.17.0-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json first to leverage Docker layer caching
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+RUN ["npm", "install", "@mui/material", "@emotion/react", "@emotion/styled"]
+
+# Install nodemon globally for live reload
+RUN npm install -g nodemon
+
+# Copy the rest of the application files
+COPY . .
+
+# Expose the port that the application will run on
+EXPOSE 5000
+
+# Run the server using the node command
+# CMD ["npm", "run", "dev"]
+
+# Use nodemon to run the server and watch for file changes
+CMD ["nodemon", "--watch", "./src", "--exec", "node", "src/index.js"]

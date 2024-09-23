@@ -1,0 +1,52 @@
+name: peak-performance
+
+services:
+  # MongoDB Service
+  mongo:
+    image: mongo:7.0.12
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - peak-performance
+
+  api: 
+    image: api-dev
+    env_file: ./server/.env.development
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev  # This is correct
+    volumes:
+      - ./server:/app
+      - /app/node_modules     
+    ports:
+      - "5000:5000" 
+    # command: nodemon --watch . --exec node server.js  # Use nodemon to watch file changes
+    depends_on:
+      - mongo
+    networks:
+      - peak-performance
+
+  client:
+    image: client-dev
+    build: 
+      context: ./client  # Specify context here
+      dockerfile: Dockerfile.dev 
+    volumes:
+      - ./client:/app
+      - /app/node_modules   
+    networks:
+      - peak-performance
+    ports:
+      - "3000:3000"
+    # command: npm run start  # Run the development server with hot reloading
+    depends_on: 
+      - api
+
+volumes:
+  mongo_data:
+
+networks:
+  peak-performance:
+    driver: bridge
