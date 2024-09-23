@@ -23,4 +23,5 @@ EXPOSE 5000
 CMD ["npm", "run", "dev"]
 
 # Use nodemon to run the server and watch for file changes
-# CMD ["nodemon", "--watch", "./src", "--exec", "node", "src/index.js"]
+# CMD ["nodemon", "--watch", "./src", "src/index.js"]
+CMD ["nodemon", "--watch", ".", "server.js"]
