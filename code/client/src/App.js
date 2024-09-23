@@ -1,17 +1,23 @@
+
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./components/Home.js";
 import CreateUser from "./components/CreateUser.js";
 import ViewUsers from "./components/ViewUsers.js";
 import DailyData from "./components/DailyData.js";
+import CreateGoal from './components/CreateGoal.js'
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import "@fontsource/mulish";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "'Mulish', sans-serif", // 全局设置 Mulish 字体
+    fontFamily: "'Mulish', sans-serif", 
   },
 });
+
+
+
+
 
 function App() {
   return (
@@ -32,6 +38,9 @@ function App() {
             <li>
               <Link to="/enter-daily-data">Daily Data</Link>
             </li>
+            <li>
+              <Link to="/create-goal">Create Goal</Link>
+            </li>
           </ul>
         </nav>
 
@@ -40,6 +49,8 @@ function App() {
           <Route path="/create-user" element={CreateUser()} />
           <Route path="/view-users" element={ViewUsers()} />
           <Route path="/enter-daily-data" element={DailyData()} />
+          <Route path="/create-goal" element={CreateGoal()} />
+
         </Routes>
       </Router>
     </ThemeProvider>
