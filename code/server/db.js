@@ -12,9 +12,29 @@ let Schema = mongoose.Schema
 
 mongoose.Promise = global.Promise;
 
+let progressSchema = new Schema({
+    date: { type: Date, required: true },
+    value: { type: Number, required: true }  
+});
+
+let goalSchema = new Schema({
+	goalId: { type: Number, required: true },
+	type: { type: String, required: true },
+	targetValue: { type: String, required: true },
+    unit: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+	progress: {type: [progressSchema], default: [] } 
+}, {
+    collection: 'goals'
+})
+
 let userSchema = new Schema({
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true }
+	userId: { type: Number, required: true },
+	email: { type: String, required: true },
+	passwordHashed: { type: String, required: true },
+    name: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+	goals: {type: [goalSchema], default: [] } 
 }, {
     collection: 'users'
 })
@@ -25,7 +45,8 @@ module.exports = {
 			connection = mongoose.createConnection(credentials.MONGO_URI)
 			console.log("Connected to MongoDB!")
 			userModel = connection.model("User", userSchema);
-			models = {userModel: userModel}
+			goalModel = connection.model("Goal", goalSchema);
+			models = {userModel: userModel, goalModel: goalModel}
 		}
 		return models
 	},
