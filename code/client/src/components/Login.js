@@ -2,7 +2,8 @@
 
  import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import apiClient from '../services/apiClient.js';
 import './css/Login.css';
 
@@ -74,7 +75,7 @@ function Login() {
             className="password-toggle-button"
             onClick={togglePasswordVisibility}
             aria-label={showPassword ? 'hide password' : 'show password'}
-          >{showPassword ? <FaEyeSlash /> : <FaEye />}</button>
+          >{showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}</button>
       </div>    
       <button type="submit">Login</button>
     </form>
