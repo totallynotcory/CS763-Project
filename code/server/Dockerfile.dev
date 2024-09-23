@@ -9,7 +9,6 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm ci
-RUN ["npm", "install", "@mui/material", "@emotion/react", "@emotion/styled"]
 
 # Install nodemon globally for live reload
 RUN npm install -g nodemon

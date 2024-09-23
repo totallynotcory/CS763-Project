@@ -9,7 +9,6 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm ci
-RUN ["npm", "install", "@mui/material", "@emotion/react", "@emotion/styled"]
 
 # Copy the rest of the application source code
 COPY . .
