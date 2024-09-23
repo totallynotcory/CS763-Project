@@ -1,7 +1,8 @@
 // ./components/Login.js
 
-import { useState } from 'react';
-
+ import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import apiClient from '../services/apiClient';
 import './css/Login.css';
 
@@ -12,6 +13,8 @@ function Login() {
     password: ''
   });
 
+  const [showPassword, setShowPassword] = useState(false);// set password visibility
+  // const navigate = useNavigate(); 
   // update input values
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,9 +24,16 @@ function Login() {
     }));
   };
 
+  // toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShow) => !prevShow);
+  };
+
   // form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); 
+    // setError('');
+    // setSuccess('');
     try {
       const response = await apiClient.post('/login', formData);
       // store token
@@ -51,14 +61,21 @@ function Login() {
       />
       
       <label htmlFor="password">Password:</label>
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        required
-      />
-
+      <div className="password-input-container">
+        <input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+         <button
+            type="button"
+            className="password-toggle-button"
+            onClick={togglePasswordVisibility}
+            aria-label={showPassword ? 'hide password' : 'show password'}
+          >{showPassword ? <FaEyeSlash /> : <FaEye />}</button>
+      </div>    
       <button type="submit">Login</button>
     </form>
     </div>

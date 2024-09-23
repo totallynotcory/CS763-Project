@@ -12,32 +12,56 @@
   .login-container h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
+    color: #333333;
   }
   
   .login-form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #555;
+    color: #575656;
   }
   
   .login-form input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #ecebeb;
     border-radius: 4px;
     box-sizing: border-box;
     transition: border-color 0.3s;
   }
   
   .login-form input:focus {
-    border-color: #5b9bd5;
+    border-color: #3078bb;
+    outline: none;
+  }
+  .password-input-container {
+    position: relative;
+  }
+  
+  .password-toggle-button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    color: #555;
+    font-size: 1.2em;
+  }
+  
+  .password-toggle-button:focus {
     outline: none;
   }
   
-  .login-form button {
+  .password-toggle-button:hover {
+    color: #000;
+  }
+  .login-form button[type="submit"] {
     width: 100%;
     padding: 10px;
     background-color: #5b9bd5;
@@ -49,18 +73,18 @@
     transition: background-color 0.3s;
   }
   
-  .login-form button:hover {
-    background-color: #4a89c7;
+  .login-form button[type="submit"]:hover {
+    background-color: #1b558f;
   }
   
   .error-message {
-    color: red;
+    color: #f80808;
     margin-bottom: 15px;
     text-align: center;
   }
   
   .success-message {
-    color: green;
+    color: #06f041;
     margin-bottom: 15px;
     text-align: center;
   }
