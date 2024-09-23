@@ -47,7 +47,7 @@ function App() {
           <Route path="/" element={Home()} />
           <Route path="/create-user" element={CreateUser()} />
           <Route path="/view-users" element={ViewUsers()} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={Login()} />
           <Route path="/enter-daily-data" element={DailyData()} />
           <Route path="/create-goal" element={CreateGoal()} />
 
