@@ -3,7 +3,7 @@
  import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import apiClient from '../services/apiClient';
+import apiClient from '../services/apiClient.js';
 import './css/Login.css';
 
 function Login() {
