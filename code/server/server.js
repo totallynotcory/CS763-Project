@@ -6,10 +6,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const db = require("./db.js")
 
-
 const app = express();
 const port = process.env.PORT || 5000
 const User = db.getModel().userModel
+const Goal = db.getModel().goalModel
 
 app.use(cors('http://localhost:3000')); //update with environment variable for deployment
 app.use(express.json());
@@ -46,6 +46,49 @@ app.post('/create-user', async (req, res) => {
     console.log(error)
   }
 
+})
+
+app.post('/create-goal', async (req, res) => {
+  try {
+    // generate new ID based on max goal ID
+    let lastGoal = await Goal.find().sort({"goalId": -1}).limit(1) 
+    let newGoalId = lastGoal[0].goalId + 1 
+    
+    // define unit based on this pre-defined list
+    let unit;
+    switch (req.body.type) {
+        case "sleep":
+            unit = "hours";
+            break;
+        case "weight":
+            unit = "lbs";
+            break;
+        case "steps":
+            unit = "steps";
+            break;
+        case "water":
+            unit = "glasses";
+            break;
+        case "exercise":
+            unit = "minutes"; 
+            break;
+        default:
+            unit = "unknown"; // default case
+    }
+
+    // create new goal and save to DB
+    let newGoal = new Goal({
+      goalId: newGoalId,
+      type: req.body.type,
+      targetValue: req.body.targetValue,
+      unit: unit,
+      // createdAt and progress will use defaults
+    })
+    await newGoal.save()
+    
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 

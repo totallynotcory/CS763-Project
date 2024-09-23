@@ -35,7 +35,7 @@ async function init() {
             passwordHashed: "pa55w0rd",
             name: "John Smith",
             createdAt: "2024-09-01",
-            goals: [goal1]
+            goals: [goal1, goal2]
         })
 
         let user2 = new User({
