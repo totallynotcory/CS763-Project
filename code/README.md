@@ -13,9 +13,11 @@ npm install
 cd code/server
 npm install
 
+
 # Then make sure you have a terminal split screen and in the server folder type:
 npm run dev
 # and in the client folder type:
+npm install react-icons
 npm run start
 
 
