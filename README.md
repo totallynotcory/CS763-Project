@@ -39,3 +39,8 @@ Users can set daily and weekly goals for each of these areas and monitor their p
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
 - **Authentication:** JWT (JSON Web Tokens) for secure user authentication
+
+# How to run
+
+Refer to the [README in the code directory](https://github.com/BUMETCS673/seprojects-cs673olf24team3/blob/dev/code/README.md)
+
