@@ -8,7 +8,7 @@ import DailyData from "./components/DailyData.js";
 import CreateGoal from './components/CreateGoal.js';
 
 // Styling
-import { createTheme, CssBaseline,
+import { createTheme, CssBaseline, ThemeProvider,
   Box, Drawer, AppBar, Toolbar, List, Typography, Divider, 
   ListItem, ListItemButton, ListItemIcon, ListItemText,
 } from "@mui/material";
@@ -18,19 +18,27 @@ import LoginIcon from '@mui/icons-material/Login';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges';
+import CloseIcon from '@mui/icons-material/Close';
 
 import "@fontsource/mulish";
 
-const drawerWidth = 240;
+const sidebarWidth = 250;
+const appBarHeight = 75;  
 
 const theme = createTheme({
   typography: {
     fontFamily: "'Mulish', sans-serif", 
   },
+  palette: {
+    primary: {
+      main: '#e2ddd5',
+    },
+  },
 });
 
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <Router>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -38,7 +46,10 @@ function App() {
       {/* AppBar at the top */}
       <AppBar
         position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+        sx={{ width: `calc(100% - ${sidebarWidth}px)`, 
+              ml: `${sidebarWidth}px`,
+              height: `${appBarHeight}px`,
+              bgcolor: 'primary.main' }}
       >
         <Toolbar>
           <Typography variant="h5" noWrap component="div">
@@ -49,18 +60,14 @@ function App() {
 
       {/* Left-side navigation drawer */}
       <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
+        sx={{ width: sidebarWidth,
+              flexShrink: 0,
+              '& .MuiDrawer-paper': {width: sidebarWidth, boxSizing: 'border-box' }
+            }}
         variant="permanent"
         anchor="left"
       >
-        <img src="/app-logo.png" alt="Logo" style={{ height: '75px', width: '75px' }} />
+        <img src="/app-logo.png" alt="Logo" style={{ height: `${appBarHeight}px`, width: `${appBarHeight}px`, marginLeft: '87.5px'}} /> 
         <Divider />
 
         {/* Sidebar Navigation */}
@@ -79,13 +86,6 @@ function App() {
             </ListItemButton>
           </ListItem>
 
-          {/* <ListItem disablePadding>
-            <ListItemButton component={Link} to="/view-users">
-              <ListItemIcon>  </ListItemIcon>
-              <ListItemText primary="View Users" />
-            </ListItemButton>
-          </ListItem> */}
-
           <ListItem disablePadding>
             <ListItemButton component={Link} to="/enter-daily-data">
               <ListItemIcon> <EditNoteIcon /> </ListItemIcon>
@@ -103,10 +103,16 @@ function App() {
           <ListItem disablePadding>
             <ListItemButton component={Link} to="/create-user">
               <ListItemIcon> <AccountCircleIcon /> </ListItemIcon>
-              <ListItemText primary="Create User (should become User Profile)" />
+              <ListItemText primary="Create User (rename to User Profile?)" />
             </ListItemButton>
           </ListItem>
 
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/view-users">
+              <ListItemIcon> <CloseIcon /> </ListItemIcon>
+              <ListItemText primary="View Users (delete?)" />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
 
@@ -130,6 +136,7 @@ function App() {
       </Box>
     </Box>
     </Router>
+    </ThemeProvider>
   );
 }
 
