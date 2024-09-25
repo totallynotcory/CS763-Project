@@ -5,9 +5,23 @@ import Login from './components/Login.js';
 import CreateUser from "./components/CreateUser.js";
 import ViewUsers from "./components/ViewUsers.js";
 import DailyData from "./components/DailyData.js";
-import CreateGoal from './components/CreateGoal.js'
-import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import CreateGoal from './components/CreateGoal.js';
+
+// Styling
+import { createTheme, CssBaseline,
+  Box, Drawer, AppBar, Toolbar, List, Typography, Divider, 
+  ListItem, ListItemButton, ListItemIcon, ListItemText,
+} from "@mui/material";
+
+import HomeIcon from '@mui/icons-material/Home';
+import LoginIcon from '@mui/icons-material/Login';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import TrackChangesIcon from '@mui/icons-material/TrackChanges';
+
 import "@fontsource/mulish";
+
+const drawerWidth = 240;
 
 const theme = createTheme({
   typography: {
@@ -17,43 +31,105 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <Router>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <Router>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/create-user">Create User</Link>
-            </li>
-            <li>
-              <Link to="/view-users">View Users</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link> 
-            </li>
-            <li>
-              <Link to="/enter-daily-data">Daily Data</Link>
-            </li>
-            <li>
-              <Link to="/create-goal">Create Goal</Link>
-            </li>
-          </ul>
-        </nav>
 
-        <Routes>
-          <Route path="/" element={Home()} />
-          <Route path="/create-user" element={CreateUser()} />
-          <Route path="/view-users" element={ViewUsers()} />
-          <Route path="/login" element={Login()} />
-          <Route path="/enter-daily-data" element={DailyData()} />
-          <Route path="/create-goal" element={CreateGoal()} />
+      {/* AppBar at the top */}
+      <AppBar
+        position="fixed"
+        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+      >
+        <Toolbar>
+          <Typography variant="h5" noWrap component="div">
+            Health and Wellness Tracker
+          </Typography>
+        </Toolbar>
+      </AppBar>
 
-        </Routes>
-      </Router>
-    </ThemeProvider>
+      {/* Left-side navigation drawer */}
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="permanent"
+        anchor="left"
+      >
+        <img src="/app-logo.png" alt="Logo" style={{ height: '75px', width: '75px' }} />
+        <Divider />
+
+        {/* Sidebar Navigation */}
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/">
+              <ListItemIcon> <HomeIcon /> </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/login">
+              <ListItemIcon> <LoginIcon /> </ListItemIcon>
+              <ListItemText primary="Login" />
+            </ListItemButton>
+          </ListItem>
+
+          {/* <ListItem disablePadding>
+            <ListItemButton component={Link} to="/view-users">
+              <ListItemIcon>  </ListItemIcon>
+              <ListItemText primary="View Users" />
+            </ListItemButton>
+          </ListItem> */}
+
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/enter-daily-data">
+              <ListItemIcon> <EditNoteIcon /> </ListItemIcon>
+              <ListItemText primary="Record Daily Data" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/create-goal">
+              <ListItemIcon> <TrackChangesIcon /> </ListItemIcon>
+              <ListItemText primary="Create Goal" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/create-user">
+              <ListItemIcon> <AccountCircleIcon /> </ListItemIcon>
+              <ListItemText primary="Create User (should become User Profile)" />
+            </ListItemButton>
+          </ListItem>
+
+        </List>
+      </Drawer>
+
+      {/* Main content */}
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+      >
+        <Toolbar />
+
+        {/* Routes need to be outside of the Drawer, so that they render in the main content area */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/create-user" element={<CreateUser />} />
+            <Route path="/view-users" element={<ViewUsers />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/enter-daily-data" element={<DailyData />} />
+            <Route path="/create-goal" element={<CreateGoal />} />
+          </Routes>
+        
+      </Box>
+    </Box>
+    </Router>
   );
 }
 
