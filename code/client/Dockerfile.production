@@ -13,7 +13,7 @@ COPY package-lock.json ./
 RUN npm ci
 
 # Copy the rest of the application source code
-COPY . .
+COPY ./client ./
 
 # Set environment variable for production build
 ENV NODE_ENV=production

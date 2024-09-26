@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install --only=production
 
 # Copy the rest of the application files
-COPY . .
+COPY ./server ./
 
 # Build the React app
 RUN npm run build
