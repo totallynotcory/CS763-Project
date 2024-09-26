@@ -31,8 +31,8 @@ jobs:
       # Push Docker images to Heroku
       - name: Push Docker Images to Heroku
         run: |
-          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:1.0.0
-          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:1.0.0
+          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:latest
+          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:latest
 
       # Release the Docker images
       - name: Release Docker Images on Heroku
