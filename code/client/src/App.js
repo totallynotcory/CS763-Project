@@ -51,14 +51,15 @@ function App() {
               height: `${appBarHeight}px`,
               bgcolor: 'primary.main' }}
       >
-        <Toolbar>
-          <Typography variant="h5" noWrap component="div">
+        {/*  */}
+        <Toolbar sx={{ display: 'flex', alignItems: 'center', height: '100%' }}> 
+          <Typography variant="h5" noWrap component="div" >
             Health and Wellness Tracker
           </Typography>
         </Toolbar>
       </AppBar>
 
-      {/* Left-side navigation drawer */}
+      {/* Left side navigation drawer */}
       <Drawer
         sx={{ width: sidebarWidth,
               flexShrink: 0,
@@ -67,7 +68,7 @@ function App() {
         variant="permanent"
         anchor="left"
       >
-        <img src="/app-logo.png" alt="Logo" style={{ height: `${appBarHeight}px`, width: `${appBarHeight}px`, marginLeft: '87.5px'}} /> 
+        <img src="/app-logo.png" alt="Logo" style={{ height: `${appBarHeight - 10}px`, width: `${appBarHeight - 10}px`, margin: '5px 0px 5px 87.5px'}} /> 
         <Divider />
 
         {/* Sidebar Navigation */}
