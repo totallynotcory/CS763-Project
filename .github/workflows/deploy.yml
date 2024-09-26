@@ -27,19 +27,20 @@ jobs:
       - name: Log in to Heroku Container Registry
         run: echo "${{ secrets.HEROKU_API_KEY }}" | docker login --username=__token__ --password-stdin registry.heroku.com
 
-      # Build Docker images
-      - name: Build and Tag Docker Images
+      # Build and tag Docker images using docker-compose.
+      - name: Build and Tag Docker Images with Docker Compose
         run: |
-          docker build --build-arg NODE_ENV=production -f ./code/server/Dockerfile.production -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:latest ./code
-          docker build -f ./code/client/Dockerfile.production -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:latest ./code
+          docker-compose -f ./code/docker-compose-production.yml build
+          docker tag code_server registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:latest
+          docker tag code_client registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:latest
 
-      # Push Docker images to Heroku
+      # Push Docker images to Heroku Container Registry.
       - name: Push Docker Images to Heroku
         run: |
           docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:latest
           docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:latest
 
-      # Release the Docker images
+      # Release the Docker images on Heroku.
       - name: Release Docker Images on Heroku
         run: |
-          heroku container:release web api --app ${{ secrets.HEROKU_APP_NAME }}
+          heroku container:release api client --app ${{ secrets.HEROKU_APP_NAME }}
