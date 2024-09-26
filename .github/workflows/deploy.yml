@@ -37,8 +37,12 @@ jobs:
       - name: Build and Tag Docker Images with Docker Compose
         run: |
           docker-compose -f ./code/docker-compose-production.yml build
-      #docker tag code_server registry.heroku.com/{{ secrets.HEROKU_APP_NAME }}/api-production:latest
-      #docker tag code_client registry.heroku.com/{{ secrets.HEROKU_APP_NAME }}/client-production:latest
+      
+      # Tag the Docker images for Heroku
+      - name: Tag Docker Images
+        run: |
+          docker tag registry.heroku.com/peak-performace/api-production:latest registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:latest
+          docker tag registry.heroku.com/peak-performace/client-production:latest registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:latest
 
       # Push Docker images to Heroku Container Registry.
       - name: Push Docker Images to Heroku
