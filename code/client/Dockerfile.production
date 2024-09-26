@@ -25,7 +25,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the shared Nginx configuration template from the host machine
-COPY ../config/nginx.conf.template /etc/nginx/nginx.conf.template
+COPY ./code/config/nginx.conf.template /etc/nginx/nginx.conf.template
 
 # Copy your web files to the container
 COPY --from=build /app/build /usr/share/nginx/html
@@ -34,7 +34,7 @@ COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 
 # Copy the shared entrypoint script from the config folder (relative to the build context)
-COPY ../config/entrypoint.sh /entrypoint.sh
+COPY ./code/config/entrypoint.sh /entrypoint.sh
 
 # Make the entrypoint script executable
 RUN chmod +x /entrypoint.sh
