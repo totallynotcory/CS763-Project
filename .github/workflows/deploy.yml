@@ -1,0 +1,40 @@
+# Your workflow name.
+name: Deploy to heroku.
+
+# Run workflow on every push to dev branch
+on:
+  push:
+    branches: HW-166-add-tests-to-docker-container
+# Your workflows jobs.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out your repository.
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Set up Docker Buildx (optional, but recommended for multi-platform builds)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1  
+
+      # Log in to Docker Hub (if needed, otherwise skip this step)
+      - name: Log in to Heroku Container Registry
+        run: echo "${{ secrets.HEROKU_API_KEY }}" | docker login --username=__token__ --password-stdin registry.heroku.com
+
+      # Build Docker images
+      - name: Build and Tag Docker Images
+        run: |
+          docker build -f ./code/server/Dockerfile.production -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:1.0.0 ./code
+          docker build -f ./code/client/Dockerfile.production -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:1.0.0 ./code
+
+      # Push Docker images to Heroku
+      - name: Push Docker Images to Heroku
+        run: |
+          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:1.0.0
+          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:1.0.0
+
+      # Release the Docker images
+      - name: Release Docker Images on Heroku
+        run: |
+          heroku container:release web api --app ${{ secrets.HEROKU_APP_NAME }}

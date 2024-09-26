@@ -12,7 +12,7 @@ services:
       - peak-performance
 
   api: 
-    image: api-dev
+    image: api-dev:1.0.0
     env_file: ./server/.env.development
     build:
       context: ./server
@@ -29,7 +29,7 @@ services:
       - peak-performance
 
   client:
-    image: client-dev
+    image: client-dev:1.0.0
     build: 
       context: ./client  # Specify context here
       dockerfile: Dockerfile.dev 

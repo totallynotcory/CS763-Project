@@ -1,0 +1,2 @@
+web: docker run -p $PORT:$PORT registry.heroku.com/${HEROKU_APP_NAME}/client-production:1.0.0
+api: docker run -p 5000:5000 registry.heroku.com/${HEROKU_APP_NAME}/api-production:1.0.0
