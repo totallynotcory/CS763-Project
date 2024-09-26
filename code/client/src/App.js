@@ -49,10 +49,11 @@ function App() {
         sx={{ width: `calc(100% - ${sidebarWidth}px)`, 
               ml: `${sidebarWidth}px`,
               height: `${appBarHeight}px`,
-              bgcolor: 'primary.main' }}
+              bgcolor: 'primary.main',
+              boxShadow: theme.shadows[1] 
+            }}
       >
-        {/*  */}
-        <Toolbar sx={{ display: 'flex', alignItems: 'center', height: '100%' }}> 
+        <Toolbar sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>  
           <Typography variant="h5" noWrap component="div" >
             Health and Wellness Tracker
           </Typography>
