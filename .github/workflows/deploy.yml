@@ -25,8 +25,8 @@ jobs:
       # Build Docker images
       - name: Build and Tag Docker Images
         run: |
-          docker build -f ./code/server/Dockerfile.production -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:1.0.0 ./code
-          docker build -f ./code/client/Dockerfile.production -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:1.0.0 ./code
+          docker build -f ./code/server/Dockerfile.production -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/api-production:latest ./code
+          docker build -f ./code/client/Dockerfile.production -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/client-production:latest ./code
 
       # Push Docker images to Heroku
       - name: Push Docker Images to Heroku
