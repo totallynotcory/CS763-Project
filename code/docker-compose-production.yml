@@ -1,27 +1,41 @@
-name: peak-performance
+version: '3.8'
 
 services:
-  api: 
-    image: api-production:1.0.0
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.production
+    image: registry.heroku.com/${HEROKU_APP_NAME}/api-production:latest  # Use Heroku registry format
     env_file: ./server/config/.env.production
-    restart: unless-stopped 
+    restart: unless-stopped
     ports:
-      - "5000:5000" 
+      - "5000:5000"
     depends_on:
       - mongo
     networks:
       - peak-performance
 
   client:
-    image: client-production:1.0.0
-    restart: unless-stopped  
+    build:
+      context: ./client
+      dockerfile: Dockerfile.production
+    image: registry.heroku.com/${HEROKU_APP_NAME}/client-production:latest  # Use Heroku registry format
+    restart: unless-stopped
     networks:
       - peak-performance
     ports:
       - "80:80"
       - "443:443"
-    depends_on: 
+    depends_on:
       - api
+
+  # Add mongo service if needed, otherwise remove it.
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - peak-performance
 
 volumes:
   mongo_data:
