@@ -17,7 +17,17 @@ jobs:
       # Copy heroku.yml to the root directory
       #Trying to get this file to change so I can make a commit
       - name: Copy heroku.yml to root
+        run: cp ./code/heroku.yml ./
+
+      # Copy heroku.yml to the root directory
+      #Trying to get this file to change so I can make a commit
+      - name: Copy heroku.yml to server
         run: cp ./code/heroku.yml ./server
+
+       # Copy heroku.yml to the root directory
+      #Trying to get this file to change so I can make a commit
+      - name: Copy heroku.yml to client
+        run: cp ./code/heroku.yml ./client
 
       # Set up Docker Buildx (optional, but recommended for multi-platform builds)
       - name: Set up Docker Buildx
