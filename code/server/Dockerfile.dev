@@ -5,7 +5,8 @@ FROM node:20.17.0-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json first to leverage Docker layer caching
-COPY package*.json ./
+COPY ./server/package.json ./
+COPY ./server/package-lock.json ./ 
 
 # Install dependencies
 RUN npm ci
@@ -14,7 +15,7 @@ RUN npm ci
 RUN npm install -g nodemon
 
 # Copy the rest of the application files
-COPY . .
+COPY ./server .
 
 
 # Expose the port that the application will run on
