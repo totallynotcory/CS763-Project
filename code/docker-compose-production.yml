@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: ./server/Dockerfile.production
     env_file: ./.env.production
-    image: registry.heroku.com/peakperformace/client-production:latest  # Use Heroku registry format
+    image: registry.heroku.com/peak-performace/client-production:latest  # Use Heroku registry format
     restart: unless-stopped
     networks:
       - peak-performance
