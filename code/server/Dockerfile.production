@@ -11,6 +11,9 @@ WORKDIR /app
 # Copy package.json and package-lock.json first to leverage Docker layer caching
 COPY ./server/package*.json ./
 
+# Copy the heroku.yml file to the root
+COPY ./heroku.yml ./
+
 # Install dependencies
 RUN npm install --only=production
 
