@@ -1,5 +1,5 @@
 # Use the official Node.js v20.17.0 image
-FROM node:20.17.0-alpine AS build
+FROM node:20.17.0-slim AS build
 
 # Set build arguments
 ARG NODE_ENV
@@ -18,7 +18,7 @@ COPY ./server/package*.json ./
 RUN npm install --only=production
 
 # Copy the rest of the application files
-COPY ./server ./
+COPY ./server .
 
 # Expose the port that the application will run on
 EXPOSE 5000

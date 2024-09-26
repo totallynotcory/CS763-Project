@@ -5,13 +5,14 @@ FROM node:20.17.0-bullseye
 WORKDIR /app
 
 # Copy the package.json and package-lock.json files first to leverage Docker caching
-COPY package*.json ./
+COPY ./client/package.json ./
+COPY ./client/package-lock.json ./ 
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the application source code
-COPY . .
+COPY ./client .
 
 # Set environment variables for development
 ENV NODE_ENV=development

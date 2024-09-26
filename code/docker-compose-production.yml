@@ -1,12 +1,10 @@
-version: '3.8'
-
 services:
   api:
     build:
-      context: ./server
-      dockerfile: Dockerfile.production
-    image: registry.heroku.com/${HEROKU_APP_NAME}/api-production:latest  # Use Heroku registry format
-    env_file: ./server/config/.env.production
+      context: .
+      dockerfile: ./client/Dockerfile.production
+    env_file: ./.env.production
+    image: registry.heroku.com/peak-performace/api-production:latest  # Use Heroku registry format
     restart: unless-stopped
     ports:
       - "5000:5000"
@@ -17,9 +15,10 @@ services:
 
   client:
     build:
-      context: ./client
-      dockerfile: Dockerfile.production
-    image: registry.heroku.com/${HEROKU_APP_NAME}/client-production:latest  # Use Heroku registry format
+      context: .
+      dockerfile: ./server/Dockerfile.production
+    env_file: ./.env.production
+    image: registry.heroku.com/peakperformace/client-production:latest  # Use Heroku registry format
     restart: unless-stopped
     networks:
       - peak-performance
