@@ -36,189 +36,209 @@ function DailyData() {
   return (
     <Box
       sx={{
-        padding: "20px",
-        backgroundColor: "#303030",
-        borderRadius: "10px",
-        color: "white",
+        position: "fixed", // Change to fixed to attach it to the screen
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "#E2DDD5", // Background color
+        display: "flex",
+        justifyContent: "flex-end", // Align the content to the right
+        height: "100vh",
       }}
     >
-      <Typography variant="h6" gutterBottom>
-        Enter your data here:
-      </Typography>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "4rem",
+          right: 0,
+          bottom: 0,
+          width: "35%",
+          padding: "2%",
+          backgroundColor: "#303030",
+          borderRadius: "10px",
+          color: "white",
+          height: "calc(100vh - 4rem)",
+          overflowY: "auto",
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Enter your data here:
+        </Typography>
 
-      <Typography variant="body1" gutterBottom>
-        {date}
-      </Typography>
+        <Typography variant="body1" gutterBottom sx={{ marginBottom: "5%" }}>
+          {date}
+        </Typography>
 
-      {/* Weight */}
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <TextField
-            label="Weight"
-            variant="filled"
-            fullWidth
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Box component="span" sx={{ color: "#F4F4F4" }}>
-                    lb
-                  </Box>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // lb color
-              },
-            }}
-          />
-        </Grid>
-        {/* Steps Count */}
-        <Grid item xs={6}>
-          <TextField
-            label="Step count"
-            variant="filled"
-            fullWidth
-            value={steps}
-            onChange={(e) => setWeight(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Box component="span" sx={{ color: "#F4F4F4" }}>
-                    Steps
-                  </Box>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // Steps color
-              },
-            }}
-          />
-        </Grid>
-        {/* Sleep hour */}
-        <Grid item xs={6}>
-          <TextField
-            label="Sleep"
-            variant="filled"
-            fullWidth
-            value={sleep}
-            onChange={(e) => setWeight(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Box component="span" sx={{ color: "#F4F4F4" }}>
-                    hour
-                  </Box>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // hour color
-              },
-            }}
-          />
-        </Grid>
+        {/* Weight */}
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Weight"
+              variant="filled"
+              fullWidth
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Box component="span" sx={{ color: "#F4F4F4" }}>
+                      lb
+                    </Box>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                backgroundColor: "#5E5E5E",
+                borderRadius: "10px",
+                "& .MuiInputBase-input": {
+                  color: "#F4F4F4", // input color
+                },
+                "& .MuiInputLabel-root": {
+                  color: "#CACACA", // label color
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#F8DEBD", // focused label color
+                },
+                "& .MuiFilledInput-underline:before": {
+                  borderBottom: "none", // no underline when unfocuced
+                },
+                "& .MuiFilledInput-underline:after": {
+                  borderBottomColor: "#F8DEBD", // underline color when focuced
+                },
+                "& .MuiInputAdornment-root": {
+                  color: "#F4F4F4", // lb color
+                },
+              }}
+            />
+          </Grid>
+          {/* Steps Count */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Count"
+              variant="filled"
+              fullWidth
+              value={steps}
+              onChange={(e) => setWeight(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Box component="span" sx={{ color: "#F4F4F4" }}>
+                      Steps
+                    </Box>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                backgroundColor: "#5E5E5E",
+                borderRadius: "10px",
+                "& .MuiInputBase-input": {
+                  color: "#F4F4F4", // input color
+                },
+                "& .MuiInputLabel-root": {
+                  color: "#CACACA", // label color
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#F8DEBD", // focused label color
+                },
+                "& .MuiFilledInput-underline:before": {
+                  borderBottom: "none", // no underline when unfocuced
+                },
+                "& .MuiFilledInput-underline:after": {
+                  borderBottomColor: "#F8DEBD", // underline color when focuced
+                },
+                "& .MuiInputAdornment-root": {
+                  color: "#F4F4F4", // Steps color
+                },
+              }}
+            />
+          </Grid>
+          {/* Sleep hour */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Sleep"
+              variant="filled"
+              fullWidth
+              value={sleep}
+              onChange={(e) => setWeight(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Box component="span" sx={{ color: "#F4F4F4" }}>
+                      hour
+                    </Box>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                backgroundColor: "#5E5E5E",
+                borderRadius: "10px",
+                "& .MuiInputBase-input": {
+                  color: "#F4F4F4", // input color
+                },
+                "& .MuiInputLabel-root": {
+                  color: "#CACACA", // label color
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#F8DEBD", // focused label color
+                },
+                "& .MuiFilledInput-underline:before": {
+                  borderBottom: "none", // no underline when unfocuced
+                },
+                "& .MuiFilledInput-underline:after": {
+                  borderBottomColor: "#F8DEBD", // underline color when focuced
+                },
+                "& .MuiInputAdornment-root": {
+                  color: "#F4F4F4", // hour color
+                },
+              }}
+            />
+          </Grid>
 
-        {/* water */}
-        <Grid item xs={6}>
-          <TextField
-            label="Water"
-            variant="filled"
-            fullWidth
-            value={water}
-            onChange={(e) => setWeight(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Box component="span" sx={{ color: "#F4F4F4" }}>
-                    glass
-                  </Box>
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // hour color
-              },
-            }}
-          />
-        </Grid>
+          {/* water */}
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Water"
+              variant="filled"
+              fullWidth
+              value={water}
+              onChange={(e) => setWeight(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Box component="span" sx={{ color: "#F4F4F4" }}>
+                      glass
+                    </Box>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                backgroundColor: "#5E5E5E",
+                borderRadius: "10px",
+                "& .MuiInputBase-input": {
+                  color: "#F4F4F4", // input color
+                },
+                "& .MuiInputLabel-root": {
+                  color: "#CACACA", // label color
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#F8DEBD", // focused label color
+                },
+                "& .MuiFilledInput-underline:before": {
+                  borderBottom: "none", // no underline when unfocuced
+                },
+                "& .MuiFilledInput-underline:after": {
+                  borderBottomColor: "#F8DEBD", // underline color when focuced
+                },
+                "& .MuiInputAdornment-root": {
+                  color: "#F4F4F4", // hour color
+                },
+              }}
+            />
+          </Grid>
 
-        {/* Mood */}
-        {/* <Grid item xs={12}>
+          {/* Mood */}
+          {/* <Grid item xs={12}>
           <Typography variant="body1">Mood</Typography>
           <Slider
             value={mood}
@@ -236,8 +256,8 @@ function DailyData() {
           />
         </Grid> */}
 
-        {/* Exercise */}
-        {/* <Grid item xs={12}>
+          {/* Exercise */}
+          {/* <Grid item xs={12}>
           <Typography variant="body1">Exercise</Typography>
           <FormControl component="fieldset">
             <RadioGroup
@@ -287,13 +307,13 @@ function DailyData() {
           </FormControl>
         </Grid> */}
 
-        {/*Choose the exercise */}
-        {/* <Grid item xs={12}>
+          {/*Choose the exercise */}
+          {/* <Grid item xs={12}>
           <FormControl fullWidth>
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -332,58 +352,58 @@ function DailyData() {
           </FormControl>
         </Grid> */}
 
-        {/* How long did you exercise */}
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel
-              sx={{
-                backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
-                color: "#CACACA", // font color when unfocused
-                borderRadius: "10px",
-                "&.Mui-focused": {
-                  // font color when focused
-                  color: "#F8DEBD",
+          {/* How long did you exercise */}
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <InputLabel
+                sx={{
+                  backgroundColor: "#5E5E5E", // question font background color
+                  padding: "0 2%",
+                  color: "#CACACA", // font color when unfocused
                   borderRadius: "10px",
-                },
-              }}
-            >
-              How long did you exercise
-            </InputLabel>
-            <Select
-              value={exerciseTime}
-              onChange={(e) => setExerciseTime(e.target.value)}
-              label="How long did you exercise"
-              sx={{
-                backgroundColor: "#5E5E5E",
-                borderRadius: "10px",
-                "& .MuiInputBase-input": {
-                  color: "#F4F4F4", // text in box(answer) - text color
-                },
-              }}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#6F6F6F", // dropdown background color
-                    color: "#F4F4F4", // dropdown text color
+                  "&.Mui-focused": {
+                    // font color when focused
+                    color: "#F8DEBD",
+                    borderRadius: "10px",
                   },
-                },
-              }}
-            >
-              <MenuItem value="30 mins">30 mins</MenuItem>
-              <MenuItem value="1 hour">1 hour</MenuItem>
-              <MenuItem value="2 hours">2 hours</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+                }}
+              >
+                How long did you exercise
+              </InputLabel>
+              <Select
+                value={exerciseTime}
+                onChange={(e) => setExerciseTime(e.target.value)}
+                label="How long did you exercise"
+                sx={{
+                  backgroundColor: "#5E5E5E",
+                  borderRadius: "10px",
+                  "& .MuiInputBase-input": {
+                    color: "#F4F4F4", // text in box(answer) - text color
+                  },
+                }}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: "#6F6F6F", // dropdown background color
+                      color: "#F4F4F4", // dropdown text color
+                    },
+                  },
+                }}
+              >
+                <MenuItem value="30 mins">30 mins</MenuItem>
+                <MenuItem value="1 hour">1 hour</MenuItem>
+                <MenuItem value="2 hours">2 hours</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
 
-        {/* What did you take for breakfast */}
-        {/* <Grid item xs={12}>
+          {/* What did you take for breakfast */}
+          {/* <Grid item xs={12}>
           <FormControl fullWidth>
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -421,13 +441,13 @@ function DailyData() {
             </Select>
           </FormControl>
         </Grid> */}
-        {/* What did you take for lunch */}
-        {/* <Grid item xs={12}>
+          {/* What did you take for lunch */}
+          {/* <Grid item xs={12}>
           <FormControl fullWidth>
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -465,13 +485,13 @@ function DailyData() {
             </Select>
           </FormControl>
         </Grid> */}
-        {/* What did you take for dinner */}
-        {/* <Grid item xs={12}>
+          {/* What did you take for dinner */}
+          {/* <Grid item xs={12}>
           <FormControl fullWidth>
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -509,7 +529,8 @@ function DailyData() {
             </Select>
           </FormControl>
         </Grid> */}
-      </Grid>
+        </Grid>
+      </Box>
     </Box>
   );
 }
