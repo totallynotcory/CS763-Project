@@ -37,8 +37,8 @@ jobs:
 
       - name: Release Client on Heroku
         run: |
-          heroku container:release web --app ${{ secrets.HEROKU_APP_NAME_CLIENT }}
+          heroku container:release web --app peak-performance
 
       - name: Release Server on Heroku
         run: |
-          heroku container:release web --app ${{ secrets.HEROKU_APP_NAME_SERVER }}
+          heroku container:release web --app peak-performance
