@@ -1,19 +1,20 @@
 # Use an official Node.js image as the base image
-FROM node:20.17.0-slim AS build
+FROM node:18-alpine AS build
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy the package.json and package-lock.json files first to leverage Docker caching
-COPY ./package.json ./
-COPY ./package-lock.json ./ 
-
+# Use relative paths from `root/code` to `root/code/client` directory
+COPY client/package.json ./  
+COPY client/package-lock.json ./  
 
 # Install dependencies
 RUN npm ci
 
-# Copy the rest of the application source code
-COPY . .
+# Copy the rest of the client application's source code
+# Ensure you're copying files from `client` folder inside the build context (`root/code`)
+COPY client/. .  
 
 # Set environment variable for production build
 ENV NODE_ENV=production
@@ -25,16 +26,16 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the shared Nginx configuration template from the host machine
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
+COPY client/nginx.conf.template /etc/nginx/nginx.conf.template
 
-# Copy your web files to the container
+# Copy your built web files to the container
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose the port that the application will run on
 EXPOSE 80
 
-# Copy the shared entrypoint script from the config folder (relative to the build context)
-COPY entrypoint.sh /entrypoint.sh
+# Copy the shared entrypoint script from the `client` folder (relative to the build context)
+COPY client/entrypoint.sh /entrypoint.sh
 
 # Make the entrypoint script executable
 RUN chmod +x /entrypoint.sh

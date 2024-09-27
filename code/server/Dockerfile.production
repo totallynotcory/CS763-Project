@@ -1,5 +1,5 @@
 # Use the official Node.js v20.17.0 image
-FROM node:20.17.0-slim AS build
+FROM node:18-alpine AS build
 
 # Set build arguments
 ARG NODE_ENV
@@ -8,21 +8,21 @@ ENV NODE_ENV=${NODE_ENV}
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json first to leverage Docker layer caching
-COPY ./package*.json ./
+# Copy package.json and package-lock.json files using paths relative to `root/code`
+COPY server/package.json ./  
+COPY server/package-lock.json ./  
 
-# Copy the heroku.yml file to the root
-# COPY ./heroku.yml ./
+# Copy the heroku.yml file to the root if needed (uncomment and adjust path if necessary)
+# COPY ./heroku.yml ./  # This is fine if `heroku.yml` is in `root/code`
 
 # Install dependencies
-RUN npm install --only=production
+RUN npm install
 
-# Copy the rest of the application files
-COPY . .
+# Copy the rest of the server source code using paths relative to the build context
+COPY server/. .  
 
 # Expose the port that the application will run on
 EXPOSE 5000
 
 # Start the Node.js application
-#CMD ["node", "server.js"]
 CMD ["npm", "run", "start"]

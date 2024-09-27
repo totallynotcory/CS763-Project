@@ -2,8 +2,8 @@ services:
   api:
     build:
       context: .
-      dockerfile: ./client/Dockerfile.production
-    env_file: ./.env.production
+      dockerfile: ./server/Dockerfile.production
+    env_file: .env.production
     image: api-production:latest  # Use Heroku registry format
     restart: unless-stopped
     ports:
@@ -16,8 +16,8 @@ services:
   client:
     build:
       context: .
-      dockerfile: ./server/Dockerfile.production
-    env_file: ./.env.production
+      dockerfile: ./client/Dockerfile.production
+    env_file: .env.production
     image: client-production:latest  # Use Heroku registry format
     restart: unless-stopped
     networks:
