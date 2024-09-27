@@ -6,6 +6,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Print Working Directory and List Files
+        run: |
+          echo "Current Directory: $(pwd)"
+          echo "Listing all files in $(pwd):"
+          ls -R
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
