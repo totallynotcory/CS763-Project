@@ -5,15 +5,15 @@ FROM node:20.17.0-slim AS build
 WORKDIR /app
 
 # Copy the package.json and package-lock.json files first to leverage Docker caching
-COPY ./client/package.json ./
-COPY ./client/package-lock.json ./ 
+COPY ./package.json ./
+COPY ./package-lock.json ./ 
 
 
 # Install dependencies
 RUN npm ci
 
 # Copy the rest of the application source code
-COPY ./client ./
+COPY . .
 
 # Set environment variable for production build
 ENV NODE_ENV=production
