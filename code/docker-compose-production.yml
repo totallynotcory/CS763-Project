@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: ./client/Dockerfile.production
     env_file: ./.env.production
-    image: registry.heroku.com/peak-performace/api-production:latest  # Use Heroku registry format
+    image: api-production:latest  # Use Heroku registry format
     restart: unless-stopped
     ports:
       - "5000:5000"
@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: ./server/Dockerfile.production
     env_file: ./.env.production
-    image: registry.heroku.com/peak-performace/client-production:latest  # Use Heroku registry format
+    image: client-production:latest  # Use Heroku registry format
     restart: unless-stopped
     networks:
       - peak-performance
