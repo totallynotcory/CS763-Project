@@ -19,8 +19,8 @@ jobs:
         id: heroku
         uses: snithyanantham/docker-compose-multiple-apps-heroku-deploy@v1.0  # use the latest version of the action
         with:
-          app_name: "peak-performace"
+          app_name: "peak-performance"
           email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
           api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
           docker_compose_file: './code/docker-compose-production.yml' # set the path to the folder where the docker-compose file is located
-          heroku_apps: '[{"imagename":"api-production","appname":"peak-performace","apptype":"web"},{"imagename":"client-production","appname":"peak-performance","apptype":"web"}]' # List of Docker Image name, Heroku app and Heroku app type
+          heroku_apps: '[{"imagename":"api-production","appname":"peak-performance","apptype":"web"},{"imagename":"client-production","appname":"peak-performance","apptype":"web"}]' # List of Docker Image name, Heroku app and Heroku app type
