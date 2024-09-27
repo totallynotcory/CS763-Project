@@ -22,5 +22,5 @@ jobs:
           app_name: "peak-performace"
           email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
           api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
-          docker_compose_file: 'code/docker-compose-production.yml' # set the path to the folder where the docker-compose file is located
+          docker_compose_file: './code/docker-compose-production.yml' # set the path to the folder where the docker-compose file is located
           heroku_apps: '[{"imagename":"api-production","appname":"peak-performace","apptype":"web"},{"imagename":"client-production","appname":"peak-performance","apptype":"web"}]' # List of Docker Image name, Heroku app and Heroku app type
