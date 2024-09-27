@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import apiClient from '../services/apiClient.js';
+import { validateRegistrationForm } from '../utils/validateRegistrationForm.js';
 
 import { Box, TextField, Button } from "@mui/material";
 
@@ -26,11 +27,19 @@ function CreateUser() {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
+
+    // Validate form inputs
+    const validationResult = validateRegistrationForm(formData);
+    if (!validationResult) {
+      // console.error('Form validation failed');
+      return; // Prevent form submission
+    }
+
+    // If validation passes, submit form
     try {
-      // console.log('Data before posting:', formData);
+      console.log('Form validation passed')
       await apiClient.post('/create-user', formData)
-      ;
-    } catch (error) {
+    } catch (error) { 
       console.error('Error creating user:', error);
     }
   };
@@ -59,7 +68,7 @@ function CreateUser() {
 
       <TextField 
         label="Email" 
-        name="email" 
+        name="email"
         variant="outlined" 
         value={formData.email}
         onChange={handleChange} 
