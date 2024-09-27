@@ -6,8 +6,6 @@ services:
     env_file: .env.production
     image: api-production:latest  # Use Heroku registry format
     restart: unless-stopped
-    ports:
-      - "5000:5000"
     depends_on:
       - mongo
     networks:
@@ -22,9 +20,6 @@ services:
     restart: unless-stopped
     networks:
       - peak-performance
-    ports:
-      - "80:80"
-      - "443:443"
     depends_on:
       - api
 
