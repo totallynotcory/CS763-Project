@@ -1,2 +1,1 @@
-web: docker run -p $PORT:$PORT registry.heroku.com/${HEROKU_APP_NAME}/client-production:latest
-api: docker run -p 5000:5000 registry.heroku.com/${HEROKU_APP_NAME}/api-production:latest
+web: docker-compose -f docker-compose-production.yml up

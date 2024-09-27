@@ -27,6 +27,9 @@ jobs:
 
       - name: Move heroku.yml to root
         run: cp code/heroku.yml ./heroku.yml
+
+      - name: Move Procfile to root
+        run: cp code/Procfile ./Procfile
       
       - name: Log in to Heroku Container Registry
         run: |
