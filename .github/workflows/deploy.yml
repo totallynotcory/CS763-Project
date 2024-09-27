@@ -3,7 +3,7 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - main  # Set this to the branch you want to trigger deployment
+      - HW-166-add-tests-to-docker-container  # Set this to the branch you want to trigger deployment
 
 jobs:
   deploy:
