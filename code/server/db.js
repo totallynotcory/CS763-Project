@@ -4,14 +4,11 @@
 const mongoose = require('mongoose')
 const dotenv = require('dotenv');
 
-// Load the appropriate .env file based on NODE_ENV
-//NODE_ENV is set via package.json
-
 // Determine the correct .env file based on the environment
 const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
 
 // Load the appropriate .env file
-dotenv.config({ path: '../${envFile}' });  // Adjust the path as necessary based on your directory structure
+dotenv.config({ path: `../${envFile}` }); 
 
 
 let connection = null
