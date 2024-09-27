@@ -2,8 +2,11 @@
 FROM node:18-alpine AS build
 
 # Set build arguments
-ARG NODE_ENV
-ENV NODE_ENV=${NODE_ENV}
+# Set environment variable for production build
+ENV NODE_ENV=production
+
+# Add a line in your Dockerfile to print environment variables (for debugging)
+RUN printenv
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -12,14 +15,14 @@ WORKDIR /app
 COPY server/package.json ./  
 COPY server/package-lock.json ./  
 
-# Copy the heroku.yml file to the root if needed (uncomment and adjust path if necessary)
-# COPY ./heroku.yml ./  # This is fine if `heroku.yml` is in `root/code`
-
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy the rest of the server source code using paths relative to the build context
 COPY server/. .  
+
+# Print environment variables for debugging (remove this in production)
+RUN printenv
 
 # Expose the port that the application will run on
 EXPOSE 5000

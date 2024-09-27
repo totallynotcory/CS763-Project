@@ -37,7 +37,7 @@ jobs:
 
       - name: Build Images Using Docker Compose
         run: |
-          docker-compose -f code/docker-compose-production.yml build
+          docker-compose -f code/docker-compose-production.yml --project-directory ./code build
 
       - name: Tag and Push API Image to Heroku Container Registry
         run: |
