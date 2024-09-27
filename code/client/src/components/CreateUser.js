@@ -3,11 +3,12 @@
 import { useState } from 'react'
 import apiClient from '../services/apiClient.js';
 
+import { Box, TextField, Button } from "@mui/material";
+
 function CreateUser() {
   
   // State for form input values
   const [formData, setFormData] = useState({
-    userId: '',
     name: '',
     email: '',
     passwordHashed: ''
@@ -26,43 +27,56 @@ function CreateUser() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
     try {
-      await apiClient.post('/create-user', formData);
+      // console.log('Data before posting:', formData);
+      await apiClient.post('/create-user', formData)
+      ;
     } catch (error) {
       console.error('Error creating user:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-    
-      <label>Name (First & Last)</label>
-      <input
-        type="text"
-        name="name"
+    <Box
+      component="form"
+      onSubmit={handleSubmit} // Attach the handleSubmit function to onSubmit
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2, // Space between inputs
+        width: '400px',
+        margin: '0 auto', // Center form horizontally
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField 
+        label="Name" 
+        name="name" 
+        variant="outlined" 
         value={formData.name}
-        onChange={handleChange}
+        onChange={handleChange} // Attach the handleChange function
       />
 
-      <label>Email</label>
-      <input
-        type="text"
-        name="email"
+      <TextField 
+        label="Email" 
+        name="email" 
+        variant="outlined" 
         value={formData.email}
-        onChange={handleChange}
+        onChange={handleChange} 
       />
-
-      <label>Password</label>
-      <input
-        type="text"
-        name="passwordHashed"
+      <TextField 
+        label="Password" 
+        name="passwordHashed" 
+        type="password" // typed values will be hidden
+        variant="outlined" 
         value={formData.passwordHashed}
-        onChange={handleChange}
+        onChange={handleChange} 
       />
 
-      <button type="submit">Submit</button>
-    </form>
-  )
+      <Button type="submit" variant="contained"> Sign Up </Button>
 
+    </Box>
+  )
 }
 
 export default CreateUser

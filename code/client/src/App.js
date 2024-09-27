@@ -105,7 +105,7 @@ function App() {
           <ListItem disablePadding>
             <ListItemButton component={Link} to="/create-user">
               <ListItemIcon> <AccountCircleIcon /> </ListItemIcon>
-              <ListItemText primary="Create User (rename to User Profile?)" />
+              <ListItemText primary="Register User" />
             </ListItemButton>
           </ListItem>
 
