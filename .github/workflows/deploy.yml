@@ -27,13 +27,13 @@ jobs:
 
       - name: Build and Push Client Image to Heroku Container Registry
         run: |
-          docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME_CLIENT }}/web -f code/client/Dockerfile.production ./code
-          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME_CLIENT }}/web
+          docker build -t registry.heroku.com/peak-performance/web -f code/client/Dockerfile.production ./code
+          docker push registry.heroku.com/peak-performance/web
 
       - name: Build and Push Server Image to Heroku Container Registry
         run: |
-          docker build -t registry.heroku.com/${{ secrets.HEROKU_APP_NAME_SERVER }}/web -f code/server/Dockerfile.production ./code
-          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME_SERVER }}/web
+          docker build -t registry.heroku.com/peak-performance/web -f code/server/Dockerfile.production ./code
+          docker push registry.heroku.com/peak-performance/web
 
       - name: Release Client on Heroku
         run: |
