@@ -9,7 +9,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /app
 
 # Copy package.json and package-lock.json first to leverage Docker layer caching
-COPY ./server/package*.json ./
+COPY ./package*.json ./
 
 # Copy the heroku.yml file to the root
 # COPY ./heroku.yml ./
@@ -18,7 +18,7 @@ COPY ./server/package*.json ./
 RUN npm install --only=production
 
 # Copy the rest of the application files
-COPY ./server .
+COPY . .
 
 # Expose the port that the application will run on
 EXPOSE 5000
