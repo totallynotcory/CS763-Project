@@ -34,11 +34,14 @@ COPY --from=build /app/build /usr/share/nginx/html
 # Expose the port that the application will run on
 EXPOSE 80
 
-# Copy the shared entrypoint script from the `client` folder (relative to the build context)
-COPY client/entrypoint.sh /entrypoint.sh
+# Copy entrypoint.sh to a standard location
+COPY client/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Make the entrypoint script executable
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set environment variable for the port (defaulting to 80)
+ENV PORT=80
 
 # Specify the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
