@@ -32,7 +32,7 @@ COPY client/nginx.conf.template /etc/nginx/nginx.conf.template
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose the port that the application will run on
-EXPOSE 80
+EXPOSE ${PORT}
 
 # Copy entrypoint.sh to a standard location
 COPY client/entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -41,7 +41,7 @@ COPY client/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Set environment variable for the port (defaulting to 80)
-ENV PORT=80
+#ENV PORT=${PORT}
 
 # Specify the entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
