@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - HW-166-add-tests-to-docker-container  # Branch to trigger deployment
+      - dev
 
 jobs:
   deploy:
