@@ -22,7 +22,7 @@ RUN npm ci
 COPY server/. .  
 
 # Print environment variables for debugging (remove this in production)
-RUN printenv
+# RUN printenv
 
 # Expose the port that the application will run on
 EXPOSE 5000
