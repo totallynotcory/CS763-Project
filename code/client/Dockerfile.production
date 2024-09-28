@@ -41,6 +41,7 @@ COPY client/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Set environment variable for the port (defaulting to 80)
+#Testing automatic deploys in Heroku
 #ENV PORT=${PORT}
 
 # Specify the entrypoint
