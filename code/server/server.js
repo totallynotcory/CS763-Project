@@ -11,7 +11,10 @@ const port = process.env.PORT || 5000
 const User = db.getModel().userModel
 const Goal = db.getModel().goalModel
 
-app.use(cors('http://localhost:3000')); //update with environment variable for deployment
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000'
+}));
+
 app.use(express.json());
 
 

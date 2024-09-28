@@ -41,18 +41,25 @@ docker rmi $(docker images -q)
 # The commands below will build and run the server and client docker file for the development environment
 
     To build:
-        cd into the server folder and enter:  docker build -t api-dev -f Dockerfile.dev .
-        cd into the client folder and enter:  docker build -t client-dev -f Dockerfile.dev .
+        Step 1: Open a terminal and cd into the code folder
+        Step 2: Run the following commands. 
+                - docker build -t api-dev -f server/Dockerfile.dev .
+                - docker build -t client-dev -f client/Dockerfile.dev .
 
     To run:
-        cd into the code folder and enter:  docker-compose -f docker-compose-dev.yml up
+        From the code folder run:  docker-compose -f docker-compose-dev.yml up
+        Open your browser and navigate to http://localhost:3000
 
  
-# The commands below will build and run the server and client docker file for the production environment
+# The commands below will tag and upload the api and client images to Docker Hub
 
-    To build:
-        cd into the server folder and enter:  docker build -t api-production .
-        cd into the client folder and enter:  docker build -t client-production -f Dockerfile.production .
+    Step 1:  Tag the images
+            - docker tag api-dev:latest cs673olf24team3/peak-performance:api-dev
+            - docker tag client-dev:latest cs673olf24team3/peak-performance:client-dev
+    
+    Step 2: Upload to Docker Hub
+            - docker push cs673olf24team3/peak-performance:api-dev
+            - docker push cs673olf24team3/peak-performance:client-dev
 
-    To run:
-        cd into the code folder and enter:  docker-compose -f docker-compose-production.yml up
+
+
