@@ -12,6 +12,8 @@ function CreateUser() {
     email: '',
     passwordHashed: ''
   });
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Handle input changes and update formData state
   const handleChange = (e) => {
@@ -25,10 +27,24 @@ function CreateUser() {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
+    // console.log('Create user request received', formData);
+    setSuccessMessage('');
+    setErrorMessage('');
+
     try {
       await apiClient.post('/create-user', formData);
+      setSuccessMessage('User created successfully!');
+
+      setFormData({
+        userId: '',
+        name: '',
+        email: '',
+        password: '',
+      });
+
     } catch (error) {
-      console.error('Error creating user:', error);
+      // console.error('Error creating user:', error);
+      setErrorMessage('Failed to create user. Please try again.');
     }
   };
 
@@ -61,9 +77,9 @@ function CreateUser() {
 
       <label>Password</label>
       <input
-        type="text"
-        name="passwordHashed"
-        value={formData.passwordHashed}
+        type="password"
+        name="password"
+        value={formData.password}
         onChange={handleChange}
       />
 

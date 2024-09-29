@@ -11,9 +11,13 @@ const port = process.env.PORT || 5000
 const User = db.getModel().userModel
 const Goal = db.getModel().goalModel
 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 app.use(cors('http://localhost:3000')); //update with environment variable for deployment
 app.use(express.json());
 
+require('dotenv').config();
 
 // WILL IMPLEMENT EXPRESS ROUTER--JUST USING THESE ROUTES FOR TESTING
 
@@ -33,20 +37,80 @@ app.get('/view-users', async (req, res) => {
 app.post('/create-user', async (req, res) => {
 
   try {
+    const { userId, name, email, password } = req.body;
+    // console.log('Create user request received', req.body);
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // console.log('Hashed password:', hashedPassword);
+
     const newUser = new User({
-      userId: req.body.userId,
-      name: req.body.name,
-      email: req.body.email,
-      passwordHashed: req.body.passwordHashed
+      userId,
+      name,
+      email,
+      passwordHashed: hashedPassword
     })
-    await Promise.all([
-      newUser.save()
-    ])
+    await newUser.save();
+    res.status(201).json({ message: 'User created successfully!' });
+    
   } catch (error) {
-    console.log(error)
+    // console.log('Error creating user:', error);
+    res.status(500).json({ message: 'Error creating user' });
   }
 
 })
+
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    // console.log('Login request received', { email, password });
+    // Find the user by email
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      // User not found
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+    // console.log('Password hash:', user.passwordHashed)
+    // Compare the provided password with the stored hashed password
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHashed);
+    // console.log('Password validation result:', isPasswordValid);
+
+    if (!isPasswordValid) {
+      // Password does not match
+      // console.log('Password does not match');
+      return res.status(401).json({ message: 'Invalid email or password.' });
+    }
+
+    // Generate a token (e.g., JWT)
+    const secretKey = process.env.SECRET_KEY; // Use environment variable in production
+    // console.log('JWT_SECRET:', secretKey);
+
+    if (!secretKey) {
+      // console.error('JWT_SECRET  is not defined');
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+
+    const token = jwt.sign(
+      { userId: user.userId, email: user.email },
+      secretKey,
+      { expiresIn: '1h' }
+    );
+    // console.log('JWT Secret:', process.env.SECRET_KEY);
+
+    // Send the token to the client
+    res.json({ token: token, message: 'Login successful' });
+
+  } catch (error) {
+    // console.error('Error during login:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 app.post('/create-goal', async (req, res) => {
   try {
@@ -96,3 +160,4 @@ app.post('/create-goal', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+

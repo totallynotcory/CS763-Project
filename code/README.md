@@ -12,30 +12,37 @@ npm install
 
 cd code/server
 npm install
-
+npm install bcrypt
+npm install jsonwebtoken
+npm install dotenv
 
 # Then make sure you have a terminal split screen and in the server folder type:
+
 npm run dev
+
 # and in the client folder type:
+
 npm install react-icons
 npm run start
 
-
-
 # Using docker to run all 3 services (mongodb, api, client)
+
 Make sure to start the docker engine by starting up Docker Desktop. Note make sure to log in.
 
 docker login -u your_username -p your_password --This will log you in using bash
 
-# Make sure you're in the code folder 
+# Make sure you're in the code folder
 
 # This will stop all containers from running
+
 docker stop $(docker ps -aq)
 
 # This removes all containers (deletes them)
+
 docker rm $(docker ps -aq)
 
-# The will remove all images 
+# The will remove all images
+
 docker rmi $(docker images -q)
 
 # The commands below will build and run the server and client docker file for the development environment
@@ -47,7 +54,6 @@ docker rmi $(docker images -q)
     To run:
         cd into the code folder and enter:  docker-compose -f docker-compose-dev.yml up
 
- 
 # The commands below will build and run the server and client docker file for the production environment
 
     To build:
