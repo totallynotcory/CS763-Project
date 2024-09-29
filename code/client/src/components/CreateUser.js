@@ -1,19 +1,24 @@
 //IN PROGRESS
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import apiClient from '../services/apiClient.js';
 import { validateRegistrationForm } from '../utils/validateRegistrationForm.js';
 
 import { Box, TextField, Button } from "@mui/material";
 
 function CreateUser() {
-  
+  const navigate = useNavigate(); // Initialize the hook
+
   // State for form input values
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     passwordHashed: ''
   });
+
+  // State for validation message
+  const [validationMsg, setValidationMsg] = useState('');
 
   // Handle input changes and update formData state
   const handleChange = (e) => {
@@ -31,16 +36,19 @@ function CreateUser() {
     // Validate form inputs
     const validationResult = validateRegistrationForm(formData);
     if (!validationResult) {
-      // console.error('Form validation failed');
+      setValidationMsg('Please check inputs and try again.');
       return; // Prevent form submission
     }
 
     // If validation passes, submit form
-    try {
-      console.log('Form validation passed')
+    try { 
       await apiClient.post('/create-user', formData)
+      setValidationMsg('Registration successful!');
+      // Redirect to home page after successful registration
+      navigate('/');
     } catch (error) { 
       console.error('Error creating user:', error);
+      setValidationMsg('Error during registration. Please try again.');
     }
   };
 
@@ -83,7 +91,9 @@ function CreateUser() {
       />
 
       <Button type="submit" variant="contained"> Sign Up </Button>
-
+      
+      {/* Render the validation message */}
+      {validationMsg && <p>{validationMsg}</p>}
     </Box>
   )
 }
