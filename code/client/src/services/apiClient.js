@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:5000', // Base URL for API requests, update with environemnt variable for deployment
-})
+  baseURL: process.env.REACT_APP_BASE_URL || 'http://localhost:5000', // Default to localhost for development
+});
 
-export default apiClient
+export default apiClient;
