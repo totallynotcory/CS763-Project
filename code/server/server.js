@@ -15,7 +15,7 @@ const Goal = db.getModel().goalModel
 //   origin: 'http://localhost:3000'
 // }));
 
-const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000'; // Fallback to local for development
+const corsOrigin = process.env.BASE_URL || 'http://localhost:3000'; // Fallback to local for development
 
 app.use(cors({
   origin: corsOrigin
