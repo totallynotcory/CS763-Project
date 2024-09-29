@@ -11,8 +11,14 @@ const port = process.env.PORT || 5000
 const User = db.getModel().userModel
 const Goal = db.getModel().goalModel
 
+// app.use(cors({
+//   origin: 'http://localhost:3000'
+// }));
+
+const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000'; // Fallback to local for development
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000'
+  origin: corsOrigin
 }));
 
 app.use(express.json());
