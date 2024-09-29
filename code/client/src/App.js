@@ -166,19 +166,28 @@ function App() {
           {/* Main content */}
           <Box
             component="main"
-            sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+            sx={{
+              flexGrow: 1,
+              bgcolor: "#E2DDD5", // Background color applied here
+              height: "100vh", // Full viewport height for every page
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
             <Toolbar />
-
-            {/* Routes need to be outside of the Drawer, so that they render in the main content area */}
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/create-user" element={<CreateUser />} />
-              <Route path="/view-users" element={<ViewUsers />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/enter-daily-data" element={<DailyData />} />
-              <Route path="/create-goal" element={<CreateGoal />} />
-            </Routes>
+            <Box
+              sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}
+            >
+              {/* Routes need to be outside of the Drawer, so that they render in the main content area */}
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/create-user" element={<CreateUser />} />
+                <Route path="/view-users" element={<ViewUsers />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/enter-daily-data" element={<DailyData />} />
+                <Route path="/create-goal" element={<CreateGoal />} />
+              </Routes>
+            </Box>
           </Box>
         </Box>
       </Router>
