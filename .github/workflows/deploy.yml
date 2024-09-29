@@ -14,7 +14,8 @@ jobs:
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}  # Your Heroku app name
+      HEROKU_APP_NAME_CLIENT: ${{ secrets.HEROKU_APP_NAME_CLIENT }} 
+      HEROKU_APP_NAME_SERVER: ${{ secrets.HEROKU_APP_NAME_SERVER }}
 
     steps:
       - name: Check out repository
@@ -48,15 +49,19 @@ jobs:
 
       - name: Tag and Push API Image to Heroku Container Registry
         run: |
-          docker tag api-production:latest registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
-          docker push registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
+          docker tag api-production:latest registry.heroku.com/${{ env.HEROKU_APP_NAME_SERVER }}/web
+          docker push registry.heroku.com/${{ env.HEROKU_APP_NAME_SERVER }}/web
 
       - name: Tag and Push Client Image to Heroku Container Registry
         run: |
-          docker tag client-production:latest registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
-          docker push registry.heroku.com/${{ env.HEROKU_APP_NAME }}/web
+          docker tag client-production:latest registry.heroku.com/${{ env.HEROKU_APP_NAME_CLIENT }}/web
+          docker push registry.heroku.com/${{ env.HEROKU_APP_NAME_CLIENT }}/web
 
-      - name: Release on Heroku
+      - name: Release the API on Heroku
         run: |
-          heroku container:release web --app ${{ env.HEROKU_APP_NAME }}
+          heroku container:release web --app ${{ env.HEROKU_APP_NAME_SERVER }}
+
+      - name: Release the Client on Heroku
+        run: |
+          heroku container:release web --app ${{ env.HEROKU_APP_NAME_CLIENT }}
 
