@@ -104,7 +104,6 @@ app.post('/create-goal', async (req, res) => {
   }
 })
 
-
 //Listen for incoming connections
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

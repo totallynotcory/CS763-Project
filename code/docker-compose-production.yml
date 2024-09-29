@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./server/Dockerfile.production
+    container_name: react-ui
     env_file: .env.production
     image: api-production:latest  # Use Heroku registry format
     restart: unless-stopped
@@ -15,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: ./client/Dockerfile.production
+    container_name: node-api
     env_file: .env.production
     image: client-production:latest  # Use Heroku registry format
     restart: unless-stopped
@@ -22,18 +24,6 @@ services:
       - peak-performance
     depends_on:
       - api
-
-  # Add mongo service if needed, otherwise remove it.
-  mongo:
-    image: mongo:latest
-    volumes:
-      - mongo_data:/data/db
-    networks:
-      - peak-performance
-
-volumes:
-  mongo_data:
-    driver: local
 
 networks:
   peak-performance:
