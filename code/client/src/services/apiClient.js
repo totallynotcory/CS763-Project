@@ -5,7 +5,7 @@ import axios from 'axios'
 // })
 
 const apiClient = axios.create({
-  baseURL: 'https://peak-performance-3c40e2c0ebea.herokuapp.com/', // Base URL for API requests, update with environemnt variable for deployment
+  baseURL: 'https://peak-performance.herokuapp.com/', // Base URL for API requests, update with environemnt variable for deployment
 })
 
 export default apiClient
