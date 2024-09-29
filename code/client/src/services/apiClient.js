@@ -1,5 +1,6 @@
 import axios from 'axios'
 const dotenv = require('dotenv');
+const path = require('path')
 
 // Determine the correct .env file based on the environment
 const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
