@@ -7,8 +7,6 @@ services:
     env_file: .env.production
     image: api-production:latest  # Use Heroku registry format
     restart: unless-stopped
-    depends_on:
-      - mongo
     networks:
       - peak-performance
 
