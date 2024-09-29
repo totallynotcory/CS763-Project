@@ -32,6 +32,8 @@ services:
     build: 
       context: .  # Specify context here
       dockerfile: ./client/Dockerfile.dev 
+    environment:
+      - REACT_APP_BASE_URL=http://localhost:5000
     volumes:
       - ./client:/app
       - /app/node_modules   

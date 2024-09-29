@@ -16,6 +16,8 @@ services:
     build:
       context: .
       dockerfile: ./client/Dockerfile.production
+    environment:
+      - REACT_APP_BASE_URL=https://peak-performance-backend-394f316db343.herokuapp.com/
     container_name: node-api
     env_file: .env.production
     image: client-production:latest  # Use Heroku registry format
