@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: ./client/Dockerfile.production
     env_file:
-      - .env.production
+      - ./client/.env.production
     environment:
       - REACT_APP_BASE_URL=https://peak-performance-backend-394f316db343.herokuapp.com/
     container_name: node-api
