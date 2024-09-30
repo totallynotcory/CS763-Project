@@ -11,7 +11,7 @@ export function validateRegistrationForm(formData) {
     // Checking email starts with 1+ alphanumeric characters, "." or "-" followed by an "@"
     // followed by 1+ alphanumeric characters or hyphens (domain) followed by a "."
     // ending with 2 to 4 characters (top-level domain)
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/;
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}/;
     if (!emailRegex.test(email)) {
       console.log('Invalid email format')
       return false;
