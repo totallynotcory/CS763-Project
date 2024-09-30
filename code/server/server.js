@@ -14,7 +14,10 @@ const Goal = db.getModel().goalModel
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-app.use(cors('http://localhost:3000')); //update with environment variable for deployment
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000'
+}));
+
 app.use(express.json());
 
 require('dotenv').config();
@@ -37,6 +40,7 @@ app.get('/view-users', async (req, res) => {
 app.post('/create-user', async (req, res) => {
 
   try {
+<<<<<<< HEAD
     const { userId, name, email, password } = req.body;
     // console.log('Create user request received', req.body);
     const existingUser = await User.findOne({ email: email });
@@ -53,6 +57,16 @@ app.post('/create-user', async (req, res) => {
       name,
       email,
       passwordHashed: hashedPassword
+=======
+    let lastUser = await User.find().sort({"userId": -1}).limit(1) 
+    let newUserId = lastUser[0].userId + 1 
+    
+    const newUser = new User({
+      userId: newUserId,
+      name: req.body.name,
+      email: req.body.email,
+      passwordHashed: req.body.passwordHashed
+>>>>>>> dev
     })
     await newUser.save();
     res.status(201).json({ message: 'User created successfully!' });

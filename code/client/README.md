@@ -39,6 +39,27 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+## Installation
+
+To run this project locally without Docker, make sure to install the necessary dependencies.
+Run the following commands in the project directory:
+
+1. Install Material-UI components:
+
+### `npm install @mui/material @emotion/react @emotion/styled`
+
+2. Install Material-UI icons:
+
+### 'npm install @mui/icons-material'
+
+3. Install React Router DOM for routing:
+
+### 'npm install react-router-dom'
+
+4. Install the Mulish font:
+
+### npm install @fontsource/mulish
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
