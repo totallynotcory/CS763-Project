@@ -22,7 +22,6 @@ import { Button } from "@mui/material";
 function CreateUser() {
   // State for form input values
   const [formData, setFormData] = useState({
-    userId: "",
     name: "",
     email: "",
     passwordHashed: "",
@@ -51,7 +50,6 @@ function CreateUser() {
       setSuccessMessage('User created successfully!');
 
       setFormData({
-        userId: '',
         name: '',
         email: '',
         password: '',
@@ -189,8 +187,9 @@ function CreateUser() {
                 label="Password"
                 variant="filled"
                 fullWidth
-                name="passwordHashed"
-                value={formData.passwordHashed}
+                type="password"
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
                 sx={{
                   backgroundColor: "#5E5E5E",

@@ -40,6 +40,7 @@ app.get('/view-users', async (req, res) => {
 app.post('/create-user', async (req, res) => {
 
   try {
+    const { name, email, password } = req.body;
     // console.log('Create user request received', req.body);
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
@@ -56,8 +57,8 @@ app.post('/create-user', async (req, res) => {
 
     const newUser = new User({
       userId: newUserId,
-      name: req.body.name,
-      email: req.body.email,
+      name: name,
+      email: email,
       passwordHashed: hashedPassword
     })
     await newUser.save();
