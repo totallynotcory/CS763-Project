@@ -1,5 +1,7 @@
 import apiClient from "../services/apiClient.js";
 import React, { useState } from "react";
+import { validateRegistrationForm } from '../utils/validateGoalForm.js';
+
 import {
   Box,
   Typography,
@@ -16,12 +18,16 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Button } from "@mui/material";
+import { validateGoalForm } from "../utils/validateGoalForm.js";
 
 function CreateGoal() {
   const [goalFormData, setGoalFormData] = useState({
     type: "",
     targetValue: 0,
   });
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Handle input changes
   const handleChange = (e) => {
@@ -35,10 +41,22 @@ function CreateGoal() {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
+
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    // Validate form inputs
+    const validationResult = validateGoalForm(formData);
+    if (!validationResult) {
+      setErrorMessage('Error: Please review your inputs and try again');
+      return; // Prevent form submission
+    }
+
     try {
       console.log(goalFormData);
       // Sends a POST request to the backend with the form data
       await apiClient.post("/create-goal", goalFormData);
+      setSuccessMessage('New goal successful!');
     } catch (error) {
       console.error("Error creating goal:", error);
     }
@@ -176,6 +194,8 @@ function CreateGoal() {
           </Grid>
         </Grid>
       </form>
+      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
+      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
     </Box>
   );
 }
