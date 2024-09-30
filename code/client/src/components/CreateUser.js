@@ -27,10 +27,12 @@ function CreateUser() {
 
   // State for form input values
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    passwordHashed: ''
+    name: "",
+    email: "",
+    passwordHashed: "",
   });
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // State for validation message
   const [validationMsg, setValidationMsg] = useState('');
@@ -47,6 +49,9 @@ function CreateUser() {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
+    // console.log('Create user request received', formData);
+    setSuccessMessage('');
+    setErrorMessage('');
 
     // Validate form inputs
     const validationResult = validateRegistrationForm(formData);
@@ -54,16 +59,20 @@ function CreateUser() {
       setValidationMsg('Please check inputs and try again.');
       return; // Prevent form submission
     }
+    
+    try {
+      await apiClient.post('/create-user', formData);
+      setSuccessMessage('User created successfully!');
 
-    // If validation passes, submit form
-    try { 
-      await apiClient.post('/create-user', formData)
-      setValidationMsg('Registration successful!');
-      // Redirect to home page after successful registration
-      navigate('/');
-    } catch (error) { 
-      console.error('Error creating user:', error);
-      setValidationMsg('Error during registration. Please try again.');
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+      });
+
+    } catch (error) {
+      // console.error('Error creating user:', error);
+      setErrorMessage('Failed to create user. Please try again.');
     }
   };
 
@@ -193,8 +202,9 @@ function CreateUser() {
                 label="Password"
                 variant="filled"
                 fullWidth
-                name="passwordHashed"
-                value={formData.passwordHashed}
+                type="password"
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
                 sx={{
                   backgroundColor: "#5E5E5E",
