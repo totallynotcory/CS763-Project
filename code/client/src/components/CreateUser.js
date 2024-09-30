@@ -23,7 +23,6 @@ function CreateUser() {
   });
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [validationMessage, setValidationMessage] = useState('');
 
   // Handle input changes and update formData state
   const handleChange = (e) => {
@@ -40,12 +39,11 @@ function CreateUser() {
 
     setSuccessMessage('');
     setErrorMessage('');
-    setValidationMessage('');
 
     // Validate form inputs
     const validationResult = validateRegistrationForm(formData);
     if (!validationResult) {
-      setValidationMessage('Error: Please review your inputs and try again');
+      setErrorMessage('Error: Please review your inputs and try again');
       return; // Prevent form submission
     }
     
@@ -66,8 +64,12 @@ function CreateUser() {
 
 
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(error.response.data.message); // Set the error message from server response
+      } else {
       // console.error('Error creating user:', error);
-      setErrorMessage('Registration failed. Please try again.');
+        setErrorMessage('Registration failed. Please try again.');
+      }
     }
   };
 
@@ -226,7 +228,7 @@ function CreateUser() {
           </Grid>
         </Grid>
       </form>
-      {validationMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{validationMessage}</p>}
+      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
       {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
     </Box>
   );

@@ -44,7 +44,7 @@ app.post('/create-user', async (req, res) => {
     // console.log('Create user request received', req.body);
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'Error: An account with this email already exists' });
     }
 
     const saltRounds = 10;
