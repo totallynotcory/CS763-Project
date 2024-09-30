@@ -8,15 +8,7 @@ import {
   Typography,
   TextField,
   Grid,
-  Slider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  InputAdornment,
   Button
 } from "@mui/material";
 
@@ -31,6 +23,7 @@ function CreateUser() {
   });
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [validationMessage, setValidationMessage] = useState('');
 
   // Handle input changes and update formData state
   const handleChange = (e) => {
@@ -47,10 +40,12 @@ function CreateUser() {
     // console.log('Create user request received', formData);
     setSuccessMessage('');
     setErrorMessage('');
+    setValidationMessage('');
 
     // Validate form inputs
     const validationResult = validateRegistrationForm(formData);
     if (!validationResult) {
+      setValidationMessage('Please check inputs and try again.');
       return; // Prevent form submission
     }
     
@@ -63,6 +58,9 @@ function CreateUser() {
         email: '',
         password: '',
       });
+      
+      // Route back to login page after a successful registration
+      navigate('/login');
 
     } catch (error) {
       // console.error('Error creating user:', error);
@@ -246,6 +244,7 @@ function CreateUser() {
           </Grid>
         </Grid>
       </form>
+      {validationMessage && <p>{validationMessage}</p>}
     </Box>
   );
 }
