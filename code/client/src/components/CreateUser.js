@@ -37,7 +37,7 @@ function CreateUser() {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
-    // console.log('Create user request received', formData);
+
     setSuccessMessage('');
     setErrorMessage('');
     setValidationMessage('');
@@ -99,13 +99,6 @@ function CreateUser() {
           {/* Name (First & Last) -------------------------------------*/}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
-              {/* <label>Name (First & Last)</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                /> */}
               <TextField
                 label="Name (First & Last)"
                 variant="filled"
@@ -141,13 +134,6 @@ function CreateUser() {
           {/* Email -------------------------------------*/}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
-              {/* <label>Email</label>
-              <input
-                type="text"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              /> */}
               <TextField
                 label="Email"
                 variant="filled"
@@ -183,13 +169,6 @@ function CreateUser() {
           {/* Password -------------------------------------*/}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
-              {/* <label>Password</label>
-              <input
-                type="text"
-                name="passwordHashed"
-                value={formData.passwordHashed}
-                onChange={handleChange}
-              /> */}
               <TextField
                 label="Password"
                 variant="filled"
