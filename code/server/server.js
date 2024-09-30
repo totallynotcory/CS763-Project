@@ -14,9 +14,7 @@ const Goal = db.getModel().goalModel
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000'
-}));
+app.use(cors());
 
 app.use(express.json());
 
@@ -162,7 +160,6 @@ app.post('/create-goal', async (req, res) => {
     console.log(error)
   }
 })
-
 
 //Listen for incoming connections
 app.listen(port, () => {
