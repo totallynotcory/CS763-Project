@@ -1,5 +1,3 @@
-//IN PROGRESS
-
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../services/apiClient.js';
@@ -29,13 +27,10 @@ function CreateUser() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    passwordHashed: "",
+    password: "",
   });
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  // State for validation message
-  const [validationMsg, setValidationMsg] = useState('');
 
   // Handle input changes and update formData state
   const handleChange = (e) => {
@@ -56,7 +51,6 @@ function CreateUser() {
     // Validate form inputs
     const validationResult = validateRegistrationForm(formData);
     if (!validationResult) {
-      setValidationMsg('Please check inputs and try again.');
       return; // Prevent form submission
     }
     
@@ -232,7 +226,6 @@ function CreateUser() {
             </FormControl>
           </Grid>
           {/* Submit Button -------------------------------------*/}
-          {/* <button type="submit">Submit</button> */}
           <Grid item xs={12}>
             <Button
               type="submit"
@@ -250,9 +243,6 @@ function CreateUser() {
             >
               Sign Up
             </Button>
-
-          {/* Render the validation message */}
-          {/* {validationMsg && <p>{validationMsg}</p>} */}
           </Grid>
         </Grid>
       </form>

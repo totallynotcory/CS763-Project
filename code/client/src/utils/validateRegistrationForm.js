@@ -1,8 +1,8 @@
 export function validateRegistrationForm(formData) {
-    const { name, email, passwordHashed } = formData;
+    const { name, email, password } = formData;
 
     // Checking there is input data in each field
-    if (!name || !email || !passwordHashed) {
+    if (!name || !email || !password) {
       console.log('Form field(s) missing')  
       return false;
     }
