@@ -4,12 +4,6 @@ FROM node:18-alpine AS build
 # Set the working directory inside the container
 WORKDIR /app
 
-# Add a build argument to pass the environment variable
-ARG REACT_APP_BASE_URL
-
-# Set the environment variable so React can access it
-ENV REACT_APP_BASE_URL=$REACT_APP_BASE_URL
-
 # Copy the package.json and package-lock.json files first to leverage Docker caching
 # Use relative paths from `root/code` to `root/code/client` directory
 COPY client/package.json ./  
