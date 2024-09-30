@@ -100,11 +100,9 @@ function Login() {
         Sign in Here!
       </Typography>
       <form className="login-form" onSubmit={handleSubmit}>
-
-      {/* <h2>Welcome !</h2> */}
       
       {/* Display error message if necessary */}
-      {/* {error && <p className="error-message">{error}</p>} */}
+      {error && <p className="error-message">{error}</p>}
 
         <Grid container direction="column" spacing={2}>
           {/* Email -------------------------------------*/}
