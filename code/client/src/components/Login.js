@@ -1,24 +1,17 @@
-// ./components/Login.js
-
-import { useState } from "react";
-// import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import apiClient from '../services/apiClient.js';
+import './css/Login.css';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import apiClient from "../services/apiClient.js";
+
 // import './css/Login.css';
 import {
   Box,
   Typography,
   TextField,
   Grid,
-  Slider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   InputAdornment,
 } from "@mui/material";
 import { Button } from "@mui/material";
@@ -30,8 +23,10 @@ function Login() {
     password: "",
   });
 
-  const [showPassword, setShowPassword] = useState(false); // set password visibility
-  // const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);// set password visibility
+  const [error, setError] = useState(''); 
+
+  const navigate = useNavigate(); 
   // update input values
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,18 +43,24 @@ function Login() {
 
   // form submission
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    // setError('');
+    event.preventDefault(); 
+    setError('');
     // setSuccess('');
     try {
       const response = await apiClient.post("/login", formData);
       // store token
       localStorage.setItem("authToken", response.data.token);
       // redirect to home page
-      console.log("login success:", response.data);
+      //console.log('login success:', response.data);
+      navigate('/');
     } catch (error) {
-      console.error("login error:", error);
+      //console.error('login error:', error);
       // warn user
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('Invalid email or password.');
+      }
     }
   };
 
@@ -91,25 +92,23 @@ function Login() {
         Sign in Here!
       </Typography>
       <form className="login-form" onSubmit={handleSubmit}>
+      
+      {/* Display error message if necessary */}
+      {error && <p className="error-message">{error}</p>}
+
         <Grid container direction="column" spacing={2}>
           {/* Email -------------------------------------*/}
           <Grid item xs={6}>
             <FormControl fullWidth>
-              {/* <label>Email:</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              /> */}
               <TextField
                 label="Email"
                 variant="filled"
                 fullWidth
                 name="email"
+                type="email" 
                 value={formData.email}
                 onChange={handleChange}
+                required
                 sx={{
                   backgroundColor: "#5E5E5E",
                   borderRadius: "10px",
@@ -228,10 +227,9 @@ function Login() {
               Sign in ➜
             </Button>
           </Grid>
-          {/* <button type="submit">Login</button> */}
         </Grid>
       </form>
-      {/* </div> */}
+      Not a member? <Link to="/create-user">Create an account</Link>
     </Box>
   );
 }
