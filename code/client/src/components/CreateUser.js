@@ -1,30 +1,25 @@
-//IN PROGRESS
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import apiClient from '../services/apiClient.js';
+import { validateRegistrationForm } from '../utils/validateRegistrationForm.js';
 
-import { useState } from "react";
-import apiClient from "../services/apiClient.js";
 import {
   Box,
   Typography,
   TextField,
   Grid,
-  Slider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  InputAdornment,
+  Button
 } from "@mui/material";
-import { Button } from "@mui/material";
 
 function CreateUser() {
+  const navigate = useNavigate(); // Initialize the hook
+
   // State for form input values
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    passwordHashed: "",
+    password: "",
   });
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,23 +36,40 @@ function CreateUser() {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
-    // console.log('Create user request received', formData);
+
     setSuccessMessage('');
     setErrorMessage('');
 
+    // Validate form inputs
+    const validationResult = validateRegistrationForm(formData);
+    if (!validationResult) {
+      setErrorMessage('Error: Please review your inputs and try again');
+      return; // Prevent form submission
+    }
+    
     try {
       await apiClient.post('/create-user', formData);
-      setSuccessMessage('User created successfully!');
+      setSuccessMessage('Registration successful! Redirecting to the login page...');
 
       setFormData({
         name: '',
         email: '',
         password: '',
       });
+      
+      // Delay routing to the login page to allow the success message to be visible
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000); // 2 second delay
+
 
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(error.response.data.message); // Set the error message from server response
+      } else {
       // console.error('Error creating user:', error);
-      setErrorMessage('Failed to create user. Please try again.');
+        setErrorMessage('Registration failed. Please try again.');
+      }
     }
   };
 
@@ -85,20 +97,13 @@ function CreateUser() {
           fontWeight: "600",
         }}
       >
-        Edit Profile
+        Sign up
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {/* Name (First & Last) -------------------------------------*/}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
-              {/* <label>Name (First & Last)</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                /> */}
               <TextField
                 label="Name (First & Last)"
                 variant="filled"
@@ -134,13 +139,6 @@ function CreateUser() {
           {/* Email -------------------------------------*/}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
-              {/* <label>Email</label>
-              <input
-                type="text"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              /> */}
               <TextField
                 label="Email"
                 variant="filled"
@@ -176,13 +174,6 @@ function CreateUser() {
           {/* Password -------------------------------------*/}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
-              {/* <label>Password</label>
-              <input
-                type="text"
-                name="passwordHashed"
-                value={formData.passwordHashed}
-                onChange={handleChange}
-              /> */}
               <TextField
                 label="Password"
                 variant="filled"
@@ -217,7 +208,6 @@ function CreateUser() {
             </FormControl>
           </Grid>
           {/* Submit Button -------------------------------------*/}
-          {/* <button type="submit">Submit</button> */}
           <Grid item xs={12}>
             <Button
               type="submit"
@@ -233,11 +223,13 @@ function CreateUser() {
                 },
               }}
             >
-              Submit
+              Sign Up
             </Button>
           </Grid>
         </Grid>
       </form>
+      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
+      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
     </Box>
   );
 }
