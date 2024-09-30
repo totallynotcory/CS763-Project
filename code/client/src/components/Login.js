@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useNavigate, Link } from 'react-router-dom';
 import apiClient from '../services/apiClient.js';
 import './css/Login.css';
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -12,14 +11,7 @@ import {
   Typography,
   TextField,
   Grid,
-  Slider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   InputAdornment,
 } from "@mui/material";
 import { Button } from "@mui/material";
@@ -235,10 +227,9 @@ function Login() {
               Sign in ➜
             </Button>
           </Grid>
-          {/* <button type="submit">Login</button> */}
         </Grid>
       </form>
-      {/* </div> */}
+      Not a member? <Link to="/create-user">Create an account</Link>
     </Box>
   );
 }
