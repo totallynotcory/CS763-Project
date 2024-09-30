@@ -36,23 +36,40 @@ function DailyData() {
   return (
     <Box
       sx={{
-        padding: "20px",
+        position: "absolute",
+        top: "4rem",
+        right: 0,
+        bottom: 0,
+        width: "35%",
+        padding: "2%",
         backgroundColor: "#303030",
         borderRadius: "10px",
         color: "white",
+        height: "calc(100vh - 4rem)",
+        overflowY: "auto",
       }}
     >
-      <Typography variant="h6" gutterBottom>
+      <Typography
+        variant="h6"
+        gutterBottom
+        sx={{
+          marginTop: "2%",
+          marginBottom: "2%",
+          color: "#E2E1E1",
+          fontSize: "1.4rem",
+          fontWeight: "600",
+        }}
+      >
         Enter your data here:
       </Typography>
 
-      <Typography variant="body1" gutterBottom>
+      <Typography variant="body1" gutterBottom sx={{ marginBottom: "5%" }}>
         {date}
       </Typography>
 
       {/* Weight */}
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             label="Weight"
             variant="filled"
@@ -93,9 +110,9 @@ function DailyData() {
           />
         </Grid>
         {/* Steps Count */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
-            label="Step count"
+            label="Count"
             variant="filled"
             fullWidth
             value={steps}
@@ -134,7 +151,7 @@ function DailyData() {
           />
         </Grid>
         {/* Sleep hour */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             label="Sleep"
             variant="filled"
@@ -176,13 +193,13 @@ function DailyData() {
         </Grid>
 
         {/* water */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             label="Water"
             variant="filled"
             fullWidth
             value={water}
-            onChange={(e) => setWeight(e.target.value)}
+            onChange={(e) => setWater(e.target.value)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -216,7 +233,6 @@ function DailyData() {
             }}
           />
         </Grid>
-
         {/* Mood */}
         {/* <Grid item xs={12}>
           <Typography variant="body1">Mood</Typography>
@@ -293,7 +309,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -338,7 +354,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -383,7 +399,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -427,7 +443,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -471,7 +487,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
