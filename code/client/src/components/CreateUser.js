@@ -45,13 +45,13 @@ function CreateUser() {
     // Validate form inputs
     const validationResult = validateRegistrationForm(formData);
     if (!validationResult) {
-      setValidationMessage('Please check inputs and try again.');
+      setValidationMessage('Error: Please review your inputs and try again');
       return; // Prevent form submission
     }
     
     try {
       await apiClient.post('/create-user', formData);
-      setSuccessMessage('User created successfully!');
+      setSuccessMessage('Registration successful! Redirecting to the login page...');
 
       setFormData({
         name: '',
@@ -59,12 +59,15 @@ function CreateUser() {
         password: '',
       });
       
-      // Route back to login page after a successful registration
-      navigate('/login');
+      // Delay routing to the login page to allow the success message to be visible
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000); // 2 second delay
+
 
     } catch (error) {
       // console.error('Error creating user:', error);
-      setErrorMessage('Failed to create user. Please try again.');
+      setErrorMessage('Registration failed. Please try again.');
     }
   };
 
@@ -92,7 +95,7 @@ function CreateUser() {
           fontWeight: "600",
         }}
       >
-        Edit Profile
+        Sign up
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -223,7 +226,8 @@ function CreateUser() {
           </Grid>
         </Grid>
       </form>
-      {validationMessage && <p>{validationMessage}</p>}
+      {validationMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{validationMessage}</p>}
+      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
     </Box>
   );
 }
