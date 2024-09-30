@@ -40,8 +40,6 @@ app.get('/view-users', async (req, res) => {
 app.post('/create-user', async (req, res) => {
 
   try {
-<<<<<<< HEAD
-    const { userId, name, email, password } = req.body;
     // console.log('Create user request received', req.body);
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
@@ -52,21 +50,15 @@ app.post('/create-user', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     // console.log('Hashed password:', hashedPassword);
 
-    const newUser = new User({
-      userId,
-      name,
-      email,
-      passwordHashed: hashedPassword
-=======
+    // Autogenerate user ID based on maximum ID in users table
     let lastUser = await User.find().sort({"userId": -1}).limit(1) 
     let newUserId = lastUser[0].userId + 1 
-    
+
     const newUser = new User({
       userId: newUserId,
       name: req.body.name,
       email: req.body.email,
-      passwordHashed: req.body.passwordHashed
->>>>>>> dev
+      passwordHashed: hashedPassword
     })
     await newUser.save();
     res.status(201).json({ message: 'User created successfully!' });

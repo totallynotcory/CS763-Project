@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+// import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import apiClient from '../services/apiClient.js';
 import './css/Login.css';
 import VisibilityIcon from "@mui/icons-material/Visibility";
