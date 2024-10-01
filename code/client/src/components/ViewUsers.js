@@ -4,18 +4,7 @@ import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient.js";
 import {
   Box,
-  Typography,
-  TextField,
-  Grid,
-  Slider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  InputAdornment,
+  Typography
 } from "@mui/material";
 import { box, bigTitle } from "./style/styles.js";
 function ViewUsers() {

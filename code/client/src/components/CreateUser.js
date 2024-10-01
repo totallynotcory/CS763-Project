@@ -15,9 +15,6 @@ import {
   box,
   title,
   textField,
-  inputLable,
-  inputBackground,
-  menuPropsStyles,
   submitButton,
 } from "./style/styles.js";
 
