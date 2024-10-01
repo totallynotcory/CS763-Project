@@ -7,17 +7,20 @@ import {
   Typography,
   TextField,
   Grid,
-  Slider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  InputAdornment,
 } from "@mui/material";
 import { Button } from "@mui/material";
+import {
+  box,
+  title,
+  inputLable,
+  inputBackground,
+  menuPropsStyles,
+  submitButton,
+} from "./style/styles.js";
 
 function CreateGoal() {
   const [goalFormData, setGoalFormData] = useState({
@@ -94,73 +97,24 @@ const handleGoalError = (error) => {
 
 
   return (
-    <Box
-      sx={{
-        top: "4rem",
-        right: 0,
-        bottom: 0,
-        width: "80%",
-        padding: "2%",
-        borderRadius: "10px",
-        height: "calc(100vh - 4rem)",
-        overflowY: "auto",
-      }}
-    >
-      <Typography
-        variant="h6"
-        gutterBottom
-        sx={{
-          marginTop: "4%",
-          marginBottom: "2%",
-          color: "#5B5753",
-          fontSize: "1.4rem",
-          fontWeight: "600",
-        }}
-      >
+    <Box sx={box}>
+      <Typography variant="h6" gutterBottom sx={title}>
         Set up your goal here:
       </Typography>
-      {/* Set up your goal here:   Select a goal type*/}
+      {/* Set up your goal here:  */}
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
+          {/*  Select a goal type */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
-              <InputLabel 
-                id="goal-type-select"
-                sx={{
-                  backgroundColor: "#5E5E5E", // question font background color
-                  padding: "0 2%",
-                  color: "#CACACA", // font color when unfocused
-                  borderRadius: "10px",
-                  "&.Mui-focused": {
-                    // font color when focused
-                    color: "#F8DEBD",
-                    borderRadius: "10px",
-                  },
-                }}
-              >
-                Select a goal type
-              </InputLabel>
-              <Select                
-                data-testid="goal-type-select"
+              <InputLabel sx={inputLable}>Select a goal type</InputLabel>
+              <Select
                 name="type" // Add name to ensure proper handling
                 value={goalFormData.type}
                 onChange={handleChange}
                 label="Select a goal type"
-                sx={{
-                  backgroundColor: "#5E5E5E",
-                  borderRadius: "10px",
-                  "& .MuiInputBase-input": {
-                    color: "#F4F4F4", // text in box(answer) - text color
-                  },
-                }}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      backgroundColor: "#6F6F6F", // dropdown background color
-                      color: "#F4F4F4", // dropdown text color
-                    },
-                  },
-                }}
+                sx={inputBackground}
+                MenuProps={menuPropsStyles}
               >
                 <MenuItem value="sleep">Sleep (Hours)</MenuItem>
                 <MenuItem data-testid="goal-type-weight" value="weight">Weight (lbs)</MenuItem>
@@ -170,7 +124,7 @@ const handleGoalError = (error) => {
               </Select>
             </FormControl>
           </Grid>
-
+          {/* Target value */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
@@ -182,26 +136,10 @@ const handleGoalError = (error) => {
                 onChange={handleChange}
                 required
                 InputLabelProps={{
-                  sx: {
-                    backgroundColor: "#5E5E5E", // question font background color
-                    padding: "0 2%",
-                    color: "#CACACA", // font color when unfocused
-                    borderRadius: "10px",
-                    "&.Mui-focused": {
-                      // font color when focused
-                      color: "#F8DEBD",
-                      borderRadius: "10px",
-                    },
-                  },
+                  sx: inputLable,
                 }}
                 InputProps={{
-                  sx: {
-                    backgroundColor: "#5E5E5E",
-                    borderRadius: "10px",
-                    "& .MuiInputBase-input": {
-                      color: "#F4F4F4", // text in box(answer) - text color
-                    },
-                  },
+                  sx: inputBackground,
                 }}
                 fullWidth
               />
@@ -209,21 +147,7 @@ const handleGoalError = (error) => {
           </Grid>
           {/* Submit Button */}
           <Grid item xs={12}>
-            <Button
-              data-testid="goal-submit-button"
-              type="submit"
-              variant="contained"
-              sx={{
-                backgroundColor: "#3A3A3A",
-                color: "#CACACA",
-                borderRadius: "10px",
-                padding: "1% 4%",
-                "&:hover": {
-                  backgroundColor: "#F8DEBD",
-                  color: "#303030",
-                },
-              }}
-            >
+            <Button type="submit" variant="contained" sx={submitButton}>
               Submit
             </Button>
           </Grid>
