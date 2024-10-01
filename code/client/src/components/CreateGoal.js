@@ -109,6 +109,7 @@ const handleGoalError = (error) => {
             <FormControl fullWidth>
               <InputLabel sx={inputLable}>Select a goal type</InputLabel>
               <Select
+                data-testid="goal-type-select"
                 name="type" // Add name to ensure proper handling
                 value={goalFormData.type}
                 onChange={handleChange}
