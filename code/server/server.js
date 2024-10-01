@@ -155,9 +155,17 @@ app.post('/create-goal', async (req, res) => {
       // createdAt and progress will use defaults
     })
     await newGoal.save()
+
+    // Send a response back to the client indicating success
+    res.status(201).json({
+      message: 'New goal created successfully',
+      goalId: newGoalId,
+    });
     
   } catch (error) {
     console.log(error)
+    // Send an error response back to the client
+    res.status(500).json({ error: 'Failed to create goal' });
   }
 })
 

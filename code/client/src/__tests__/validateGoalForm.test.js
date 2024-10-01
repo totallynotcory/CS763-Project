@@ -1,4 +1,7 @@
 import { validateGoalForm } from '../utils/validateGoalForm';
+import { getByRole, render, screen, waitFor, fireEvent } from '@testing-library/react';
+
+import App from '../App'; 
 
 test('empty input form fields', () => {
     const formData = { type: '', targetValue: '' };
