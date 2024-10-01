@@ -21,13 +21,13 @@ jobs:
 
       - name: Install dependencies for the client
         run: |
-          cd code/client && npm ci
+          cd code/client
+          npm ci
 
       - name: Run Jest tests
-        run: npm test
-
-      - name: Change directory back to the root
-        run: cd ../../
+        run: |
+          cd code/client
+          npm test
 
   # Step 2: Deployment job depends on successful completion of tests
   deploy:
