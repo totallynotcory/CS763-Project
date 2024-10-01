@@ -144,3 +144,12 @@ export const loginSubmitButton = {
 export const link = {
   color: "#D08726",
 };
+
+// HomePage & ViewUsers
+export const bigTitle = {
+  marginTop: "4%",
+  marginBottom: "2%",
+  color: "#5B5753",
+  fontSize: "3rem",
+  fontWeight: "600",
+};
