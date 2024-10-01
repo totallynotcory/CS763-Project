@@ -14,6 +14,17 @@ import {
   MenuItem,
   InputAdornment,
 } from "@mui/material";
+import {
+  box,
+  title,
+  textField,
+  inputLable,
+  inputBackground,
+  menuPropsStyles,
+  submitButton,
+  sideMenuBox,
+  sideMenuTitle,
+} from "./style/styles.js";
 
 function DailyData() {
   const [date, setDate] = useState("Aug 8, 2024");
@@ -34,32 +45,8 @@ function DailyData() {
   };
 
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        top: "4rem",
-        right: 0,
-        bottom: 0,
-        width: "35%",
-        padding: "2%",
-        backgroundColor: "#303030",
-        borderRadius: "10px",
-        color: "white",
-        height: "calc(100vh - 4rem)",
-        overflowY: "auto",
-      }}
-    >
-      <Typography
-        variant="h6"
-        gutterBottom
-        sx={{
-          marginTop: "2%",
-          marginBottom: "2%",
-          color: "#E2E1E1",
-          fontSize: "1.4rem",
-          fontWeight: "600",
-        }}
-      >
+    <Box sx={sideMenuBox}>
+      <Typography variant="h6" gutterBottom sx={sideMenuTitle}>
         Enter your data here:
       </Typography>
 
@@ -85,28 +72,7 @@ function DailyData() {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // lb color
-              },
-            }}
+            sx={textField}
           />
         </Grid>
         {/* Steps Count */}
@@ -126,28 +92,7 @@ function DailyData() {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // Steps color
-              },
-            }}
+            sx={textField}
           />
         </Grid>
         {/* Sleep hour */}
@@ -167,28 +112,7 @@ function DailyData() {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // hour color
-              },
-            }}
+            sx={textField}
           />
         </Grid>
 
@@ -209,28 +133,7 @@ function DailyData() {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // hour color
-              },
-            }}
+            sx={textField}
           />
         </Grid>
         {/* Mood */}
@@ -307,17 +210,7 @@ function DailyData() {
         {/* <Grid item xs={12}>
           <FormControl fullWidth>
             <InputLabel
-              sx={{
-                backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 2%",
-                color: "#CACACA", // font color when unfocused
-                borderRadius: "10px",
-                "&.Mui-focused": {
-                  // font color when focused
-                  color: "#F8DEBD",
-                  borderRadius: "10px",
-                },
-              }}
+              sx={inputLable}
             >
               Choose the exercise
             </InputLabel>
@@ -325,21 +218,8 @@ function DailyData() {
               value={exerciseType}
               onChange={(e) => setExerciseType(e.target.value)}
               label="How long did you exercise"
-              sx={{
-                backgroundColor: "#5E5E5E",
-                borderRadius: "10px",
-                "& .MuiInputBase-input": {
-                  color: "#F4F4F4", // text in box(answer) - text color
-                },
-              }}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#6F6F6F", // dropdown background color
-                    color: "#F4F4F4", // dropdown text color
-                  },
-                },
-              }}
+              sx={inputBackground}
+              MenuProps={menuPropsStyles}
             >
               <MenuItem value="Running">Running</MenuItem>
               <MenuItem value="Walking">Walking</MenuItem>
@@ -370,21 +250,8 @@ function DailyData() {
               value={exerciseTime}
               onChange={(e) => setExerciseTime(e.target.value)}
               label="How long did you exercise"
-              sx={{
-                backgroundColor: "#5E5E5E",
-                borderRadius: "10px",
-                "& .MuiInputBase-input": {
-                  color: "#F4F4F4", // text in box(answer) - text color
-                },
-              }}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#6F6F6F", // dropdown background color
-                    color: "#F4F4F4", // dropdown text color
-                  },
-                },
-              }}
+              sx={inputBackground}
+              MenuProps={menuPropsStyles}
             >
               <MenuItem value="30 mins">30 mins</MenuItem>
               <MenuItem value="1 hour">1 hour</MenuItem>
