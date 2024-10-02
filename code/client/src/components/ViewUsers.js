@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient.js";
+import { authenticated } from "../utils/authenticate.js";
 import {
   Box,
   Typography
 } from "@mui/material";
 import { box, bigTitle } from "./style/styles.js";
+
 function ViewUsers() {
+  authenticated();
   const [data, setData] = useState([{}]);
 
   useEffect(() => {
