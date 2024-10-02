@@ -14,9 +14,7 @@ const Goal = db.getModel().goalModel
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000'
-}));
+app.use(cors());
 
 app.use(express.json());
 
@@ -157,12 +155,19 @@ app.post('/create-goal', async (req, res) => {
       // createdAt and progress will use defaults
     })
     await newGoal.save()
+
+    // Send a response back to the client indicating success
+    res.status(201).json({
+      message: 'New goal created successfully',
+      goalId: newGoalId,
+    });
     
   } catch (error) {
     console.log(error)
+    // Send an error response back to the client
+    res.status(500).json({ error: 'Failed to create goal' });
   }
 })
-
 
 //Listen for incoming connections
 app.listen(port, () => {
