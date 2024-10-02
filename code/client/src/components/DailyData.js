@@ -14,6 +14,17 @@ import {
   MenuItem,
   InputAdornment,
 } from "@mui/material";
+import {
+  box,
+  title,
+  textField,
+  inputLable,
+  inputBackground,
+  menuPropsStyles,
+  submitButton,
+  sideMenuBox,
+  sideMenuTitle,
+} from "./style/styles.js";
 
 function DailyData() {
   const [date, setDate] = useState("Aug 8, 2024");
@@ -34,25 +45,18 @@ function DailyData() {
   };
 
   return (
-    <Box
-      sx={{
-        padding: "20px",
-        backgroundColor: "#303030",
-        borderRadius: "10px",
-        color: "white",
-      }}
-    >
-      <Typography variant="h6" gutterBottom>
+    <Box sx={sideMenuBox}>
+      <Typography variant="h6" gutterBottom sx={sideMenuTitle}>
         Enter your data here:
       </Typography>
 
-      <Typography variant="body1" gutterBottom>
+      <Typography variant="body1" gutterBottom sx={{ marginBottom: "5%" }}>
         {date}
       </Typography>
 
       {/* Weight */}
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             label="Weight"
             variant="filled"
@@ -68,34 +72,13 @@ function DailyData() {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // lb color
-              },
-            }}
+            sx={textField}
           />
         </Grid>
         {/* Steps Count */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
-            label="Step count"
+            label="Count"
             variant="filled"
             fullWidth
             value={steps}
@@ -109,32 +92,11 @@ function DailyData() {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // Steps color
-              },
-            }}
+            sx={textField}
           />
         </Grid>
         {/* Sleep hour */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             label="Sleep"
             variant="filled"
@@ -150,39 +112,18 @@ function DailyData() {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // hour color
-              },
-            }}
+            sx={textField}
           />
         </Grid>
 
         {/* water */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             label="Water"
             variant="filled"
             fullWidth
             value={water}
-            onChange={(e) => setWeight(e.target.value)}
+            onChange={(e) => setWater(e.target.value)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -192,31 +133,9 @@ function DailyData() {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              backgroundColor: "#5E5E5E",
-              borderRadius: "10px",
-              "& .MuiInputBase-input": {
-                color: "#F4F4F4", // input color
-              },
-              "& .MuiInputLabel-root": {
-                color: "#CACACA", // label color
-              },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#F8DEBD", // focused label color
-              },
-              "& .MuiFilledInput-underline:before": {
-                borderBottom: "none", // no underline when unfocuced
-              },
-              "& .MuiFilledInput-underline:after": {
-                borderBottomColor: "#F8DEBD", // underline color when focuced
-              },
-              "& .MuiInputAdornment-root": {
-                color: "#F4F4F4", // hour color
-              },
-            }}
+            sx={textField}
           />
         </Grid>
-
         {/* Mood */}
         {/* <Grid item xs={12}>
           <Typography variant="body1">Mood</Typography>
@@ -291,17 +210,7 @@ function DailyData() {
         {/* <Grid item xs={12}>
           <FormControl fullWidth>
             <InputLabel
-              sx={{
-                backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
-                color: "#CACACA", // font color when unfocused
-                borderRadius: "10px",
-                "&.Mui-focused": {
-                  // font color when focused
-                  color: "#F8DEBD",
-                  borderRadius: "10px",
-                },
-              }}
+              sx={inputLable}
             >
               Choose the exercise
             </InputLabel>
@@ -309,21 +218,8 @@ function DailyData() {
               value={exerciseType}
               onChange={(e) => setExerciseType(e.target.value)}
               label="How long did you exercise"
-              sx={{
-                backgroundColor: "#5E5E5E",
-                borderRadius: "10px",
-                "& .MuiInputBase-input": {
-                  color: "#F4F4F4", // text in box(answer) - text color
-                },
-              }}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#6F6F6F", // dropdown background color
-                    color: "#F4F4F4", // dropdown text color
-                  },
-                },
-              }}
+              sx={inputBackground}
+              MenuProps={menuPropsStyles}
             >
               <MenuItem value="Running">Running</MenuItem>
               <MenuItem value="Walking">Walking</MenuItem>
@@ -338,7 +234,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -354,21 +250,8 @@ function DailyData() {
               value={exerciseTime}
               onChange={(e) => setExerciseTime(e.target.value)}
               label="How long did you exercise"
-              sx={{
-                backgroundColor: "#5E5E5E",
-                borderRadius: "10px",
-                "& .MuiInputBase-input": {
-                  color: "#F4F4F4", // text in box(answer) - text color
-                },
-              }}
-              MenuProps={{
-                PaperProps: {
-                  sx: {
-                    backgroundColor: "#6F6F6F", // dropdown background color
-                    color: "#F4F4F4", // dropdown text color
-                  },
-                },
-              }}
+              sx={inputBackground}
+              MenuProps={menuPropsStyles}
             >
               <MenuItem value="30 mins">30 mins</MenuItem>
               <MenuItem value="1 hour">1 hour</MenuItem>
@@ -383,7 +266,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -427,7 +310,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {
@@ -471,7 +354,7 @@ function DailyData() {
             <InputLabel
               sx={{
                 backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 8px",
+                padding: "0 2%",
                 color: "#CACACA", // font color when unfocused
                 borderRadius: "10px",
                 "&.Mui-focused": {

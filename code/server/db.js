@@ -3,21 +3,15 @@
 
 const mongoose = require('mongoose')
 const dotenv = require('dotenv');
-//const credentials = require('./credentials.js')
+const path = require('path')
 
-// Load the appropriate .env file based on NODE_ENV
-//NODE_ENV is set via package.json like this:
+// Determine the correct .env file based on the environment
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
 
-//"scripts": {
-//  "start": "cross-env NODE_ENV=production node server",
-//  "dev": "cross-env NODE_ENV=development nodemon server"
-//}
+// Load the appropriate .env file
+// dotenv.config({ path: `../${envFile}` }); 
+dotenv.config({ path: path.resolve(__dirname, `../${envFile}`) })
 
-//cross-env is a small utility that helps set environment variables in a cross-platform way, ensuring compatibility between different operating systems (such as Windows, macOS, and Linux).
-const result = dotenv.config({
-	path: `.env.${process.env.NODE_ENV}` // This evaluates to either .env.production or .env.development.
-  });
-  
 
 let connection = null
 let userModel = null
