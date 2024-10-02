@@ -1,5 +1,5 @@
 import { authenticated } from "../utils/authenticate";
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken'
 
 describe('Testing authentication', () => {
     beforeEach(() => {
