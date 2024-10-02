@@ -30,10 +30,11 @@ app.get('/check-connection', async (req, res) => {
   res.sendStatus(200)
 })
 
-app.get('/view-users', async (req, res) => {
-  allUsers = await User.find({})
-  res.json(allUsers)
-})
+// app.get('/view-users', async (req, res) => {
+//   console.log("Request received at /manage-profile");
+//   allUsers = await User.find({})
+//   res.json(allUsers)
+// })
 
 app.post('/create-user', async (req, res) => {
 
