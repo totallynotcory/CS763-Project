@@ -29,6 +29,7 @@ import {
   sideMenuBox,
   sideMenuTitle,
   datePick,
+  calendarStyle,
 } from "./style/styles.js";
 
 function DailyData() {
@@ -38,7 +39,10 @@ function DailyData() {
   const [mood, setMood] = useState(3);
   const [exercise, setExercise] = useState("No");
   const [exerciseType, setExerciseType] = useState("");
-  const [exerciseTime, setExerciseTime] = useState("");
+  const [exerciseTime, setExerciseTime] = useState({
+    type: "",
+    exerciseTimeValue: 0,
+  });
   const [water, setWater] = useState("");
   const [breakfast, setBreakfast] = useState("");
   const [lunch, setLunch] = useState("");
@@ -101,17 +105,7 @@ function DailyData() {
       />
 
       <Collapse in={open}>
-        <Paper
-          ref={calendarRef}
-          sx={{
-            mt: 2,
-            mb: 2,
-            backgroundColor: "transparent",
-            boxShadow: "none",
-            marginBottom: "4%",
-            marginLeft: "2%",
-          }}
-        >
+        <Paper ref={calendarRef} sx={calendarStyle}>
           <DayPicker
             mode="single"
             selected={date}
@@ -209,6 +203,47 @@ function DailyData() {
             sx={textField}
           />
         </Grid>
+
+        {/* How long did you exercise */}
+        <Grid item xs={12} md={6}>
+          <FormControl fullWidth>
+            <TextField
+              data-testid="exerciseTime"
+              type="number"
+              name="exerciseTime"
+              label="How long did you exercise - min"
+              value={exerciseTime.exerciseTimeValue}
+              onChange={(e) =>
+                setExerciseTime({
+                  ...exerciseTime,
+                  exerciseTimeValue: e.target.value,
+                })
+              }
+              required
+              InputLabelProps={{
+                sx: inputLable,
+              }}
+              InputProps={{
+                sx: inputBackground,
+              }}
+              variant="outlined"
+              fullWidth
+            />
+          </FormControl>
+        </Grid>
+        {/* <InputLabel sx={inputLable}>How long did you exercise</InputLabel> */}
+        {/* <Select
+              value={exerciseTime}
+              onChange={(e) => setExerciseTime(e.target.value)}
+              label="How long did you exercise"
+              sx={inputBackground}
+              MenuProps={menuPropsStyles}
+            >
+              <MenuItem value="30 mins">30 mins</MenuItem>
+              <MenuItem value="1 hour">1 hour</MenuItem>
+              <MenuItem value="2 hours">2 hours</MenuItem>
+            </Select> */}
+
         {/* Mood */}
         {/* <Grid item xs={12}>
           <Typography variant="body1">Mood</Typography>
@@ -300,24 +335,6 @@ function DailyData() {
             </Select>
           </FormControl>
         </Grid> */}
-
-        {/* How long did you exercise */}
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel sx={inputLable}>How long did you exercise</InputLabel>
-            <Select
-              value={exerciseTime}
-              onChange={(e) => setExerciseTime(e.target.value)}
-              label="How long did you exercise"
-              sx={inputBackground}
-              MenuProps={menuPropsStyles}
-            >
-              <MenuItem value="30 mins">30 mins</MenuItem>
-              <MenuItem value="1 hour">1 hour</MenuItem>
-              <MenuItem value="2 hours">2 hours</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
 
         {/* What did you take for breakfast */}
         {/* <Grid item xs={12}>
