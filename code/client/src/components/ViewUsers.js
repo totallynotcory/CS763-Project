@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient.js";
+import { authenticated } from "../utils/authenticate.js";
 import {
   Box,
   Typography,
@@ -17,7 +18,9 @@ import {
   MenuItem,
   InputAdornment,
 } from "@mui/material";
+
 function ViewUsers() {
+  authenticated();
   const [data, setData] = useState([{}]);
 
   useEffect(() => {
