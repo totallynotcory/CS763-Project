@@ -109,6 +109,7 @@ function DailyData() {
             backgroundColor: "transparent",
             boxShadow: "none",
             marginBottom: "4%",
+            marginLeft: "2%",
           }}
         >
           <DayPicker

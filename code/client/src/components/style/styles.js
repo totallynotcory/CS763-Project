@@ -97,7 +97,7 @@ export const textField = {
 
 // DailyData
 export const datePick = {
-  width: "30%",
+  width: "40%",
   marginTop: "2%",
   marginBottom: "3%",
   backgroundColor: "transparent",
@@ -108,12 +108,14 @@ export const datePick = {
   "& .MuiInputBase-input": {
     color: "#6F6F6F",
     textAlign: "center",
+    fontWeight: "bold",
   },
   "& .MuiInputLabel-root": {
     color: "#303030", // label color
   },
   "& .MuiInputLabel-root.Mui-focused": {
     color: "#303030", // focused label color
+    fontWeight: "bold",
     borderBottom: "none",
   },
   "& .MuiFilledInput-underline:before": {
