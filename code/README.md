@@ -1,28 +1,16 @@
-240919
-Setting up client and server in local development environment (NOTE: this may evolve over time):
-
-Make sure your in the right branch
-in the terminal type git checkout db_test
-(NOTE: this may get pushed to the dev branch soon)
-
-The type git pull
-
-cd code/client
-npm install
-
-cd code/server
-npm install
-npm install bcrypt
+<!-- npm install bcrypt
 npm install jsonwebtoken
-npm install dotenv
+npm install dotenv -->
 
 # Then make sure you have a terminal split screen and in the server folder type:
 
+npm install
 npm run dev
 
 # and in the client folder type:
 
-npm install react-icons
+<!-- npm install react-icons -->
+npm install
 npm run start
 
 # Using docker to run all 3 services (mongodb, api, client)

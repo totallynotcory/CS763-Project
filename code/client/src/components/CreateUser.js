@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import apiClient from '../services/apiClient.js';
-import { validateRegistrationForm } from '../utils/validateRegistrationForm.js';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apiClient from "../services/apiClient.js";
+import { validateRegistrationForm } from "../utils/validateRegistrationForm.js";
 
 import {
   Box,
@@ -9,8 +9,17 @@ import {
   TextField,
   Grid,
   FormControl,
-  Button
+  Button,
 } from "@mui/material";
+import {
+  box,
+  title,
+  textField,
+  inputLable,
+  inputBackground,
+  menuPropsStyles,
+  submitButton,
+} from "./style/styles.js";
 
 function CreateUser() {
   const navigate = useNavigate(); // Initialize the hook
@@ -21,8 +30,8 @@ function CreateUser() {
     email: "",
     password: "",
   });
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Handle input changes and update formData state
   const handleChange = (e) => {
@@ -37,66 +46,45 @@ function CreateUser() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
 
-    setSuccessMessage('');
-    setErrorMessage('');
+    setSuccessMessage("");
+    setErrorMessage("");
 
     // Validate form inputs
     const validationResult = validateRegistrationForm(formData);
     if (!validationResult) {
-      setErrorMessage('Error: Please review your inputs and try again');
+      setErrorMessage("Error: Please review your inputs and try again");
       return; // Prevent form submission
     }
-    
+
     try {
-      await apiClient.post('/create-user', formData);
-      setSuccessMessage('Registration successful! Redirecting to the login page...');
+      await apiClient.post("/create-user", formData);
+      setSuccessMessage(
+        "Registration successful! Redirecting to the login page..."
+      );
 
       setFormData({
-        name: '',
-        email: '',
-        password: '',
+        name: "",
+        email: "",
+        password: "",
       });
-      
+
       // Delay routing to the login page to allow the success message to be visible
       setTimeout(() => {
-        navigate('/login');
+        navigate("/login");
       }, 2000); // 2 second delay
-
-
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data.message); // Set the error message from server response
       } else {
-      // console.error('Error creating user:', error);
-        setErrorMessage('Registration failed. Please try again.');
+        // console.error('Error creating user:', error);
+        setErrorMessage("Registration failed. Please try again.");
       }
     }
   };
 
   return (
-    <Box
-      sx={{
-        top: "4rem",
-        right: 0,
-        bottom: 0,
-        width: "80%",
-        padding: "2%",
-        borderRadius: "10px",
-        height: "calc(100vh - 4rem)",
-        overflowY: "auto",
-      }}
-    >
-      <Typography
-        variant="h6"
-        gutterBottom
-        sx={{
-          marginTop: "4%",
-          marginBottom: "2%",
-          color: "#5B5753",
-          fontSize: "1.4rem",
-          fontWeight: "600",
-        }}
-      >
+    <Box sx={box}>
+      <Typography variant="h6" gutterBottom sx={title}>
         Sign up
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -111,28 +99,7 @@ function CreateUser() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                sx={{
-                  backgroundColor: "#5E5E5E",
-                  borderRadius: "10px",
-                  "& .MuiInputBase-input": {
-                    color: "#F4F4F4", // input color
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "#CACACA", // label color
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: "#F8DEBD", // focused label color
-                  },
-                  "& .MuiFilledInput-underline:before": {
-                    borderBottom: "none", // no underline when unfocuced
-                  },
-                  "& .MuiFilledInput-underline:after": {
-                    borderBottomColor: "#F8DEBD", // underline color when focuced
-                  },
-                  "& .MuiInputAdornment-root": {
-                    color: "#F4F4F4", // hour color
-                  },
-                }}
+                sx={textField}
               />
             </FormControl>
           </Grid>
@@ -146,28 +113,7 @@ function CreateUser() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                sx={{
-                  backgroundColor: "#5E5E5E",
-                  borderRadius: "10px",
-                  "& .MuiInputBase-input": {
-                    color: "#F4F4F4", // input color
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "#CACACA", // label color
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: "#F8DEBD", // focused label color
-                  },
-                  "& .MuiFilledInput-underline:before": {
-                    borderBottom: "none", // no underline when unfocuced
-                  },
-                  "& .MuiFilledInput-underline:after": {
-                    borderBottomColor: "#F8DEBD", // underline color when focuced
-                  },
-                  "& .MuiInputAdornment-root": {
-                    color: "#F4F4F4", // hour color
-                  },
-                }}
+                sx={textField}
               />
             </FormControl>
           </Grid>
@@ -182,54 +128,24 @@ function CreateUser() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                sx={{
-                  backgroundColor: "#5E5E5E",
-                  borderRadius: "10px",
-                  "& .MuiInputBase-input": {
-                    color: "#F4F4F4", // input color
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "#CACACA", // label color
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: "#F8DEBD", // focused label color
-                  },
-                  "& .MuiFilledInput-underline:before": {
-                    borderBottom: "none", // no underline when unfocuced
-                  },
-                  "& .MuiFilledInput-underline:after": {
-                    borderBottomColor: "#F8DEBD", // underline color when focuced
-                  },
-                  "& .MuiInputAdornment-root": {
-                    color: "#F4F4F4", // hour color
-                  },
-                }}
+                sx={textField}
               />
             </FormControl>
           </Grid>
           {/* Submit Button -------------------------------------*/}
           <Grid item xs={12}>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                backgroundColor: "#3A3A3A",
-                color: "#CACACA",
-                borderRadius: "10px",
-                padding: "1% 4%",
-                "&:hover": {
-                  backgroundColor: "#F8DEBD",
-                  color: "#303030",
-                },
-              }}
-            >
+            <Button type="submit" variant="contained" sx={submitButton}>
               Sign Up
             </Button>
           </Grid>
         </Grid>
       </form>
-      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
+      {errorMessage && (
+        <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>
+      )}
+      {successMessage && (
+        <p style={{ color: "#008000", fontWeight: "bold" }}>{successMessage}</p>
+      )}
     </Box>
   );
 }
