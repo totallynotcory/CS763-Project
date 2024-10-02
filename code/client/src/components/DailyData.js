@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -13,7 +13,11 @@ import {
   Select,
   MenuItem,
   InputAdornment,
+  Collapse,
+  Paper,
 } from "@mui/material";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 import {
   box,
   title,
@@ -24,10 +28,10 @@ import {
   submitButton,
   sideMenuBox,
   sideMenuTitle,
+  datePick,
 } from "./style/styles.js";
 
 function DailyData() {
-  const [date, setDate] = useState("Aug 8, 2024");
   const [weight, setWeight] = useState("");
   const [steps, setSteps] = useState("");
   const [sleep, setSleep] = useState("");
@@ -39,20 +43,88 @@ function DailyData() {
   const [breakfast, setBreakfast] = useState("");
   const [lunch, setLunch] = useState("");
   const [dinner, setDinner] = useState("");
+  // date
+  const [date, setDate] = useState(null); //
+  const [anchorEl, setAnchorEl] = useState(null); // control Popper content
+  const [open, setOpen] = useState(false); // control Popper open/close
+  const handleDateChange = (selectedDate) => {
+    setDate(selectedDate);
+    setOpen(false); // close after chosing date
+  };
+  const handleTextFieldClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prevOpen) => !prevOpen); // open/close calendar
+  };
+  const formatDate = (date) => {
+    return date ? date.toLocaleDateString("en-CA") : "";
+  };
 
   const handleMoodChange = (event, newValue) => {
     setMood(newValue);
   };
+  const calendarRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+        setOpen(false); // Close the calendar if clicked outside
+      }
+    }
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
 
   return (
-    <Box sx={sideMenuBox}>
-      <Typography variant="h6" gutterBottom sx={sideMenuTitle}>
+    <Box sx={box}>
+      <Typography variant="h6" gutterBottom sx={title}>
         Enter your data here:
       </Typography>
 
-      <Typography variant="body1" gutterBottom sx={{ marginBottom: "5%" }}>
+      {/* <Typography variant="body1" gutterBottom sx={{ marginBottom: "2%" }}>
         {date}
-      </Typography>
+      </Typography> */}
+      <TextField
+        label="Select a date"
+        value={formatDate(date)}
+        onClick={handleTextFieldClick}
+        readOnly
+        variant="filled"
+        sx={datePick}
+        fullWidth
+      />
+
+      <Collapse in={open}>
+        <Paper
+          ref={calendarRef}
+          sx={{
+            mt: 2,
+            mb: 2,
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            marginBottom: "4%",
+          }}
+        >
+          <DayPicker
+            mode="single"
+            selected={date}
+            onSelect={handleDateChange}
+            styles={{
+              month: {
+                backgroundColor: "#C2D5C0",
+                padding: "1rem",
+                borderRadius: "20px",
+              },
+            }}
+          />
+        </Paper>
+      </Collapse>
 
       {/* Weight */}
       <Grid container spacing={2}>
@@ -231,21 +303,7 @@ function DailyData() {
         {/* How long did you exercise */}
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <InputLabel
-              sx={{
-                backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 2%",
-                color: "#CACACA", // font color when unfocused
-                borderRadius: "10px",
-                "&.Mui-focused": {
-                  // font color when focused
-                  color: "#F8DEBD",
-                  borderRadius: "10px",
-                },
-              }}
-            >
-              How long did you exercise
-            </InputLabel>
+            <InputLabel sx={inputLable}>How long did you exercise</InputLabel>
             <Select
               value={exerciseTime}
               onChange={(e) => setExerciseTime(e.target.value)}

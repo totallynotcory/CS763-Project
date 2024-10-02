@@ -95,6 +95,32 @@ export const textField = {
   },
 };
 
+// DailyData
+export const datePick = {
+  width: "30%",
+  marginTop: "2%",
+  marginBottom: "3%",
+  backgroundColor: "transparent",
+
+  "& .MuiInputBase-root": {
+    borderRadius: "50px",
+  },
+  "& .MuiInputBase-input": {
+    color: "#6F6F6F",
+    textAlign: "center",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#303030", // label color
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#303030", // focused label color
+    borderBottom: "none",
+  },
+  "& .MuiFilledInput-underline:before": {
+    borderBottom: "none", // no underline when unfocused
+  },
+};
+
 // DailyData - side menu
 export const sideMenuBox = {
   position: "absolute",
