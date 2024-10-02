@@ -7,7 +7,7 @@ import axios from 'axios';
 // });
 
 const apiClient = axios.create({
-  baseURL: 'https://peak-performance-backend-394f316db343.herokuapp.com/', // Default to localhost for development
+  baseURL: 'http://localhost:5000' // 'https://peak-performance-backend-394f316db343.herokuapp.com/', // Default to localhost for development
 });
 
 export default apiClient;

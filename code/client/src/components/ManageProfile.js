@@ -1,39 +1,48 @@
-//will update this file with better error handling as per Mosh video
-
 import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient.js";
+
 import {
   Box,
   Typography
 } from "@mui/material";
-import { box, bigTitle } from "./style/styles.js";
+import {box, bigTitle } from "./style/styles.js";
+
 function ManageProfile() {
-  const [data, setData] = useState([{}]);
+  
+  const [data, setData] = useState(null); // To store the profile data
+  const [error, setError] = useState(null); // To handle errors
 
   useEffect(() => {
     apiClient
-      .get("/view-users")
+      .get("/manage-profile") // Fetch user profile data from the backend (e.g., /manage-profile)
       .then((res) => {
-        setData(res.data);
+        setData(res.data); 
       })
       .catch((err) => {
+        setError("Error fetching profile data. Try refreshing.");
         console.log(err);
       });
   }, []);
+
+  if (error) {
+    console.log(data)
+    return <p>{error}</p>;
+  }
 
   return (
     <Box sx={box}>
       <Typography variant="h6" gutterBottom sx={bigTitle}>
         Manage Profile
       </Typography>
-      {typeof data === "undefined" ? (
-        <p>Loading...</p>
+      {/* If there is data returned, render the below in <div> section */}
+      {data ? (
+        <div>
+          <p>Name: {data.name}</p>
+          <p>Email: {data.email}</p>
+          <p>Password: {data.passwordHashed}</p>
+        </div>
       ) : (
-        data.map((user, i) => (
-          <p key={i}>
-            {i + 1}. ID: {user.userId} | Name: {user.name} | Email: {user.email}
-          </p>
-        ))
+        <p>No profile data available</p>
       )}
     </Box>
   );

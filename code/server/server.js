@@ -30,11 +30,24 @@ app.get('/check-connection', async (req, res) => {
   res.sendStatus(200)
 })
 
-// app.get('/view-users', async (req, res) => {
-//   console.log("Request received at /manage-profile");
-//   allUsers = await User.find({})
-//   res.json(allUsers)
-// })
+app.get('/view-users', async (req, res) => {
+  const allUsers = await User.find({})
+  res.json(allUsers)
+})
+
+app.get('/manage-profile', async (req, res) => {
+  try {
+    // NEED TO UPDATE THIS TO GRAB USER ID FROM LOCAL STORAGE
+    const userId = 10001 // req.userId; 
+    const userProfile = await User.findOne({ userId });
+    if (!userProfile) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(userProfile); 
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 app.post('/create-user', async (req, res) => {
 
