@@ -149,7 +149,7 @@ function DailyData() {
             variant="filled"
             fullWidth
             value={steps}
-            onChange={(e) => setWeight(e.target.value)}
+            onChange={(e) => setSteps(e.target.value)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -169,7 +169,7 @@ function DailyData() {
             variant="filled"
             fullWidth
             value={sleep}
-            onChange={(e) => setWeight(e.target.value)}
+            onChange={(e) => setSleep(e.target.value)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
