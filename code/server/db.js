@@ -43,6 +43,12 @@ let userSchema = new Schema({
 	email: { type: String, required: true },
 	passwordHashed: { type: String, required: true },
     name: { type: String, required: true },
+	gender: { type: String, default: "" },
+	dob: { type: Date, default: null },
+	height: {
+		feet: { type: Number, default: 0 },
+		inches: { type: Number, default: 0 }
+	  },
     createdAt: { type: Date, default: Date.now },
 	goals: {type: [goalSchema], default: [] } 
 }, {
