@@ -37,7 +37,7 @@ app.get('/view-users', async (req, res) => {
 
 app.get('/manage-profile', async (req, res) => {
   try {
-    // NEED TO UPDATE THIS TO GRAB USER ID FROM LOCAL STORAGE
+    // TO DO: UPDATE THIS TO GRAB USER ID FROM LOCAL STORAGE, rather than hardcode
     const userId = 10001 // req.userId; 
     const userProfile = await User.findOne({ userId });
     if (!userProfile) {
