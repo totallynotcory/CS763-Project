@@ -40,6 +40,9 @@ function ManageProfile() {
           <p>Name: {data.name}</p>
           <p>Email: {data.email}</p>
           <p>Password: {data.passwordHashed}</p>
+          <p>Gender: {data.gender}</p>
+          <p>Date of Birth: {data.dob}</p>
+          <p>Height: {data.height.feet} {data.height.inches}</p>
         </div>
       ) : (
         <p>No profile data available</p>
