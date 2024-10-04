@@ -49,6 +49,15 @@ app.get('/manage-profile', async (req, res) => {
   }
 });
 
+app.post('/manage-profile', async (req, res) => {
+  try {
+    
+  } catch (error) {
+    res.status(500).json({ error: "Error updating profile" });
+  }
+});
+
+
 app.post('/create-user', async (req, res) => {
 
   try {
