@@ -2,13 +2,13 @@
 
 https://peak-performance-3c40e2c0ebea.herokuapp.com/
 
-### Open up a split screen terminal:
+## Open up a split screen terminal:
 
-Change directory into the 'server' folder
+    Change directory into the 'server' folder:
         npm install
         npm run dev
 
-Change directory into the 'client' folder
+    Change directory into the 'client' folder:
         npm install
         npm run start
 
