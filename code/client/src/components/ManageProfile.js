@@ -13,7 +13,10 @@ function ManageProfile() {
     dob: { year: 1900, month: 1, day: 1 },
     height: { feet: "", inches: "" },
     });
+
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     apiClient
@@ -65,12 +68,18 @@ function ManageProfile() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
-  
+    
+    // Clear any existing messages before processing the form
+    setSuccessMessage('');
+    setErrorMessage('');
+
     try {
-      console.log("Updating profile")
       await apiClient.post("/manage-profile", profileData);
+      console.log("Updating profile")
+      setSuccessMessage('Profile updated!');
     } catch (err) {
-        console.log("Error updating profile", err);
+      console.log("Error updating profile", err);
+      setErrorMessage('Error: Failed to update profile. Please try again');
     }
   };
 
@@ -215,6 +224,8 @@ function ManageProfile() {
           </Button>
         </form>
       )}
+      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
+      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
     </Box>
   );
 }
