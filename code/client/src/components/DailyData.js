@@ -3,15 +3,8 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
-  Slider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
+  Grid2,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   InputAdornment,
   Collapse,
   Paper,
@@ -122,8 +115,8 @@ function DailyData() {
       </Collapse>
 
       {/* Weight */}
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+      <Grid2 container spacing={2}>
+        <Grid2 item xs={12} md={6}>
           <TextField
             label="Weight"
             variant="filled"
@@ -141,9 +134,9 @@ function DailyData() {
             }}
             sx={textField}
           />
-        </Grid>
+        </Grid2>
         {/* Steps Count */}
-        <Grid item xs={12} md={6}>
+        <Grid2 item xs={12} md={6}>
           <TextField
             label="Count"
             variant="filled"
@@ -161,9 +154,9 @@ function DailyData() {
             }}
             sx={textField}
           />
-        </Grid>
+        </Grid2>
         {/* Sleep hour */}
-        <Grid item xs={12} md={6}>
+        <Grid2 item xs={12} md={6}>
           <TextField
             label="Sleep"
             variant="filled"
@@ -181,10 +174,10 @@ function DailyData() {
             }}
             sx={textField}
           />
-        </Grid>
+        </Grid2>
 
         {/* water */}
-        <Grid item xs={12} md={6}>
+        <Grid2 item xs={12} md={6}>
           <TextField
             label="Water"
             variant="filled"
@@ -202,10 +195,10 @@ function DailyData() {
             }}
             sx={textField}
           />
-        </Grid>
+        </Grid2>
 
         {/* How long did you exercise */}
-        <Grid item xs={12} md={6}>
+        <Grid2 item xs={12} md={6}>
           <FormControl fullWidth>
             <TextField
               data-testid="exerciseTime"
@@ -230,7 +223,7 @@ function DailyData() {
               fullWidth
             />
           </FormControl>
-        </Grid>
+        </Grid2>
         {/* <InputLabel sx={inputLable}>How long did you exercise</InputLabel> */}
         {/* <Select
               value={exerciseTime}
@@ -468,7 +461,7 @@ function DailyData() {
             </Select>
           </FormControl>
         </Grid> */}
-      </Grid>
+      </Grid2>
     </Box>
   );
 }

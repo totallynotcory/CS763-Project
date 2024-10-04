@@ -1,4 +1,4 @@
-//This file is for writing data to the database for testing purposes
+// This file is for initializing data to the MongoDB database 
 
 const db = require("./db.js")
 
