@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import apiClient from "../services/apiClient.js";
 import {
   Box,
   Typography,
@@ -8,6 +9,7 @@ import {
   InputAdornment,
   Collapse,
   Paper,
+  Button
 } from "@mui/material";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
@@ -26,40 +28,56 @@ import {
 } from "./style/styles.js";
 
 function DailyData() {
-  const [weight, setWeight] = useState("");
-  const [steps, setSteps] = useState("");
-  const [sleep, setSleep] = useState("");
-  const [mood, setMood] = useState(3);
-  const [exercise, setExercise] = useState("No");
-  const [exerciseType, setExerciseType] = useState("");
-  const [exerciseTime, setExerciseTime] = useState({
-    type: "",
-    exerciseTimeValue: 0,
+
+  const [formData, setFormData] = useState({
+    // entryDate: "",
+    weight: "",
+    steps: "",
+    sleep: "",
+    water: "",
+    exercise: ""
   });
-  const [water, setWater] = useState("");
-  const [breakfast, setBreakfast] = useState("");
-  const [lunch, setLunch] = useState("");
-  const [dinner, setDinner] = useState("");
+  
+  // Handle input changes and update formData state
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // const [mood, setMood] = useState(3);
+  // const [breakfast, setBreakfast] = useState("");
+  // const [lunch, setLunch] = useState("");
+  // const [dinner, setDinner] = useState("");
+  
   // date
   const [date, setDate] = useState(null); //
+
   const [anchorEl, setAnchorEl] = useState(null); // control Popper content
   const [open, setOpen] = useState(false); // control Popper open/close
+
   const handleDateChange = (selectedDate) => {
     setDate(selectedDate);
     setOpen(false); // close after chosing date
   };
+
   const handleTextFieldClick = (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((prevOpen) => !prevOpen); // open/close calendar
   };
+
   const formatDate = (date) => {
     return date ? date.toLocaleDateString("en-CA") : "";
   };
 
-  const handleMoodChange = (event, newValue) => {
-    setMood(newValue);
-  };
+  // const handleMoodChange = (event, newValue) => {
+  //   setMood(newValue);
+  // };
+
   const calendarRef = useRef(null);
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
@@ -78,15 +96,30 @@ function DailyData() {
     };
   }, [open]);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
+
+    // Clear any existing messages before processing the form
+    // setSuccessMessage('');
+    // setErrorMessage('');
+
+    try {
+      await apiClient.post("/enter-daily-data", formData);
+      console.log("Daily entry processed")
+      // setSuccessMessage('Profile updated!');
+    } catch (err) {
+      console.log("Error submitting daily entry", err);
+      // setErrorMessage('Error: Failed to update profile. Please try again');
+    }
+  };
+
   return (
     <Box sx={box}>
       <Typography variant="h6" gutterBottom sx={title}>
         Enter your data here:
       </Typography>
 
-      {/* <Typography variant="body1" gutterBottom sx={{ marginBottom: "2%" }}>
-        {date}
-      </Typography> */}
+      <form onSubmit={handleSubmit}>
       <TextField
         label="Select a date"
         value={formatDate(date)}
@@ -121,8 +154,9 @@ function DailyData() {
             label="Weight"
             variant="filled"
             fullWidth
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
+            name="weight"
+            value={formData.weight}
+            onChange={handleChange}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -141,8 +175,9 @@ function DailyData() {
             label="Count"
             variant="filled"
             fullWidth
-            value={steps}
-            onChange={(e) => setSteps(e.target.value)}
+            name="steps"
+            value={formData.steps}
+            onChange={handleChange}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -161,8 +196,9 @@ function DailyData() {
             label="Sleep"
             variant="filled"
             fullWidth
-            value={sleep}
-            onChange={(e) => setSleep(e.target.value)}
+            name="sleep"
+            value={formData.sleep}
+            onChange={handleChange}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -182,8 +218,9 @@ function DailyData() {
             label="Water"
             variant="filled"
             fullWidth
-            value={water}
-            onChange={(e) => setWater(e.target.value)}
+            name="water"
+            value={formData.water}
+            onChange={handleChange}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -203,15 +240,10 @@ function DailyData() {
             <TextField
               data-testid="exerciseTime"
               type="number"
-              name="exerciseTime"
+              name="exercise"
               label="How long did you exercise - min"
-              value={exerciseTime.exerciseTimeValue}
-              onChange={(e) =>
-                setExerciseTime({
-                  ...exerciseTime,
-                  exerciseTimeValue: e.target.value,
-                })
-              }
+              value={formData.exercise}
+              onChange={handleChange}
               required
               InputLabelProps={{
                 sx: inputLable,
@@ -224,19 +256,6 @@ function DailyData() {
             />
           </FormControl>
         </Grid2>
-        {/* <InputLabel sx={inputLable}>How long did you exercise</InputLabel> */}
-        {/* <Select
-              value={exerciseTime}
-              onChange={(e) => setExerciseTime(e.target.value)}
-              label="How long did you exercise"
-              sx={inputBackground}
-              MenuProps={menuPropsStyles}
-            >
-              <MenuItem value="30 mins">30 mins</MenuItem>
-              <MenuItem value="1 hour">1 hour</MenuItem>
-              <MenuItem value="2 hours">2 hours</MenuItem>
-            </Select> */}
-
         {/* Mood */}
         {/* <Grid item xs={12}>
           <Typography variant="body1">Mood</Typography>
@@ -461,7 +480,15 @@ function DailyData() {
             </Select>
           </FormControl>
         </Grid> */}
+
+        {/* Submit Button */}
+        <Grid2 item xs={12}>
+          <Button type="submit" variant="contained" sx={submitButton}>
+            Submit
+          </Button>
+        </Grid2>
       </Grid2>
+      </form>
     </Box>
   );
 }

@@ -10,6 +10,7 @@ const app = express();
 const port = process.env.PORT || 5000
 const User = db.getModel().userModel
 const Goal = db.getModel().goalModel
+const DailyEntry = db.getModel().dailyEntryModel
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -165,6 +166,37 @@ app.post('/create-goal', async (req, res) => {
     res.status(500).json({ error: 'Failed to create goal' });
   }
 })
+
+
+app.post('/enter-daily-data', async (req, res) => {
+
+  try {
+    const { weight, steps, sleep, water, exercise } = req.body;
+
+    // generate new ID based on max goal ID
+    let lastEntry = await DailyEntry.find().sort({"dailyEntryId": -1}).limit(1) 
+    let newEntryId = lastEntry[0].dailyEntryId + 1 
+
+    const newDailyEntry = new DailyEntry({
+      dailyEntryId: newEntryId,
+      userId: 10001,      // UPDATE TO USERID BASED ON WHO IS LOGGED IN
+      entryDate: "2024-10-04", // TO DO: FIGURE OUT HOW TO GRAB THIS FROM FORM
+      weight: weight,
+      steps: steps,
+      sleep: sleep,
+      water: water,
+      exercise: exercise
+  })
+
+    await newDailyEntry.save();
+    res.status(201).json({ message: 'Daily entry created successfully!' });
+    
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating daily entry' });
+  }
+
+})
+
 
 //Listen for incoming connections
 app.listen(port, () => {
