@@ -12,8 +12,8 @@ function ManageProfile() {
     gender: "",
     dob: "",
     height: { feet: "", inches: "" },
-    }); // To store the profile data
-  const [error, setError] = useState(null); // To handle errors
+    });
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     apiClient
@@ -30,10 +30,23 @@ function ManageProfile() {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    // setData((prevData) => ({
+    //   ...prevData,
+    //   [name]: value,
+    // }));
+    if (name === 'dob') {
+        // Convert the string date back to a Date object
+        const dateValue = new Date(value); // `value` will be in "yyyy-MM-dd" format
+        setData((prevData) => ({
+          ...prevData,
+          [name]: dateValue,
+        }));
+    } else {
+        setData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+    }
   };
   
   // Handle input change for height
@@ -47,7 +60,7 @@ function ManageProfile() {
 
   const handleSubmit = () => {
     apiClient
-      .post("/manage-profile", data)
+      .post("/manage-profile", data) // Post user to back end
       .then((res) => {
         console.log("Profile updated successfully");
       })
@@ -56,10 +69,14 @@ function ManageProfile() {
       });
   };
 
-//   if (error) {
-//     console.log(data)
-//     return <p>{error}</p>;
-//   }
+  const formatDate = (date) => {
+    if (!date) return ''; // Handle cases where date might be null or undefined
+    const year = date.getFullYear();
+    console.log(year)
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`; // Returns 'yyyy-MM-dd'
+  };
 
   return (
     <Box sx={box}>
@@ -79,7 +96,7 @@ function ManageProfile() {
             fullWidth
             margin="normal"
             sx={inputBackground}
-            MenuProps={menuPropsStyles}
+            menuprops={menuPropsStyles}
           />
           <TextField
             label="Email"
@@ -89,7 +106,7 @@ function ManageProfile() {
             fullWidth
             margin="normal"
             sx={inputBackground}
-            MenuProps={menuPropsStyles}
+            menuprops={menuPropsStyles}
           />
           <TextField
             label="Password"
@@ -100,7 +117,7 @@ function ManageProfile() {
             fullWidth
             margin="normal"
             sx={inputBackground}
-            MenuProps={menuPropsStyles}
+            menuprops={menuPropsStyles}
           />
           <TextField
             select
@@ -111,7 +128,7 @@ function ManageProfile() {
             fullWidth
             margin="normal"
             sx={inputBackground}
-            MenuProps={menuPropsStyles}
+            menuprops={menuPropsStyles}
           >
             <MenuItem value="male">Male</MenuItem>
             <MenuItem value="female">Female</MenuItem>
@@ -122,7 +139,8 @@ function ManageProfile() {
             label="Date of Birth"
             name="dob"
             type="date"
-            value={data.dob}
+            value = {data.dob}
+            // value={formatDate(data.dob)}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -130,7 +148,7 @@ function ManageProfile() {
               shrink: true,
             }}
             sx={inputBackground}
-            MenuProps={menuPropsStyles}
+            menuprops={menuPropsStyles}
           />
           <TextField
             label="Height (Feet)"
@@ -140,7 +158,7 @@ function ManageProfile() {
             type="number"
             margin="normal"
             sx={inputBackground}
-            MenuProps={menuPropsStyles}
+            menuprops={menuPropsStyles}
           />
           <TextField
             label="Height (Inches)"
@@ -150,7 +168,7 @@ function ManageProfile() {
             type="number"
             margin="normal"
             sx={inputBackground}
-            MenuProps={menuPropsStyles}
+            menuprops={menuPropsStyles}
           />
           <Button
             variant="contained"
