@@ -98,7 +98,7 @@ app.post('/login', async (req, res) => {
 
     if (!secretKey) {
       // console.error('JWT_SECRET  is not defined');
-      return res.status(500).json({ message: 'Internal server error' });
+      return res.status(500).json({ message: 'No secret key' });
     }
 
     const token = jwt.sign(
@@ -116,7 +116,7 @@ app.post('/login', async (req, res) => {
     console.log(process.env.NODE_ENV)
     console.log(process.env.SECRET_KEY)
     console.log(error)
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: `node_env: ${process.NODE_ENV} ${error}` });
   }
 });
 
