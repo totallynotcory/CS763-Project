@@ -50,13 +50,35 @@ app.get('/manage-profile', async (req, res) => {
 });
 
 app.post('/manage-profile', async (req, res) => {
-  try {
-    
+  try { 
+    const { userId, name, email, password, gender, dob, height } = req.body;
+
+    // Find the user in the database using userId
+    const userProfile = await User.findOne({ userId });
+
+    // Check if the user exists
+    if (!userProfile) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the user's profile with the new values
+    userProfile.name = name;
+    userProfile.email = email;
+    userProfile.password = password; // Make sure to hash the password if it's being updated
+    userProfile.gender = gender;
+    userProfile.dob = dob;
+    userProfile.height = height;
+
+    // Save the updated user profile
+    await userProfile.save();
+
+    // Send a success response
+    res.status(200).json({ message: "Profile updated successfully", userProfile });
   } catch (error) {
-    res.status(500).json({ error: "Error updating profile" });
+    console.error(error); // Log the error for debugging
+    res.status(500).json({ message: "Error updating profile" });
   }
 });
-
 
 app.post('/create-user', async (req, res) => {
 

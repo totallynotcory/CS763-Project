@@ -8,8 +8,8 @@ const Goal = db.getModel().goalModel
 async function init() {
     try {
         // Option to delete existing data for full reset
-        // await User.deleteMany({})
-        // await Goal.deleteMany({})
+        await User.deleteMany({})
+        await Goal.deleteMany({})
 
         let goal1 = new Goal({
             goalId: 50001,

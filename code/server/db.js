@@ -44,10 +44,14 @@ let userSchema = new Schema({
 	passwordHashed: { type: String, required: true },
     name: { type: String, required: true },
 	gender: { type: String, default: "na" },
-	dob: { type: Date, default: new Date('1900-01-01') },
+	dob: {
+		year: { type: Number, default: 1900, min: 1900, max: 2024 },
+		month: { type: Number, default: 1, min: 1, max: 12 },
+		day: { type: Number, default: 1, min: 1, max: 31 },
+	},
 	height: {
-		feet: { type: Number, default: 0 },
-		inches: { type: Number, default: 0 }
+		feet: { type: Number, default: 0, min: 0, max: 7 },
+		inches: { type: Number, default: 0, min: 0, max: 12 }
 	  },
     createdAt: { type: Date, default: Date.now },
 	goals: {type: [goalSchema], default: [] } 

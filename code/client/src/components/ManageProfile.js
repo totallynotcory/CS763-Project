@@ -5,12 +5,13 @@ import { box, bigTitle, inputBackground, menuPropsStyles, submitButton } from ".
 
 function ManageProfile() {
   
-  const [data, setData] = useState({
+  const [profileData, setProfileData] = useState({
+    userId: "",
     name: "",
     email: "",
-    passwordHashed: "",
+    password: "",
     gender: "",
-    dob: "",
+    dob: { year: 1900, month: 1, day: 1 },
     height: { feet: "", inches: "" },
     });
   const [error, setError] = useState(null);
@@ -19,7 +20,7 @@ function ManageProfile() {
     apiClient
       .get("/manage-profile") // Fetch user profile data from the backend (e.g., /manage-profile)
       .then((res) => {
-        setData(res.data); 
+        setProfileData(res.data); 
       })
       .catch((err) => {
         setError("Error fetching profile data. Try refreshing.");
@@ -30,19 +31,16 @@ function ManageProfile() {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // setData((prevData) => ({
-    //   ...prevData,
-    //   [name]: value,
-    // }));
     if (name === 'dob') {
+        console.log("Date:", value)
         // Convert the string date back to a Date object
         const dateValue = new Date(value); // `value` will be in "yyyy-MM-dd" format
-        setData((prevData) => ({
+        setProfileData((prevData) => ({
           ...prevData,
           [name]: dateValue,
         }));
     } else {
-        setData((prevData) => ({
+      setProfileData((prevData) => ({
           ...prevData,
           [name]: value,
         }));
@@ -52,30 +50,29 @@ function ManageProfile() {
   // Handle input change for height
   const handleHeightChange = (e) => {
     const { name, value } = e.target;
-    setData((prevData) => ({
+    setProfileData((prevData) => ({
       ...prevData,
       height: { ...prevData.height, [name]: value },
     }));
   };
 
-  const handleSubmit = () => {
-    apiClient
-      .post("/manage-profile", data) // Post user to back end
-      .then((res) => {
-        console.log("Profile updated successfully");
-      })
-      .catch((err) => {
-        console.log("Error updating profile", err);
-      });
+  const handleDobChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData((prevData) => ({
+      ...prevData,
+      dob: { ...prevData.dob, [name]: Number(value) }, // Convert to Number
+    }));
   };
 
-  const formatDate = (date) => {
-    if (!date) return ''; // Handle cases where date might be null or undefined
-    const year = date.getFullYear();
-    console.log(year)
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`; // Returns 'yyyy-MM-dd'
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
+  
+    try {
+      console.log("Updating profile")
+      await apiClient.post("/manage-profile", profileData);
+    } catch (err) {
+        console.log("Error updating profile", err);
+    }
   };
 
   return (
@@ -89,9 +86,21 @@ function ManageProfile() {
       ) : (
         <form>
           <TextField
+            label="User ID"
+            name="userId"
+            value={profileData.userId}
+            fullWidth
+            margin="normal"
+            InputProps={{
+              readOnly: true, // Makes it non-editable
+            }}
+            // sx={inputBackground}
+            menuprops={menuPropsStyles}
+          />
+          <TextField
             label="Name"
             name="name"
-            value={data.name}
+            value={profileData.name}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -101,7 +110,7 @@ function ManageProfile() {
           <TextField
             label="Email"
             name="email"
-            value={data.email}
+            value={profileData.email}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -110,9 +119,9 @@ function ManageProfile() {
           />
           <TextField
             label="Password"
-            name="passwordHashed"
+            name="password"
             // type="password"
-            value={data.passwordHashed}
+            value={profileData.passwordHashed}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -123,7 +132,7 @@ function ManageProfile() {
             select
             label="Gender"
             name="gender"
-            value={data.gender}
+            value={profileData.gender}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -136,24 +145,39 @@ function ManageProfile() {
             <MenuItem value="na">Prefer not to disclose</MenuItem>
           </TextField>
           <TextField
-            label="Date of Birth"
-            name="dob"
-            type="date"
-            value = {data.dob}
-            // value={formatDate(data.dob)}
-            onChange={handleChange}
-            fullWidth
+            label="Year of Birth"
+            name="year"
+            type="number"
+            value={profileData.dob.year}
+            onChange={handleDobChange}
             margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
+            sx={inputBackground}
+            menuprops={menuPropsStyles}
+          />
+          <TextField
+            label="Month of Birth"
+            name="month"
+            type="number"
+            value={profileData.dob.month}
+            onChange={handleDobChange}
+            margin="normal"
+            sx={inputBackground}
+            menuprops={menuPropsStyles}
+          />
+          <TextField
+            label="Day of Birth"
+            name="day"
+            type="number"
+            value={profileData.dob.day}
+            onChange={handleDobChange}
+            margin="normal"
             sx={inputBackground}
             menuprops={menuPropsStyles}
           />
           <TextField
             label="Height (Feet)"
             name="feet"
-            value={data.height.feet}
+            value={profileData.height.feet}
             onChange={handleHeightChange}
             type="number"
             margin="normal"
@@ -163,7 +187,7 @@ function ManageProfile() {
           <TextField
             label="Height (Inches)"
             name="inches"
-            value={data.height.inches}
+            value={profileData.height.inches}
             onChange={handleHeightChange}
             type="number"
             margin="normal"
