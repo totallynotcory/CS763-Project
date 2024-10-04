@@ -38,7 +38,7 @@ app.get('/view-users', async (req, res) => {
 app.get('/manage-profile', async (req, res) => {
   try {
     // TO DO: UPDATE THIS TO GRAB USER ID FROM LOCAL STORAGE, rather than hardcode
-    const userId = 10003 // req.userId; 
+    const userId = 10001 // req.userId; 
     const userProfile = await User.findOne({ userId });
     if (!userProfile) {
       return res.status(404).json({ error: "User not found" });
