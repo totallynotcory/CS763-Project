@@ -113,6 +113,9 @@ app.post('/login', async (req, res) => {
 
   } catch (error) {
     // console.error('Error during login:', error);
+    console.log(process.env.NODE_ENV)
+    console.log(process.env.SECRET_KEY)
+    console.log(error)
     res.status(500).json({ message: 'Internal server error' });
   }
 });
