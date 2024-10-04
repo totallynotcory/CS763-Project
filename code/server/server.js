@@ -93,9 +93,9 @@ app.post('/login', async (req, res) => {
     }
 
     // Generate a token (e.g., JWT)
-    // const secretKey = process.env.SECRET_KEY; // Use environment variable in production
+    const secretKey = process.env.SECRET_KEY; // Use environment variable in production
     // console.log('JWT_SECRET:', secretKey);
-    const secretKey = "myproductionsecret"
+    // const secretKey = "myproductionsecret"
 
     if (!secretKey) {
       // console.error('JWT_SECRET  is not defined');
