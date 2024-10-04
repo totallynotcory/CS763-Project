@@ -48,13 +48,10 @@ function DailyData() {
   };
 
   // const [mood, setMood] = useState(3);
-  // const [exercise, setExercise] = useState("No");
-  // const [exerciseType, setExerciseType] = useState("");
-
-  // const [water, setWater] = useState("");
   // const [breakfast, setBreakfast] = useState("");
   // const [lunch, setLunch] = useState("");
   // const [dinner, setDinner] = useState("");
+  
   // date
   const [date, setDate] = useState(null); //
 
@@ -243,7 +240,6 @@ function DailyData() {
             <TextField
               data-testid="exerciseTime"
               type="number"
-
               name="exercise"
               label="How long did you exercise - min"
               value={formData.exercise}
