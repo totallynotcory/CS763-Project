@@ -3,7 +3,6 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - lab3-validate-goal  # Branch to trigger deployment
       - dev
 
 jobs:
