@@ -33,20 +33,10 @@ function ManageProfile() {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'dob') {
-        console.log("Date:", value)
-        // Convert the string date back to a Date object
-        const dateValue = new Date(value); // `value` will be in "yyyy-MM-dd" format
-        setProfileData((prevData) => ({
-          ...prevData,
-          [name]: dateValue,
-        }));
-    } else {
-      setProfileData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-    }
+    setProfileData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
   };
   
   // Handle input change for height
@@ -88,7 +78,7 @@ function ManageProfile() {
       <Typography variant="h6" gutterBottom sx={bigTitle}>
         Manage Profile
       </Typography>
-      {/* If there is data returned, render the below in <div> section */}
+      {/* If there is data returned, renders in below section */}
       {error ? (
         <p>{error}</p>
       ) : (
