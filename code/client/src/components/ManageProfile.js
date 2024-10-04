@@ -7,9 +7,8 @@ function ManageProfile() {
   
   const [profileData, setProfileData] = useState({
     userId: "",
-    name: "",
     email: "",
-    password: "",
+    name: "",
     gender: "",
     dob: { year: 1900, month: 1, day: 1 },
     height: { feet: "", inches: "" },
@@ -98,30 +97,22 @@ function ManageProfile() {
             menuprops={menuPropsStyles}
           />
           <TextField
-            label="Name"
-            name="name"
-            value={profileData.name}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            sx={inputBackground}
-            menuprops={menuPropsStyles}
-          />
-          <TextField
             label="Email"
             name="email"
             value={profileData.email}
             onChange={handleChange}
             fullWidth
             margin="normal"
-            sx={inputBackground}
+            InputProps={{
+              readOnly: true, // Makes it non-editable
+            }}
+            // sx={inputBackground}
             menuprops={menuPropsStyles}
           />
           <TextField
-            label="Password"
-            name="password"
-            // type="password"
-            value={profileData.passwordHashed}
+            label="Name"
+            name="name"
+            value={profileData.name}
             onChange={handleChange}
             fullWidth
             margin="normal"

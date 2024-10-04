@@ -38,7 +38,7 @@ app.get('/view-users', async (req, res) => {
 app.get('/manage-profile', async (req, res) => {
   try {
     // TO DO: UPDATE THIS TO GRAB USER ID FROM LOCAL STORAGE, rather than hardcode
-    const userId = 10001 // req.userId; 
+    const userId = 10003 // req.userId; 
     const userProfile = await User.findOne({ userId });
     if (!userProfile) {
       return res.status(404).json({ error: "User not found" });
@@ -51,20 +51,18 @@ app.get('/manage-profile', async (req, res) => {
 
 app.post('/manage-profile', async (req, res) => {
   try { 
-    const { userId, name, email, password, gender, dob, height } = req.body;
+    const { userId, name, gender, dob, height } = req.body;
 
-    // Find the user in the database using userId
+    // Find user in the database using userId
     const userProfile = await User.findOne({ userId });
 
-    // Check if the user exists
+    // Check if user exists
     if (!userProfile) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Update the user's profile with the new values
+    // Update the profile with the new values
     userProfile.name = name;
-    userProfile.email = email;
-    userProfile.password = password; // Make sure to hash the password if it's being updated
     userProfile.gender = gender;
     userProfile.dob = dob;
     userProfile.height = height;
