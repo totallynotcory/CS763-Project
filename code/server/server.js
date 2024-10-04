@@ -2,7 +2,7 @@
 //It sets up and runs the server, it connects to the database, and it defines how the application responds to incoming requests.
 
 const express = require('express');
-const mongoose = require('mongoose');
+
 const cors = require('cors');
 const db = require("./db.js")
 
@@ -93,12 +93,13 @@ app.post('/login', async (req, res) => {
     }
 
     // Generate a token (e.g., JWT)
-    const secretKey = process.env.SECRET_KEY; // Use environment variable in production
+    // const secretKey = process.env.SECRET_KEY; // Use environment variable in production
     // console.log('JWT_SECRET:', secretKey);
+    const secretKey = "myproductionsecret"
 
     if (!secretKey) {
       // console.error('JWT_SECRET  is not defined');
-      return res.status(500).json({ message: 'No secret key' });
+      return res.status(500).json({ message: 'no secret key' });
     }
 
     const token = jwt.sign(
@@ -113,10 +114,7 @@ app.post('/login', async (req, res) => {
 
   } catch (error) {
     // console.error('Error during login:', error);
-    console.log(process.env.NODE_ENV)
-    console.log(process.env.SECRET_KEY)
-    console.log(error)
-    res.status(500).json({ message: `node_env: ${process.NODE_ENV} ${error}` });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
