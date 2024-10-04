@@ -29,7 +29,7 @@ Make sure to start the docker engine by starting up Docker Desktop. Note make su
     docker rm $(docker ps -aq)
 
 
-### The will remove all images
+### This will remove all images
 
     docker rmi $(docker images -q)
 
