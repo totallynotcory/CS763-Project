@@ -146,25 +146,44 @@ function ManageProfile() {
             menuprops={menuPropsStyles}
           />
           <TextField
+            select
             label="Month of Birth"
             name="month"
-            type="number"
             value={profileData.dob.month}
             onChange={handleDobChange}
             margin="normal"
             sx={inputBackground}
             menuprops={menuPropsStyles}
-          />
+          >
+            {Array.from({ length: 12 }, (_, index) => {
+              const monthNumber = index + 1; // Month numbers range from 1 to 12
+              return (
+                <MenuItem key={monthNumber} value={monthNumber}>
+                  {monthNumber < 10 ? `0${monthNumber}` : monthNumber} {/* Format month as 01, 02, ... */}
+                </MenuItem>
+              );
+            })}
+          </TextField>
           <TextField
+            select
             label="Day of Birth"
             name="day"
-            type="number"
             value={profileData.dob.day}
             onChange={handleDobChange}
             margin="normal"
             sx={inputBackground}
             menuprops={menuPropsStyles}
-          />
+          >
+            {Array.from({ length: 31 }, (_, index) => {
+              const dayNumber = index + 1; // Day numbers range from 1 to 31
+              return (
+                <MenuItem key={dayNumber} value={dayNumber}>
+                  {dayNumber < 10 ? `0${dayNumber}` : dayNumber} {/* Format day as 01, 02, ... */}
+                </MenuItem>
+              );
+            })}
+          </TextField>
+          <br></br>
           <TextField
             label="Height (Feet)"
             name="feet"
