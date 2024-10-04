@@ -1,19 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Typography,
   TextField,
-  Grid,
-  Slider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
+  Grid2,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   InputAdornment,
+  Collapse,
+  Paper,
 } from "@mui/material";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 import {
   box,
   title,
@@ -24,39 +21,102 @@ import {
   submitButton,
   sideMenuBox,
   sideMenuTitle,
+  datePick,
+  calendarStyle,
 } from "./style/styles.js";
 
 function DailyData() {
-  const [date, setDate] = useState("Aug 8, 2024");
   const [weight, setWeight] = useState("");
   const [steps, setSteps] = useState("");
   const [sleep, setSleep] = useState("");
   const [mood, setMood] = useState(3);
   const [exercise, setExercise] = useState("No");
   const [exerciseType, setExerciseType] = useState("");
-  const [exerciseTime, setExerciseTime] = useState("");
+  const [exerciseTime, setExerciseTime] = useState({
+    type: "",
+    exerciseTimeValue: 0,
+  });
   const [water, setWater] = useState("");
   const [breakfast, setBreakfast] = useState("");
   const [lunch, setLunch] = useState("");
   const [dinner, setDinner] = useState("");
+  // date
+  const [date, setDate] = useState(null); //
+  const [anchorEl, setAnchorEl] = useState(null); // control Popper content
+  const [open, setOpen] = useState(false); // control Popper open/close
+  const handleDateChange = (selectedDate) => {
+    setDate(selectedDate);
+    setOpen(false); // close after chosing date
+  };
+  const handleTextFieldClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prevOpen) => !prevOpen); // open/close calendar
+  };
+  const formatDate = (date) => {
+    return date ? date.toLocaleDateString("en-CA") : "";
+  };
 
   const handleMoodChange = (event, newValue) => {
     setMood(newValue);
   };
+  const calendarRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+        setOpen(false); // Close the calendar if clicked outside
+      }
+    }
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
 
   return (
-    <Box sx={sideMenuBox}>
-      <Typography variant="h6" gutterBottom sx={sideMenuTitle}>
+    <Box sx={box}>
+      <Typography variant="h6" gutterBottom sx={title}>
         Enter your data here:
       </Typography>
 
-      <Typography variant="body1" gutterBottom sx={{ marginBottom: "5%" }}>
+      {/* <Typography variant="body1" gutterBottom sx={{ marginBottom: "2%" }}>
         {date}
-      </Typography>
+      </Typography> */}
+      <TextField
+        label="Select a date"
+        value={formatDate(date)}
+        onClick={handleTextFieldClick}
+        readOnly
+        variant="filled"
+        sx={datePick}
+        fullWidth
+      />
+
+      <Collapse in={open}>
+        <Paper ref={calendarRef} sx={calendarStyle}>
+          <DayPicker
+            mode="single"
+            selected={date}
+            onSelect={handleDateChange}
+            styles={{
+              month: {
+                backgroundColor: "#C2D5C0",
+                padding: "1rem",
+                borderRadius: "20px",
+              },
+            }}
+          />
+        </Paper>
+      </Collapse>
 
       {/* Weight */}
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+      <Grid2 container spacing={2}>
+        <Grid2 item xs={12} md={6}>
           <TextField
             label="Weight"
             variant="filled"
@@ -74,15 +134,15 @@ function DailyData() {
             }}
             sx={textField}
           />
-        </Grid>
+        </Grid2>
         {/* Steps Count */}
-        <Grid item xs={12} md={6}>
+        <Grid2 item xs={12} md={6}>
           <TextField
             label="Count"
             variant="filled"
             fullWidth
             value={steps}
-            onChange={(e) => setWeight(e.target.value)}
+            onChange={(e) => setSteps(e.target.value)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -94,15 +154,15 @@ function DailyData() {
             }}
             sx={textField}
           />
-        </Grid>
+        </Grid2>
         {/* Sleep hour */}
-        <Grid item xs={12} md={6}>
+        <Grid2 item xs={12} md={6}>
           <TextField
             label="Sleep"
             variant="filled"
             fullWidth
             value={sleep}
-            onChange={(e) => setWeight(e.target.value)}
+            onChange={(e) => setSleep(e.target.value)}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -114,10 +174,10 @@ function DailyData() {
             }}
             sx={textField}
           />
-        </Grid>
+        </Grid2>
 
         {/* water */}
-        <Grid item xs={12} md={6}>
+        <Grid2 item xs={12} md={6}>
           <TextField
             label="Water"
             variant="filled"
@@ -135,7 +195,48 @@ function DailyData() {
             }}
             sx={textField}
           />
-        </Grid>
+        </Grid2>
+
+        {/* How long did you exercise */}
+        <Grid2 item xs={12} md={6}>
+          <FormControl fullWidth>
+            <TextField
+              data-testid="exerciseTime"
+              type="number"
+              name="exerciseTime"
+              label="How long did you exercise - min"
+              value={exerciseTime.exerciseTimeValue}
+              onChange={(e) =>
+                setExerciseTime({
+                  ...exerciseTime,
+                  exerciseTimeValue: e.target.value,
+                })
+              }
+              required
+              InputLabelProps={{
+                sx: inputLable,
+              }}
+              InputProps={{
+                sx: inputBackground,
+              }}
+              variant="outlined"
+              fullWidth
+            />
+          </FormControl>
+        </Grid2>
+        {/* <InputLabel sx={inputLable}>How long did you exercise</InputLabel> */}
+        {/* <Select
+              value={exerciseTime}
+              onChange={(e) => setExerciseTime(e.target.value)}
+              label="How long did you exercise"
+              sx={inputBackground}
+              MenuProps={menuPropsStyles}
+            >
+              <MenuItem value="30 mins">30 mins</MenuItem>
+              <MenuItem value="1 hour">1 hour</MenuItem>
+              <MenuItem value="2 hours">2 hours</MenuItem>
+            </Select> */}
+
         {/* Mood */}
         {/* <Grid item xs={12}>
           <Typography variant="body1">Mood</Typography>
@@ -227,38 +328,6 @@ function DailyData() {
             </Select>
           </FormControl>
         </Grid> */}
-
-        {/* How long did you exercise */}
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel
-              sx={{
-                backgroundColor: "#5E5E5E", // question font background color
-                padding: "0 2%",
-                color: "#CACACA", // font color when unfocused
-                borderRadius: "10px",
-                "&.Mui-focused": {
-                  // font color when focused
-                  color: "#F8DEBD",
-                  borderRadius: "10px",
-                },
-              }}
-            >
-              How long did you exercise
-            </InputLabel>
-            <Select
-              value={exerciseTime}
-              onChange={(e) => setExerciseTime(e.target.value)}
-              label="How long did you exercise"
-              sx={inputBackground}
-              MenuProps={menuPropsStyles}
-            >
-              <MenuItem value="30 mins">30 mins</MenuItem>
-              <MenuItem value="1 hour">1 hour</MenuItem>
-              <MenuItem value="2 hours">2 hours</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
 
         {/* What did you take for breakfast */}
         {/* <Grid item xs={12}>
@@ -392,7 +461,7 @@ function DailyData() {
             </Select>
           </FormControl>
         </Grid> */}
-      </Grid>
+      </Grid2>
     </Box>
   );
 }

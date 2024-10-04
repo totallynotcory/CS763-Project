@@ -1,37 +1,38 @@
-<!-- npm install bcrypt
-npm install jsonwebtoken
-npm install dotenv -->
+# Link to our website
 
-# Then make sure you have a terminal split screen and in the server folder type:
+https://peak-performance-3c40e2c0ebea.herokuapp.com/
 
-npm install
-npm run dev
+## Open up a split screen terminal:
 
-# and in the client folder type:
+    Change directory into the 'server' folder:
+        npm install
+        npm run dev
 
-<!-- npm install react-icons -->
-npm install
-npm run start
+    Change directory into the 'client' folder:
+        npm install
+        npm run start
 
-# Using docker to run all 3 services (mongodb, api, client)
+## Using docker to run all 3 services (mongodb, api, client)
 
 Make sure to start the docker engine by starting up Docker Desktop. Note make sure to log in.
 
-docker login -u your_username -p your_password --This will log you in using bash
+    docker login -u your_username -p your_password --This will log you in using bash
 
-# Make sure you're in the code folder
+### Make sure you're in the code folder
 
-# This will stop all containers from running
+### This will stop all containers from running
 
-docker stop $(docker ps -aq)
+    docker stop $(docker ps -aq)
 
-# This removes all containers (deletes them)
+### This removes all containers (deletes them)
 
-docker rm $(docker ps -aq)
+    docker rm $(docker ps -aq)
 
-# The will remove all images
 
-docker rmi $(docker images -q)
+### This will remove all images
+
+    docker rmi $(docker images -q)
+
 
 # The commands below will build and run the server and client docker file for the development environment
 
