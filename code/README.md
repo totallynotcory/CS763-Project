@@ -2,6 +2,10 @@
 npm install jsonwebtoken
 npm install dotenv -->
 
+#Link to our website
+
+https://peak-performance-3c40e2c0ebea.herokuapp.com/
+
 # Then make sure you have a terminal split screen and in the server folder type:
 
 npm install
