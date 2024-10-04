@@ -27,7 +27,10 @@
     "web-vitals": "^2.1.4"
   },
   "jest": {
-    "transform": {}
+    "transform": {},
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   },
   "scripts": {
     "start": "react-scripts start",
