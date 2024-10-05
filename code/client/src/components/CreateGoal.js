@@ -7,13 +7,13 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
+  Grid2,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
+  Button
 } from "@mui/material";
-import { Button } from "@mui/material";
 import {
   box,
   title,
@@ -105,9 +105,9 @@ const handleGoalError = (error) => {
       </Typography>
       {/* Set up your goal here:  */}
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
+        <Grid2 container spacing={2}>
           {/*  Select a goal type */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item xs={12} md={6}>
             <FormControl fullWidth>
               <InputLabel sx={inputLable}>Select a goal type</InputLabel>
               <Select
@@ -126,9 +126,9 @@ const handleGoalError = (error) => {
                 <MenuItem value="exercise">Exercise (Minutes)</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Target value */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 data-testid="goal-targetValue-select"
@@ -147,14 +147,14 @@ const handleGoalError = (error) => {
                 fullWidth
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Submit Button */}
-          <Grid item xs={12}>
+          <Grid2 item xs={12}>
             <Button type="submit" variant="contained" sx={submitButton}>
               Submit
             </Button>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </form>
       {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
       {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}

@@ -18,13 +18,16 @@ export const title = {
 };
 
 export const inputLable = {
+  marginLeft: "-1%",
   backgroundColor: "#5E5E5E", // question font background color
-  padding: "0 2%",
+  padding: "0 3%",
   color: "#CACACA", // font color when unfocused
   borderRadius: "10px",
+  fontWeight: "bold",
   "&.Mui-focused": {
-    // font color when focused
+    // label - font color when focused
     color: "#F8DEBD",
+    fontWeight: "bold",
     borderRadius: "10px",
   },
 };
@@ -34,6 +37,7 @@ export const inputBackground = {
   borderRadius: "10px",
   "& .MuiInputBase-input": {
     color: "#F4F4F4", // text in box(answer) - text color
+    border: "none",
   },
 };
 
@@ -93,6 +97,53 @@ export const textField = {
   "& .MuiInputAdornment-root": {
     color: "#F4F4F4", // hour color
   },
+  "& .MuiFilledInput-root:hover:before": {
+    borderBottom: "none !important",
+  },
+};
+
+// DailyData
+export const datePick = {
+  width: "35%",
+  marginTop: "2%",
+  marginBottom: "3%",
+  backgroundColor: "transparent",
+
+  "& .MuiInputBase-root": {
+    borderRadius: "50px",
+    border: "2px solid #5E5E5E",
+  },
+  "& .MuiInputBase-input": {
+    color: "#6F6F6F",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#5E5E5E", // label color
+    paddingLeft: "5%",
+    fontWeight: "bold",
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#5E5E5E", // focused label color
+    fontWeight: "bold",
+  },
+  "& .MuiFilledInput-underline:before": {
+    borderBottom: "none", // no underline when unfocused
+  },
+  "& .MuiFilledInput-underline:after": {
+    borderBottom: "none", // no underline when focused
+  },
+  "& .MuiFilledInput-root:hover:before": {
+    borderBottom: "none !important",
+  },
+};
+
+export const calendarStyle = {
+  mt: 2,
+  mb: 2,
+  backgroundColor: "transparent",
+  boxShadow: "none",
+  marginBottom: "4%",
 };
 
 // DailyData - side menu

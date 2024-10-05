@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../services/apiClient.js";
-// import "./css/Login.css";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
@@ -9,7 +8,7 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
+  Grid2,
   FormControl,
   InputAdornment,
 } from "@mui/material";
@@ -22,7 +21,7 @@ import {
   link,
 } from "./style/styles.js";
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   // status to store login status
   const [formData, setFormData] = useState({
     email: "",
@@ -59,6 +58,7 @@ function Login() {
       localStorage.setItem("authToken", token);
       localStorage.setItem('userId', userId);
       // redirect to home page
+      setIsAuthenticated(true);
       //console.log('login success:', response.data);
       navigate("/");
     } catch (error) {
@@ -85,9 +85,9 @@ function Login() {
         {/* Display error message if necessary */}
         {error && <p className="error-message">{error}</p>}
 
-        <Grid container direction="column" spacing={2}>
+        <Grid2 container direction="column" spacing={2}>
           {/* Email -------------------------------------*/}
-          <Grid item xs={6}>
+          <Grid2 item xs={6}>
             <FormControl fullWidth>
               <TextField
                 label="Email"
@@ -101,9 +101,9 @@ function Login() {
                 sx={textField}
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Password ----------------------------------*/}
-          <Grid item xs={6}>
+          <Grid2 item xs={6}>
             <FormControl fullWidth>
               <TextField
                 label="Password"
@@ -138,15 +138,15 @@ function Login() {
                 sx={textField}
               />
             </FormControl>
-          </Grid>
+          </Grid2>
 
           {/* login button ------------------------------*/}
-          <Grid item xs={12} container justifyContent="center">
+          <Grid2 item xs={12} container justifyContent="center">
             <Button type="submit" variant="contained" sx={loginSubmitButton}>
               Sign in ➜
             </Button>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </form>
       Not a member?{" "}
       <Link to="/create-user" style={link}>

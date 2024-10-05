@@ -8,7 +8,7 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
+  Grid2,
   FormControl,
   Button,
 } from "@mui/material";
@@ -16,9 +16,6 @@ import {
   box,
   title,
   textField,
-  inputLable,
-  inputBackground,
-  menuPropsStyles,
   submitButton,
 } from "./style/styles.js";
 
@@ -77,7 +74,6 @@ function CreateUser() {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data.message); // Set the error message from server response
       } else {
-        // console.error('Error creating user:', error);
         setErrorMessage("Registration failed. Please try again.");
       }
     }
@@ -89,9 +85,9 @@ function CreateUser() {
         Sign up
       </Typography>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
+        <Grid2 container spacing={2}>
           {/* Name (First & Last) -------------------------------------*/}
-          <Grid item xs={12} md={6}>
+          <Grid2 item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtName"
@@ -104,9 +100,9 @@ function CreateUser() {
                 sx={textField}
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Email -------------------------------------*/}
-          <Grid item xs={12} md={6}>
+          <Grid2 item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtEmail"
@@ -119,9 +115,9 @@ function CreateUser() {
                 sx={textField}
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Password -------------------------------------*/}
-          <Grid item xs={12} md={6}>
+          <Grid2 item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtPassword"
@@ -135,14 +131,14 @@ function CreateUser() {
                 sx={textField}
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Submit Button -------------------------------------*/}
-          <Grid item xs={12}>
+          <Grid2 item xs={12}>
             <Button type="submit" variant="contained" sx={submitButton}>
               Sign Up
             </Button>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </form>
       {errorMessage && (
         <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>

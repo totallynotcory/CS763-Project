@@ -4,9 +4,11 @@ import Home from "./components/Home.js";
 import Login from "./components/Login.js";
 import CreateUser from "./components/CreateUser.js";
 import ViewUsers from "./components/ViewUsers.js";
+import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
-
+import React, { useState, useEffect } from 'react';
+import LogoutIcon from '@mui/icons-material/Logout';
 // Styling
 import {
   createTheme,
@@ -27,7 +29,7 @@ import {
 
 import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
-// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import CloseIcon from "@mui/icons-material/Close";
@@ -48,7 +50,25 @@ const theme = createTheme({
   },
 });
 
+
+
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // On component mount, check if user is already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogout = () => {
+  
+    localStorage.removeItem('authToken');
+    
+    setIsAuthenticated(false);
+    
+    // navigate('/login');
+  };
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -111,16 +131,26 @@ function App() {
                 </ListItemButton>
               </ListItem>
 
+              {!isAuthenticated ? (
               <ListItem disablePadding>
                 <ListItemButton component={Link} to="/login">
                   <ListItemIcon>
-                    {" "}
-                    <LoginIcon />{" "}
+                    <LoginIcon />
                   </ListItemIcon>
                   <ListItemText primary="Login" />
                 </ListItemButton>
               </ListItem>
-
+              ) : (
+              <ListItem disablePadding>
+                <ListItemButton onClick={handleLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Logout" />
+                </ListItemButton>
+              </ListItem>
+              )}
+            
               <ListItem disablePadding>
                 <ListItemButton component={Link} to="/enter-daily-data">
                   <ListItemIcon>
@@ -138,6 +168,16 @@ function App() {
                     <TrackChangesIcon />{" "}
                   </ListItemIcon>
                   <ListItemText primary="Create Goal" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/manage-profile">
+                  <ListItemIcon>
+                    {" "}
+                    <AccountCircleIcon />{" "}
+                  </ListItemIcon>
+                  <ListItemText primary="Manage Profile" />
                 </ListItemButton>
               </ListItem>
 
@@ -173,7 +213,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/view-users" element={<ViewUsers />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/manage-profile" element={<ManageProfile />} />
+                <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
                 <Route path="/enter-daily-data" element={<DailyData />} />
                 <Route path="/create-goal" element={<CreateGoal />} />
               </Routes>
