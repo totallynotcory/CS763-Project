@@ -32,9 +32,52 @@ app.get('/check-connection', async (req, res) => {
 })
 
 app.get('/view-users', async (req, res) => {
-  allUsers = await User.find({})
+  const allUsers = await User.find({})
   res.json(allUsers)
 })
+
+app.get('/manage-profile', async (req, res) => {
+  try {
+    // TO DO: UPDATE THIS TO GRAB USER ID FROM LOCAL STORAGE, rather than hardcode
+    const userId = 10001 // req.userId; 
+    const userProfile = await User.findOne({ userId });
+    if (!userProfile) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(userProfile); 
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.post('/manage-profile', async (req, res) => {
+  try { 
+    const { userId, name, gender, dob, height } = req.body;
+
+    // Find user in the database using userId
+    const userProfile = await User.findOne({ userId });
+
+    // Check if user exists
+    if (!userProfile) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update the profile with the new values
+    userProfile.name = name;
+    userProfile.gender = gender;
+    userProfile.dob = dob;
+    userProfile.height = height;
+
+    // Save the updated user profile
+    await userProfile.save();
+
+    // Send a success response
+    res.status(200).json({ message: "Profile updated successfully", userProfile });
+  } catch (error) {
+    console.error(error); // Log the error for debugging
+    res.status(500).json({ message: "Error updating profile" });
+  }
+});
 
 app.post('/create-user', async (req, res) => {
 

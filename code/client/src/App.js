@@ -4,6 +4,7 @@ import Home from "./components/Home.js";
 import Login from "./components/Login.js";
 import CreateUser from "./components/CreateUser.js";
 import ViewUsers from "./components/ViewUsers.js";
+import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
 import React, { useState, useEffect } from 'react';
@@ -28,7 +29,7 @@ import {
 
 import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
-// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import CloseIcon from "@mui/icons-material/Close";
@@ -171,6 +172,16 @@ function App() {
               </ListItem>
 
               <ListItem disablePadding>
+                <ListItemButton component={Link} to="/manage-profile">
+                  <ListItemIcon>
+                    {" "}
+                    <AccountCircleIcon />{" "}
+                  </ListItemIcon>
+                  <ListItemText primary="Manage Profile" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
                 <ListItemButton component={Link} to="/view-users">
                   <ListItemIcon>
                     {" "}
@@ -202,6 +213,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/view-users" element={<ViewUsers />} />
+                <Route path="/manage-profile" element={<ManageProfile />} />
                 <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
                 <Route path="/enter-daily-data" element={<DailyData />} />
                 <Route path="/create-goal" element={<CreateGoal />} />
