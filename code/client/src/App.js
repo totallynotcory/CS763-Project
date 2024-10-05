@@ -6,6 +6,7 @@ import CreateUser from "./components/CreateUser.js";
 import ViewUsers from "./components/ViewUsers.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
+import Dashboard from "./components/Dashboard.js"
 
 // Styling
 import {
@@ -31,6 +32,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import CloseIcon from "@mui/icons-material/Close";
+import BarChartIcon from "@mui/icons-material/BarChart";
 
 import "@fontsource/mulish";
 
@@ -142,6 +144,16 @@ function App() {
               </ListItem>
 
               <ListItem disablePadding>
+                <ListItemButton component={Link} to="/dashboard">
+                  <ListItemIcon>
+                    {" "}
+                    <BarChartIcon />{" "}
+                  </ListItemIcon>
+                  <ListItemText primary="Dash-board" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
                 <ListItemButton component={Link} to="/view-users">
                   <ListItemIcon>
                     {" "}
@@ -159,7 +171,7 @@ function App() {
             sx={{
               flexGrow: 1,
               bgcolor: "#E2DDD5", // Background color applied here
-              height: "100vh", // Full viewport height for every page
+              minHeight: "100vh", // Full viewport height for every page
               display: "flex",
               flexDirection: "column",
             }}
@@ -176,6 +188,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/enter-daily-data" element={<DailyData />} />
                 <Route path="/create-goal" element={<CreateGoal />} />
+                <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
             </Box>
           </Box>
