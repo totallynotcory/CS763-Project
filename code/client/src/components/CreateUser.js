@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../services/apiClient.js";
 import { validateRegistrationForm } from "../utils/validateRegistrationForm.js";
 
+
 import {
   Box,
   Typography,
@@ -57,7 +58,7 @@ function CreateUser() {
     }
 
     try {
-      await apiClient.post("/create-user", formData);
+      await apiClient.post("/api/users/create-user", formData);
       setSuccessMessage(
         "Registration successful! Redirecting to the login page..."
       );
@@ -93,6 +94,7 @@ function CreateUser() {
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
+                data-testid="txtName"
                 label="Name (First & Last)"
                 variant="filled"
                 fullWidth
@@ -107,6 +109,7 @@ function CreateUser() {
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
+                data-testid="txtEmail"
                 label="Email"
                 variant="filled"
                 fullWidth
@@ -121,6 +124,7 @@ function CreateUser() {
           <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
+                data-testid="txtPassword"
                 label="Password"
                 variant="filled"
                 fullWidth

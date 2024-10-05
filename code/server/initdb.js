@@ -1,6 +1,6 @@
 //This file is for writing data to the database for testing purposes
 
-const db = require("./db.js")
+const db = require("./config/db.js")
 
 const User = db.getModel().userModel
 const Goal = db.getModel().goalModel
