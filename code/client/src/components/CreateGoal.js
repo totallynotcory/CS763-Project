@@ -1,6 +1,7 @@
 import apiClient from "../services/apiClient.js";
 import React, { useState } from "react";
 import { validateGoalForm } from '../utils/validateGoalForm.js';
+import { authenticated } from "../utils/authenticate.js";
 
 import {
   Box,
@@ -23,6 +24,7 @@ import {
 } from "./style/styles.js";
 
 function CreateGoal() {
+  authenticated();
   const [goalFormData, setGoalFormData] = useState({
     type: "",
     targetValue: 0,
@@ -76,7 +78,7 @@ const createGoal = async (formData) => {
   try {
     console.log("Creating new goal with data:", formData);
     // Sends a POST request to the backend with the form data
-    await apiClient.post("/create-goal", formData);
+    await apiClient.post("/api/goals/create-goal", formData);
     handleGoalSuccess(); // Handle the success case
   } catch (error) {
     handleGoalError(error); // Handle the error case

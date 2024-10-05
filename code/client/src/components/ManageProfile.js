@@ -20,7 +20,7 @@ function ManageProfile() {
 
   useEffect(() => {
     apiClient
-      .get("/manage-profile") // Fetch user profile data from the backend (e.g., /manage-profile)
+      .get("/api/users/manage-profile") // Fetch user profile data from the backend (e.g., /manage-profile)
       .then((res) => {
         setProfileData(res.data); 
       })
@@ -64,7 +64,7 @@ function ManageProfile() {
     setErrorMessage('');
 
     try {
-      await apiClient.post("/manage-profile", profileData);
+      await apiClient.post("/api/users/manage-profile", profileData);
       console.log("Updating profile")
       setSuccessMessage('Profile updated!');
     } catch (err) {
