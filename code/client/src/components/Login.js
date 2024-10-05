@@ -21,7 +21,7 @@ import {
   link,
 } from "./style/styles.js";
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   // status to store login status
   const [formData, setFormData] = useState({
     email: "",
@@ -56,6 +56,7 @@ function Login() {
       // store token
       localStorage.setItem("authToken", response.data.token);
       // redirect to home page
+      setIsAuthenticated(true);
       //console.log('login success:', response.data);
       navigate("/");
     } catch (error) {

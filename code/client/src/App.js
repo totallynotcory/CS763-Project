@@ -7,7 +7,8 @@ import ViewUsers from "./components/ViewUsers.js";
 import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
-
+import React, { useState, useEffect } from 'react';
+import LogoutIcon from '@mui/icons-material/Logout';
 // Styling
 import {
   createTheme,
@@ -49,7 +50,25 @@ const theme = createTheme({
   },
 });
 
+
+
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // On component mount, check if user is already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogout = () => {
+  
+    localStorage.removeItem('authToken');
+    
+    setIsAuthenticated(false);
+    
+    // navigate('/login');
+  };
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -112,16 +131,26 @@ function App() {
                 </ListItemButton>
               </ListItem>
 
+              {!isAuthenticated ? (
               <ListItem disablePadding>
                 <ListItemButton component={Link} to="/login">
                   <ListItemIcon>
-                    {" "}
-                    <LoginIcon />{" "}
+                    <LoginIcon />
                   </ListItemIcon>
                   <ListItemText primary="Login" />
                 </ListItemButton>
               </ListItem>
-
+              ) : (
+              <ListItem disablePadding>
+                <ListItemButton onClick={handleLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Logout" />
+                </ListItemButton>
+              </ListItem>
+              )}
+            
               <ListItem disablePadding>
                 <ListItemButton component={Link} to="/enter-daily-data">
                   <ListItemIcon>
@@ -185,7 +214,7 @@ function App() {
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/view-users" element={<ViewUsers />} />
                 <Route path="/manage-profile" element={<ManageProfile />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
                 <Route path="/enter-daily-data" element={<DailyData />} />
                 <Route path="/create-goal" element={<CreateGoal />} />
               </Routes>

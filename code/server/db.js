@@ -59,6 +59,19 @@ let userSchema = new Schema({
     collection: 'users'
 })
 
+let dailyEntrySchema = new Schema({
+	dailyEntryId: { type: Number, required: true },
+	userId: { type: Number, required: true },
+	entryDate: { type: Date },
+	weight: { type: Number },
+	steps: { type: Number },
+	sleep: { type: Number },
+	water: { type: Number },
+	exercise: { type: Number }
+}, {
+    collection: 'daily_entries'
+})
+
 module.exports = {
     getModel: () => {
 		if (connection == null) {
@@ -66,7 +79,8 @@ module.exports = {
 			console.log("Connected to MongoDB!")
 			userModel = connection.model("User", userSchema);
 			goalModel = connection.model("Goal", goalSchema);
-			models = {userModel: userModel, goalModel: goalModel}
+			dailyEntryModel = connection.model("DailyEntry", dailyEntrySchema);
+			models = {userModel: userModel, goalModel: goalModel, dailyEntryModel: dailyEntryModel}
 		}
 		return models
 	},
