@@ -28,8 +28,7 @@ async function init() {
             targetValue: 8,
             unit: "hours",
             createdAt: "2024-09-10",
-            progress: [{date: new Date("2024-09-11"), value: 7.5},
-                        {date: new Date("2024-09-12"), value: 8}]
+            userId: 10001
         })
         
         let goal2 = new Goal({
@@ -37,7 +36,8 @@ async function init() {
             type: "steps",
             targetValue: 9000,
             unit: "steps",
-            // will use defaults for createdAt and progress
+            userId: 10001
+            // will use default for createdAt
         })
 
         let user1 = new User({
@@ -45,8 +45,7 @@ async function init() {
             email: "akyee@bu.edu",
             passwordHashed: hashedPassword,
             name: "Amanda Yee",
-            createdAt: "2024-09-01",
-            goals: [goal1, goal2] // Connect default goals to user
+            createdAt: "2024-09-01"
         })
 
         let user2 = new User({
