@@ -32,7 +32,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { useNavigate } from 'react-router-dom';
 import "@fontsource/mulish";
 
 const sidebarWidth = "20vh";
@@ -49,6 +49,29 @@ const theme = createTheme({
   },
 });
 
+function LogoutButton({ setIsAuthenticated }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+  
+    localStorage.removeItem('authToken');
+
+    setIsAuthenticated(false);
+
+    navigate('/login');
+  };
+
+  return (
+    <ListItem disablePadding>
+      <ListItemButton onClick={handleLogout}>
+        <ListItemIcon>
+          <LogoutIcon />
+        </ListItemIcon>
+        <ListItemText primary="Logout" />
+      </ListItemButton>
+    </ListItem>
+  );
+}
 
 
 function App() {
@@ -60,14 +83,6 @@ function App() {
     setIsAuthenticated(!!token);
   }, []);
 
-  const handleLogout = () => {
-  
-    localStorage.removeItem('authToken');
-    
-    setIsAuthenticated(false);
-    
-    // navigate('/login');
-  };
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -131,23 +146,16 @@ function App() {
               </ListItem>
 
               {!isAuthenticated ? (
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/login">
-                  <ListItemIcon>
-                    <LoginIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Login" />
-                </ListItemButton>
-              </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to="/login">
+                    <ListItemIcon>
+                      <LoginIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Login" />
+                  </ListItemButton>
+                </ListItem>
               ) : (
-              <ListItem disablePadding>
-                <ListItemButton onClick={handleLogout}>
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Logout" />
-                </ListItemButton>
-              </ListItem>
+                <LogoutButton setIsAuthenticated={setIsAuthenticated} />
               )}
             
               <ListItem disablePadding>
