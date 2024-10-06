@@ -1,24 +1,115 @@
-// __tests__/userController.test.js
-const request = require('supertest');
-const app = require('../server');  
 const mongoose = require('mongoose');
-const User = require('../models/User');  // Your User model
-const jwt = require('jsonwebtoken');
+const request = require('supertest');
+const app = require('../server');  // Import the app, not the server instance
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
+const { MongoMemoryServer } = require('mongodb-memory-server');
+let mongoServer;
 
-// Mock the database connection before running the tests
+let server;
+
 beforeAll(async () => {
-  const url = 'mongodb://127.0.0.1:27017/testDB';
-  await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+  process.env.NODE_ENV = 'test';  // Set NODE_ENV to test
+  
+  mongoServer = await MongoMemoryServer.create();
+  const uri = mongoServer.getUri();
+  await mongoose.connect(uri);
+  console.log('mongoose uir:', uri);
+  server = app.listen(5001);  // Start the test server
 });
 
-// Close the database connection after the tests
 afterAll(async () => {
+  await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
+  await mongoServer.stop();
+  if (server) server.close();
 });
 
 describe('User Controller Endpoints', () => {
+  beforeEach(async () => {
+    await User.deleteMany({});  // Clear all users before each test
+  });
+
+  describe('GET /api/users/view-users', () => {
+    it('should return a list of all users', async () => {
+      await User.create({ userId: 1, name: 'John Doe', email: 'john@example.com', passwordHashed: 'hashedPassword' });
+    
+      const res = await request(app).get('/api/users/view-users');
+      console.log('Response:', res.body); // Add this to inspect the response
+      expect(res.statusCode).toEqual(200);
+      expect(Array.isArray(res.body)).toBe(true);
+      expect(res.body.length).toBe(1);
+      expect(res.body[0].name).toBe('John Doe');
+    });
+
+    it('should handle errors and return 500', async () => {
+      jest.spyOn(User, 'find').mockImplementationOnce(() => {
+        throw new Error('Error retrieving users');
+      });
+
+      const res = await request(app).get('/api/users/view-users');
+      expect(res.statusCode).toBe(500);
+      expect(res.body.message).toBe('Error retrieving users');
+    });
+  });
+
+  describe('GET /api/users/manage-profile', () => {
+    it('should return the user profile if user exists', async () => {
+      await User.create({ userId: 10001, name: 'Jane Doe', email: 'jane@example.com', passwordHashed: 'hashedPassword' });
+
+      const res = await request(app).get('/api/users/manage-profile');
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.name).toBe('Jane Doe');
+    });
+
+    it('should return 404 if the user does not exist', async () => {
+      const res = await request(app).get('/api/users/manage-profile');
+      expect(res.statusCode).toEqual(404);
+      expect(res.body.message).toBe('User not found');
+    });
+  });
+
+ 
+
   
-  // Test the createUser endpoint
+  it('should update the user profile', async () => {
+    // Create the user before attempting to update
+    const user = await User.create({
+      userId: 10001,
+      name: 'John Doe',
+      email: 'john@example.com',
+      passwordHashed: 'hashedPassword',
+    });
+  
+    // Log the created user to make sure it was inserted correctly
+    console.log('Created user:', user);
+    console.log('Created user with userId:', user.userId, typeof user.userId);  // Check the type of userId
+  
+    // Send the update request
+    const res = await request(app)
+      .post('/api/users/manage-profile')
+      .send({
+        userId: 10001,  // Ensure this matches the userId in the database
+        name: 'John Updated',
+        gender: 'Male',
+        dob: { year: 1990, month: 1, day: 1 },
+        height: { feet: 6, inches: 2 },
+      });
+  
+    // Log the response for debugging
+    console.log('Response status code:', res.statusCode);
+    console.log('Response body:', res.body);
+  
+    // Assertions
+    expect(res.statusCode).toEqual(200);  // Expect a successful profile update
+    expect(res.body.message).toBe('Profile updated successfully');
+    expect(res.body.userProfile.name).toBe('John Updated');
+  });
+  
+  
+  
+
+
   describe('POST /api/users/create-user', () => {
     it('should create a new user', async () => {
       const res = await request(app)
@@ -31,60 +122,49 @@ describe('User Controller Endpoints', () => {
 
       expect(res.statusCode).toEqual(201);
       expect(res.body.message).toBe('User created successfully!');
-      
-      // Clean up the created user after the test
-      await User.findOneAndDelete({ email: 'testuser@example.com' });
     });
 
     it('should return 400 if the user already exists', async () => {
-      // First, create a user
       await User.create({
         userId: 1,
-        name: 'Existing User',
-        email: 'existinguser@example.com',
+        name: 'Test User',
+        email: 'testuser@example.com',
         passwordHashed: await bcrypt.hash('password123', 10),
       });
 
       const res = await request(app)
         .post('/api/users/create-user')
         .send({
-          name: 'Existing User',
-          email: 'existinguser@example.com',
+          name: 'Test User',
+          email: 'testuser@example.com',
           password: 'password123',
         });
 
       expect(res.statusCode).toEqual(400);
       expect(res.body.message).toBe('An account with this email already exists');
-
-      // Clean up the created user after the test
-      await User.findOneAndDelete({ email: 'existinguser@example.com' });
     });
   });
 
-  // Test the loginUser endpoint
   describe('POST /api/users/login', () => {
     it('should log in a user and return a token', async () => {
-      // First, create a user to log in
-      const user = await User.create({
+      const hashedPassword = await bcrypt.hash('password123', 10);
+      await User.create({
         userId: 1,
         name: 'Test User',
-        email: 'testlogin@example.com',
-        passwordHashed: await bcrypt.hash('password123', 10),
+        email: 'testuser@example.com',
+        passwordHashed: hashedPassword,
       });
 
       const res = await request(app)
         .post('/api/users/login')
         .send({
-          email: 'testlogin@example.com',
+          email: 'testuser@example.com',
           password: 'password123',
         });
 
       expect(res.statusCode).toEqual(200);
       expect(res.body).toHaveProperty('token');
       expect(res.body.message).toBe('Login successful');
-
-      // Clean up the created user after the test
-      await User.findOneAndDelete({ email: 'testlogin@example.com' });
     });
 
     it('should return 401 if the email or password is incorrect', async () => {
@@ -97,15 +177,6 @@ describe('User Controller Endpoints', () => {
 
       expect(res.statusCode).toEqual(401);
       expect(res.body.message).toBe('Invalid email or password.');
-    });
-  });
-
-  // Test the viewUsers endpoint
-  describe('GET /api/users/view-users', () => {
-    it('should return a list of all users', async () => {
-      const res = await request(app).get('/api/users/view-users');
-      expect(res.statusCode).toEqual(200);
-      expect(Array.isArray(res.body)).toBe(true);
     });
   });
 });
