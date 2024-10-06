@@ -53,58 +53,135 @@ describe('User Controller Endpoints', () => {
     });
   });
 
-  describe('GET /api/users/manage-profile', () => {
-    it('should return the user profile if user exists', async () => {
-      await User.create({ userId: 10001, name: 'Jane Doe', email: 'jane@example.com', passwordHashed: 'hashedPassword' });
 
-      const res = await request(app).get('/api/users/manage-profile');
+
+
+  describe('GET /api/users/manage-profile', () => {
+
+    const createAndLoginUser = async () => {
+      // Create a new user
+      await User.create({
+        userId: 10001,
+        name: 'Jane Doe',
+        email: 'jane@example.com',
+        passwordHashed: await bcrypt.hash('password123', 10)
+      });
+  
+      // Login the user and get the token
+      const loginResponse = await request(app)
+        .post('/api/users/login') // Adjust this path based on your login route
+        .send({
+          email: 'jane@example.com',
+          password: 'password123'
+        });
+  
+      // Return the token from the login response
+      return loginResponse.body.token;
+    };
+
+    it('should return the user profile if user exists', async () => {
+      // Get the token by creating and logging in a user
+      const token = await createAndLoginUser();
+
+      // Make a request to the protected route with the token
+      const res = await request(app)
+        .get('/api/users/manage-profile')
+        .set('Authorization', `Bearer ${token}`);
+
+      // Assert the response
       expect(res.statusCode).toEqual(200);
       expect(res.body.name).toBe('Jane Doe');
     });
 
     it('should return 404 if the user does not exist', async () => {
-      const res = await request(app).get('/api/users/manage-profile');
+      // Get a token for a non-existent user (you can skip creating a user for this test)
+      const token = await createAndLoginUser();
+
+      // Manually delete the user to simulate a non-existent user
+      await User.deleteOne({ email: 'jane@example.com' });
+
+      // Make the request with the token
+      const res = await request(app)
+        .get('/api/users/manage-profile')
+        .set('Authorization', `Bearer ${token}`);
+
+      // Assert the response
       expect(res.statusCode).toEqual(404);
       expect(res.body.message).toBe('User not found');
+    });
+
+    // Move the "update the user profile" test inside the correct describe block
+    it('should update the user profile', async () => {
+      // Create the user before attempting to update
+      const user = await User.create({
+        userId: 10001,
+        name: 'John Doe',
+        email: 'john@example.com',
+        passwordHashed: 'hashedPassword',
+      });
+    
+      // Log the created user to make sure it was inserted correctly
+      console.log('Created user:', user);
+      console.log('Created user with userId:', user.userId, typeof user.userId);  // Check the type of userId
+    
+      // Send the update request
+      const res = await request(app)
+        .post('/api/users/manage-profile')
+        .send({
+          userId: 10001,  // Ensure this matches the userId in the database
+          name: 'John Updated',
+          gender: 'Male',
+          dob: { year: 1990, month: 1, day: 1 },
+          height: { feet: 6, inches: 2 },
+        });
+    
+      // Log the response for debugging
+      console.log('Response status code:', res.statusCode);
+      console.log('Response body:', res.body);
+    
+      // Assertions
+      expect(res.statusCode).toEqual(200);  // Expect a successful profile update
+      expect(res.body.message).toBe('Profile updated successfully');
+      expect(res.body.userProfile.name).toBe('John Updated');
     });
   });
 
  
 
   
-  it('should update the user profile', async () => {
-    // Create the user before attempting to update
-    const user = await User.create({
-      userId: 10001,
-      name: 'John Doe',
-      email: 'john@example.com',
-      passwordHashed: 'hashedPassword',
-    });
+  // it('should update the user profile', async () => {
+  //   // Create the user before attempting to update
+  //   const user = await User.create({
+  //     userId: 10001,
+  //     name: 'John Doe',
+  //     email: 'john@example.com',
+  //     passwordHashed: 'hashedPassword',
+  //   });
   
-    // Log the created user to make sure it was inserted correctly
-    console.log('Created user:', user);
-    console.log('Created user with userId:', user.userId, typeof user.userId);  // Check the type of userId
+  //   // Log the created user to make sure it was inserted correctly
+  //   console.log('Created user:', user);
+  //   console.log('Created user with userId:', user.userId, typeof user.userId);  // Check the type of userId
   
-    // Send the update request
-    const res = await request(app)
-      .post('/api/users/manage-profile')
-      .send({
-        userId: 10001,  // Ensure this matches the userId in the database
-        name: 'John Updated',
-        gender: 'Male',
-        dob: { year: 1990, month: 1, day: 1 },
-        height: { feet: 6, inches: 2 },
-      });
+  //   // Send the update request
+  //   const res = await request(app)
+  //     .post('/api/users/manage-profile')
+  //     .send({
+  //       userId: 10001,  // Ensure this matches the userId in the database
+  //       name: 'John Updated',
+  //       gender: 'Male',
+  //       dob: { year: 1990, month: 1, day: 1 },
+  //       height: { feet: 6, inches: 2 },
+  //     });
   
-    // Log the response for debugging
-    console.log('Response status code:', res.statusCode);
-    console.log('Response body:', res.body);
+  //   // Log the response for debugging
+  //   console.log('Response status code:', res.statusCode);
+  //   console.log('Response body:', res.body);
   
-    // Assertions
-    expect(res.statusCode).toEqual(200);  // Expect a successful profile update
-    expect(res.body.message).toBe('Profile updated successfully');
-    expect(res.body.userProfile.name).toBe('John Updated');
-  });
+  //   // Assertions
+  //   expect(res.statusCode).toEqual(200);  // Expect a successful profile update
+  //   expect(res.body.message).toBe('Profile updated successfully');
+  //   expect(res.body.userProfile.name).toBe('John Updated');
+  // });
   
   
   

@@ -10,7 +10,7 @@ router.post('/login', loginUser);
 
 // View all users
 router.get('/view-users', viewUsers);
-router.get('/view-users', updateProfile);
+// router.get('/view-users', updateProfile);
 
 // Manage user profile (GET and POST)
 router.get('/manage-profile', manageProfile);
