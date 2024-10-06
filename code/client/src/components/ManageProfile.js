@@ -3,10 +3,9 @@ import apiClient from "../services/apiClient.js";
 import { Box, Typography, TextField, MenuItem, Button } from "@mui/material";
 import { box, bigTitle, inputBackground, menuPropsStyles, submitButton } from "./style/styles.js";
 import { authenticated } from "../utils/authenticate.js";
+import { validateProfileForm } from "../utils/validateProfileForm.js";
 
 function ManageProfile() {
-  
-
 
   const [profileData, setProfileData] = useState({
     userId: "",
@@ -73,6 +72,13 @@ function ManageProfile() {
     // Clear any existing messages before processing the form
     setSuccessMessage('');
     setErrorMessage('');
+
+    // Validate form
+    const validationResult = validateProfileForm(profileData);
+    if (!validationResult.isValid) {
+      setErrorMessage(validationResult.message);
+      return; // Prevent form submission
+    }
 
     try {
       await apiClient.post("/api/users/manage-profile", profileData);
