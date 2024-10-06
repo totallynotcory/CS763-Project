@@ -33,8 +33,7 @@ const userSchema = new Schema({
     feet: { type: Number, default: 0, min: 0, max: 7 },
     inches: { type: Number, default: 0, min: 0, max: 12 },
   },
-  createdAt: { type: Date, default: Date.now },
-  goals: { type: [goalSchema], default: [] },  // Array of goals
+  createdAt: { type: Date, default: Date.now }
 }, {
   collection: 'users',
 });
