@@ -7,6 +7,7 @@ import ViewUsers from "./components/ViewUsers.js";
 import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
+import ManageDailyData from "./components/ManageDailyData.js";
 
 import React, { useState, useEffect } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -34,7 +35,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
-import CloseIcon from "@mui/icons-material/Close";
+import TodayIcon from '@mui/icons-material/Today';
 
 import "@fontsource/mulish";
 
@@ -164,6 +165,16 @@ function App({ RouterComponent = Router }) {
               </ListItem>
 
               <ListItem disablePadding>
+                <ListItemButton component={Link} to="/manage-daily-data">
+                  <ListItemIcon>
+                    {" "}
+                    <TodayIcon />{" "}
+                  </ListItemIcon>
+                  <ListItemText primary="Manage Daily Data" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
                 <ListItemButton component={Link} to="/create-goal">
                   <ListItemIcon>
                     {" "}
@@ -182,6 +193,7 @@ function App({ RouterComponent = Router }) {
                   <ListItemText primary="Manage Profile" />
                 </ListItemButton>
               </ListItem>
+
               {/* <ListItem disablePadding>
                 <ListItemButton component={Link} to="/view-users">
                   <ListItemIcon>
@@ -217,6 +229,7 @@ function App({ RouterComponent = Router }) {
                 <Route path="/manage-profile" element={<ManageProfile />} />
                 <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
                 <Route path="/enter-daily-data" element={<DailyData />} />
+                <Route path="/manage-daily-data" element={<ManageDailyData />} />
                 <Route path="/create-goal" element={<CreateGoal />} />
               </Routes>
             </Box>
