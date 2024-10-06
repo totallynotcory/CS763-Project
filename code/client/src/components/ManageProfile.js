@@ -24,20 +24,19 @@ function ManageProfile() {
     const token = authenticated()
 
     if (token) {
-
+      apiClient
+        .get("/api/users/manage-profile", {
+          headers: { Authorization: `Bearer ${token}` }
+        }) // Fetch user profile data from the backend (e.g., /manage-profile)
+        .then((res) => {
+          setProfileData(res.data); 
+        })
+        .catch((err) => {
+          setError("Error fetching profile data. Try refreshing.");
+          console.log(err);
+        });
     }
-
-    apiClient
-      .get("/api/users/manage-profile", {
-        headers: { Authorization: `Bearer ${token}` }
-      }) // Fetch user profile data from the backend (e.g., /manage-profile)
-      .then((res) => {
-        setProfileData(res.data); 
-      })
-      .catch((err) => {
-        setError("Error fetching profile data. Try refreshing.");
-        console.log(err);
-      });
+    
   }, []);
 
   // Handle input changes
