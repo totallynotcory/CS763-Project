@@ -1,11 +1,6 @@
 export function validateProfileForm(formData) {
     const { name, gender, dob, height } = formData;
 
-    console.log(name)
-    console.log(gender)
-    console.log(dob)
-    console.log(height)
-
     // Checking there is input data in each field
     if (!name || !gender || !dob || !height) {
         return { isValid: false, message: 'Form field(s) missing' };
@@ -31,5 +26,5 @@ export function validateProfileForm(formData) {
     }
 
     // If all validations pass
-    return { isValid: true, message: '' };
+    return { isValid: true, message: 'Form is valid' };
 }
