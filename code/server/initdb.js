@@ -1,6 +1,6 @@
 // This file is for initializing data to the MongoDB database 
 
-const db = require("./db.js")
+const db = require("./config/db.js")
 
 const User = db.getModel().userModel
 const Goal = db.getModel().goalModel

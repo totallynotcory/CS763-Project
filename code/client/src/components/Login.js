@@ -52,9 +52,11 @@ function Login({ setIsAuthenticated }) {
     setError("");
     // setSuccess('');
     try {
-      const response = await apiClient.post("/login", formData);
+      const response = await apiClient.post("/api/users/login", formData);
+      const { token, userId } = response.data;
       // store token
-      localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("authToken", token);
+      localStorage.setItem('userId', userId);
       // redirect to home page
       setIsAuthenticated(true);
       //console.log('login success:', response.data);
