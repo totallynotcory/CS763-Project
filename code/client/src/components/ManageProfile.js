@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient.js";
 import { Box, Typography, TextField, MenuItem, Button } from "@mui/material";
 import { box, bigTitle, inputBackground, menuPropsStyles, submitButton } from "./style/styles.js";
+import { authenticated } from "../utils/authenticate.js";
 
 function ManageProfile() {
   
+
+
   const [profileData, setProfileData] = useState({
     userId: "",
     email: "",
@@ -19,8 +22,16 @@ function ManageProfile() {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+    const token = authenticated()
+
+    if (token) {
+
+    }
+
     apiClient
-      .get("/api/users/manage-profile") // Fetch user profile data from the backend (e.g., /manage-profile)
+      .get("/api/users/manage-profile", {
+        headers: { Authorization: `Bearer ${token}` }
+      }) // Fetch user profile data from the backend (e.g., /manage-profile)
       .then((res) => {
         setProfileData(res.data); 
       })

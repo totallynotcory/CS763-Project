@@ -12,6 +12,7 @@ export function authenticated() {
             window.location.href = '/login';
         }
     }
+    return token
 }
   
 function validateToken(token) {

@@ -17,10 +17,25 @@ exports.viewUsers = async (req, res) => {
 // Manage Profile (GET)
 exports.manageProfile = async (req, res) => {
   try {
-    const userId = 1; // Hardcoded, should be dynamic (e.g., from token)
-    const userProfile = await User.findOne({ userId });
+    // Get token from Authorization header
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+      return res.status(401).json({ message: 'Authorization header is missing' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'Token is missing' });
+    }
+
+    // Verify and decode the token
+    const secretKey = process.env.SECRET_KEY;
+    const decoded = jwt.verify(token, secretKey);
     
-    console.log(userProfile)
+    // Extract userId from the decoded token
+    const userId = decoded.userId;
+
+    const userProfile = await User.findOne({ userId });
 
     if (!userProfile) {
       return res.status(404).json({ message: 'User not found' });
