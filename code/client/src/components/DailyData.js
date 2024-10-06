@@ -121,7 +121,7 @@ function DailyData() {
   return (
     <Box sx={box}>
       <Typography variant="h6" gutterBottom sx={title}>
-        Enter your data here:
+        Enter your data for the day:
       </Typography>
 
       <form onSubmit={handleSubmit}>
