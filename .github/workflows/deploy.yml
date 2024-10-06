@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - dev
+      - AddServerTestsToPipeline
 
 jobs:
   # Step 1: Testing using Jest
-  test:
+  Test-Client:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -28,10 +29,33 @@ jobs:
           cd code/client
           npm test
 
-  # Step 2: Deployment job depends on successful completion of tests
-  deploy:
+  # Step 2: Testing using Jest
+  Test-Server:
     runs-on: ubuntu-latest
-    needs: test  # This ensures that the deploy job runs only if the test job succeeds
+    needs: Test-Client
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x' # Use the version of Node.js your project requires
+
+      - name: Install dependencies for the server
+        run: |
+          cd code/server
+          npm ci
+
+      - name: Run Jest tests
+        run: |
+          cd code/server
+          npm test
+
+  # Step 3: Deployment job depends on successful completion of tests
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: Test-Client  # This ensures that the deploy job runs only if the test job succeeds
 
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
