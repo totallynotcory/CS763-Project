@@ -1,8 +1,7 @@
+import React, { useState, useEffect } from "react"; // Added useEffect import
 import apiClient from "../services/apiClient.js";
-import React, { useState } from "react";
 import { validateGoalForm } from '../utils/validateGoalForm.js';
 import { authenticated } from "../utils/authenticate.js";
-
 import {
   Box,
   Typography,
@@ -24,7 +23,16 @@ import {
 } from "./style/styles.js";
 
 function CreateGoal() {
-  authenticated();
+  // Profile Data State
+  const [profileData, setProfileData] = useState({
+    userId: "",
+    email: "",
+    name: "",
+    gender: "",
+    dob: { year: 1900, month: 1, day: 1 },
+    height: { feet: "", inches: "" },
+  });
+
   const [goalFormData, setGoalFormData] = useState({
     type: "",
     targetValue: 0,
@@ -32,6 +40,26 @@ function CreateGoal() {
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState(null); // State for managing error when fetching profile
+
+  // useEffect to fetch profile data
+  useEffect(() => {
+    const token = authenticated();
+
+    if (token) {
+      apiClient
+        .get("/api/users/manage-profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        }) // Fetch user profile data from the backend
+        .then((res) => {
+          setProfileData(res.data); // Set the fetched profile data
+        })
+        .catch((err) => {
+          setError("Error fetching profile data. Try refreshing.");
+          console.log(err);
+        });
+    }
+  }, []); // Empty dependency array to run only once after the component mounts
 
   // Handle input changes
   const handleChange = (e) => {
@@ -42,77 +70,76 @@ function CreateGoal() {
     }));
   };
 
-// Function to handle the form submission event
-const handleSubmit = (event) => {
-  event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
-  
-  // Clear any existing messages before processing the form
-  clearMessages();
+  // Function to handle the form submission event
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    clearMessages();
 
-  // Validate the form and, if valid, proceed with goal creation
-  if (validateAndSetMessages(goalFormData)) {
-    createGoal(goalFormData);
-  }
-};
+    if (validateAndSetMessages(goalFormData)) {
+      createGoal(goalFormData);
+    }
+  };
 
-// Function to clear any success or error messages
-const clearMessages = () => {
-  setSuccessMessage('');
-  setErrorMessage('');
-};
+  // Clear messages
+  const clearMessages = () => {
+    setSuccessMessage('');
+    setErrorMessage('');
+  };
 
-// Function to validate the goal form and handle validation messages
-const validateAndSetMessages = (formData) => {
-  const validationResult = validateGoalForm(formData);
+  // Validate form
+  const validateAndSetMessages = (formData) => {
+    const validationResult = validateGoalForm(formData);
+    if (!validationResult.isValid) {
+      setErrorMessage(validationResult.message);
+      return false;
+    }
+    return true;
+  };
 
-  if (!validationResult.isValid) {
-    setErrorMessage(validationResult.message);
-    return false; // Prevent form submission if validation fails
-  }
+  // Create goal
+  const createGoal = async (formData) => {
+    try {
+      console.log("Creating new goal with data:", formData);
 
-  return true;
-};
+      const token = authenticated();
+      console.log("Token:", token);
 
-// Function to create a new goal by making a POST request
-const createGoal = async (formData) => {
-  try {
-    console.log("Creating new goal with data:", formData);
-    // Sends a POST request to the backend with the form data
-    await apiClient.post("/api/goals/create-goal", formData);
-    handleGoalSuccess(); // Handle the success case
-  } catch (error) {
-    handleGoalError(error); // Handle the error case
-  }
-};
+      await apiClient.post("/api/goals/create-goal", formData, {
+        headers: { Authorization: `Bearer ${token}` }, // Pass token
+      });
+      
+      handleGoalSuccess();
+    } catch (error) {
+      handleGoalError(error);
+    }
+  };
 
-// Function to handle a successful goal creation
-const handleGoalSuccess = () => {
-  console.log("Goal created successfully!");
-  setSuccessMessage('New goal successful!');
-};
+  // Handle success
+  const handleGoalSuccess = () => {
+    console.log("Goal created successfully!");
+    setSuccessMessage('New goal successful!');
+  };
 
-// Function to handle errors during goal creation
-const handleGoalError = (error) => {
-  console.error("Error creating goal:", error);
-  setErrorMessage('Failed to create a new goal. Please try again.');
-};
-
+  // Handle error
+  const handleGoalError = (error) => {
+    console.error("Error creating goal:", error);
+    setErrorMessage('Failed to create a new goal. Please try again.');
+  };
 
   return (
     <Box sx={box}>
       <Typography variant="h6" gutterBottom sx={title}>
         Set up your goal here:
       </Typography>
-      {/* Set up your goal here:  */}
       <form onSubmit={handleSubmit}>
         <Grid2 container spacing={2}>
-          {/*  Select a goal type */}
+          {/* Select a goal type */}
           <Grid2 item xs={12} md={6}>
             <FormControl fullWidth>
               <InputLabel sx={inputLable}>Select a goal type</InputLabel>
               <Select
                 data-testid="goal-type-select"
-                name="type" // Add name to ensure proper handling
+                name="type"
                 value={goalFormData.type}
                 onChange={handleChange}
                 label="Select a goal type"
@@ -120,7 +147,9 @@ const handleGoalError = (error) => {
                 MenuProps={menuPropsStyles}
               >
                 <MenuItem value="sleep">Sleep (Hours)</MenuItem>
-                <MenuItem data-testid="goal-type-weight" value="weight">Weight (lbs)</MenuItem>
+                <MenuItem data-testid="goal-type-weight" value="weight">
+                  Weight (lbs)
+                </MenuItem>
                 <MenuItem value="steps">Steps (Step Count)</MenuItem>
                 <MenuItem value="water">Water Intake (Glasses)</MenuItem>
                 <MenuItem value="exercise">Exercise (Minutes)</MenuItem>
@@ -156,9 +185,14 @@ const handleGoalError = (error) => {
           </Grid2>
         </Grid2>
       </form>
-      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
+      {errorMessage && (
+        <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>
+      )}
+      {successMessage && (
+        <p style={{ color: "#008000", fontWeight: "bold" }}>{successMessage}</p>
+      )}
     </Box>
   );
 }
+
 export default CreateGoal;

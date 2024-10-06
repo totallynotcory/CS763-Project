@@ -182,9 +182,7 @@ function App({ RouterComponent = Router }) {
                   <ListItemText primary="Manage Profile" />
                 </ListItemButton>
               </ListItem>
-   
-
-              <ListItem disablePadding>
+              {/* <ListItem disablePadding>
                 <ListItemButton component={Link} to="/view-users">
                   <ListItemIcon>
                     {" "}
@@ -192,7 +190,7 @@ function App({ RouterComponent = Router }) {
                   </ListItemIcon>
                   <ListItemText primary="View Users (delete?)" />
                 </ListItemButton>
-              </ListItem>
+              </ListItem> */}
             </List>
           </Drawer>
 
