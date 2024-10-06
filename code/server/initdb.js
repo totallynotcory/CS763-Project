@@ -1,5 +1,6 @@
 // This file is for initializing data to the MongoDB database 
 
+const bcrypt = require('bcrypt');
 const db = require("./config/db.js")
 
 const User = require("./models/User");
@@ -15,6 +16,11 @@ async function init() {
         // await User.deleteMany({})
         // await Goal.deleteMany({})
         // await DailyEntry.deleteMany({})
+
+        // hashing "password" to be used as default password for users created here
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash("password", saltRounds); 
+
 
         let goal1 = new Goal({
             goalId: 50001,
@@ -36,20 +42,46 @@ async function init() {
 
         let user1 = new User({
             userId: 10001,
-            email: "test@gmail.com",
-            passwordHashed: "pa55w0rd",
-            name: "John Smith",
+            email: "akyee@bu.edu",
+            passwordHashed: hashedPassword,
+            name: "Amanda Yee",
             createdAt: "2024-09-01",
-            goals: [goal1, goal2]
+            goals: [goal1, goal2] // Connect default goals to user
         })
 
         let user2 = new User({
             userId: 10002,
-            email: "hello@bu.edu",
-            passwordHashed: "b0st0nuniversity",
-            name: "Jane Doe",
-            // createdAt: "2024-09-01", // testing the default param in schema works
-            goals: []
+            email: "abbieyl@bu.edu",
+            passwordHashed: hashedPassword,
+            name: "Abbie-Yu Luo"
+        })
+
+        let user3 = new User({
+            userId: 10003,
+            email: "ccerav@bu.edu",
+            passwordHashed: hashedPassword,
+            name: "Chris Ceravolo"
+        })
+
+        let user4 = new User({
+            userId: 10004,
+            email: "elee27@bu.edu",
+            passwordHashed: hashedPassword,
+            name: "Eddie Lee"
+        })
+
+        let user5 = new User({
+            userId: 10005,
+            email: "kenlight@bu.edu",
+            passwordHashed: hashedPassword,
+            name: "Kenny Light"
+        })
+
+        let user6 = new User({
+            userId: 10006,
+            email: "zihaoq@bu.edu",
+            passwordHashed: hashedPassword,
+            name: "Zihao Qian"
         })
 
         let dailyEntry1 = new DailyEntry({
@@ -64,10 +96,9 @@ async function init() {
         })
     
         await Promise.all([
-            user1.save(),
-            user2.save(),
-            goal1.save(),
-            goal2.save(),
+            user1.save(), user2.save(), user3.save(),
+            user4.save(), user5.save(), user6.save(),
+            goal1.save(), goal2.save(),
             dailyEntry1.save()
         ])
     
