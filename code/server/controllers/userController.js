@@ -83,10 +83,7 @@ exports.updateProfile = async (req, res) => {
       res.status(500).json({ message: 'Error updating profile' });
     }
   };
-  
-  
-  
-  
+
 
 // Create User
 exports.createUser = async (req, res) => {

@@ -2,12 +2,15 @@
 
 const db = require("./config/db.js")
 
-const User = db.getModel().userModel
-const Goal = db.getModel().goalModel
-const DailyEntry = db.getModel().dailyEntryModel
+const User = require("./models/User");
+const Goal = require("./models/Goal");
+const DailyEntry = require("./models/DailyEntry");
 
 async function init() {
     try {
+        // Connect to MongoDB
+        await db.connectDB();
+
         // Option to delete existing data for full reset
         // await User.deleteMany({})
         // await Goal.deleteMany({})
