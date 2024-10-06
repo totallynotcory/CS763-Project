@@ -1,5 +1,6 @@
 // This file is for initializing data to the MongoDB database 
 
+const bcrypt = require('bcrypt');
 const db = require("./config/db.js")
 
 const User = require("./models/User");
@@ -15,6 +16,11 @@ async function init() {
         // await User.deleteMany({})
         // await Goal.deleteMany({})
         // await DailyEntry.deleteMany({})
+
+        // hashing "password" to be used as default password for users created here
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash("password", saltRounds); 
+
 
         let goal1 = new Goal({
             goalId: 50001,
@@ -37,7 +43,7 @@ async function init() {
         let user1 = new User({
             userId: 10001,
             email: "akyee@bu.edu",
-            passwordHashed: "password",
+            passwordHashed: hashedPassword,
             name: "Amanda Yee",
             createdAt: "2024-09-01",
             goals: [goal1, goal2] // Connect default goals to user
@@ -46,35 +52,35 @@ async function init() {
         let user2 = new User({
             userId: 10002,
             email: "abbieyl@bu.edu",
-            passwordHashed: "password",
+            passwordHashed: hashedPassword,
             name: "Abbie-Yu Luo"
         })
 
         let user3 = new User({
             userId: 10003,
             email: "ccerav@bu.edu",
-            passwordHashed: "password",
+            passwordHashed: hashedPassword,
             name: "Chris Ceravolo"
         })
 
         let user4 = new User({
             userId: 10004,
             email: "elee27@bu.edu",
-            passwordHashed: "password",
+            passwordHashed: hashedPassword,
             name: "Eddie Lee"
         })
 
         let user5 = new User({
             userId: 10005,
             email: "kenlight@bu.edu",
-            passwordHashed: "password",
+            passwordHashed: hashedPassword,
             name: "Kenny Light"
         })
 
         let user6 = new User({
             userId: 10006,
             email: "zihaoq@bu.edu",
-            passwordHashed: "password",
+            passwordHashed: hashedPassword,
             name: "Zihao Qian"
         })
 
