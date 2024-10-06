@@ -7,7 +7,6 @@ import ViewUsers from "./components/ViewUsers.js";
 import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
-import Dashboard from "./components/Dashboard.js"
 
 import React, { useState, useEffect } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -176,16 +175,6 @@ function App() {
               </ListItem>
 
               <ListItem disablePadding>
-                <ListItemButton component={Link} to="/dashboard">
-                  <ListItemIcon>
-                    {" "}
-                    <BarChartIcon />{" "}
-                  </ListItemIcon>
-                  <ListItemText primary="Dash-board" />
-                 </ListItemButton>
-              </ListItem>
-
-              <ListItem disablePadding>
                 <ListItemButton component={Link} to="/manage-profile">
                   <ListItemIcon>
                     {" "}
@@ -232,7 +221,6 @@ function App() {
                 <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
                 <Route path="/enter-daily-data" element={<DailyData />} />
                 <Route path="/create-goal" element={<CreateGoal />} />
-                <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
             </Box>
           </Box>

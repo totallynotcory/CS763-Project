@@ -17,9 +17,11 @@ exports.viewUsers = async (req, res) => {
 // Manage Profile (GET)
 exports.manageProfile = async (req, res) => {
   try {
-    const userId = 10001; // Hardcoded, should be dynamic (e.g., from token)
+    const userId = 1; // Hardcoded, should be dynamic (e.g., from token)
     const userProfile = await User.findOne({ userId });
     
+    console.log(userProfile)
+
     if (!userProfile) {
       return res.status(404).json({ message: 'User not found' });
     }
