@@ -7,8 +7,10 @@ import ViewUsers from "./components/ViewUsers.js";
 import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
+
 import React, { useState, useEffect } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
+
 // Styling
 import {
   createTheme,
@@ -33,6 +35,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import CloseIcon from "@mui/icons-material/Close";
+import BarChartIcon from "@mui/icons-material/BarChart";
 
 import "@fontsource/mulish";
 
@@ -180,6 +183,7 @@ function App() {
                   <ListItemText primary="Manage Profile" />
                 </ListItemButton>
               </ListItem>
+   
 
               <ListItem disablePadding>
                 <ListItemButton component={Link} to="/view-users">
@@ -199,7 +203,7 @@ function App() {
             sx={{
               flexGrow: 1,
               bgcolor: "#E2DDD5", // Background color applied here
-              height: "100vh", // Full viewport height for every page
+              minHeight: "100vh", // Full viewport height for every page
               display: "flex",
               flexDirection: "column",
             }}

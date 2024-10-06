@@ -204,3 +204,11 @@ export const bigTitle = {
   fontSize: "3rem",
   fontWeight: "600",
 };
+
+
+//Dashboard
+export const dashboardLineChartContainer = {
+  width: "600px",
+  height: "200px",
+  marginBottom: "50px"
+}
