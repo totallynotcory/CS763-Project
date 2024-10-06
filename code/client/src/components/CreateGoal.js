@@ -90,7 +90,7 @@ function CreateGoal() {
   const validateAndSetMessages = (formData) => {
     const validationResult = validateGoalForm(formData);
     if (!validationResult.isValid) {
-      setErrorMessage('Error: Please review your inputs and try again');
+      setErrorMessage(validationResult.message);
       return false;
     }
     return true;
