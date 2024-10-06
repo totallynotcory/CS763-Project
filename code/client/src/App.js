@@ -35,7 +35,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import CloseIcon from "@mui/icons-material/Close";
-import BarChartIcon from "@mui/icons-material/BarChart";
 
 import "@fontsource/mulish";
 
@@ -55,7 +54,7 @@ const theme = createTheme({
 
 
 
-function App() {
+function App({ RouterComponent = Router }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // On component mount, check if user is already logged in
@@ -74,7 +73,7 @@ function App() {
   };
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <RouterComponent>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
 
@@ -225,7 +224,7 @@ function App() {
             </Box>
           </Box>
         </Box>
-      </Router>
+      </RouterComponent>
     </ThemeProvider>
   );
 }
