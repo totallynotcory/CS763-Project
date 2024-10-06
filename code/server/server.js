@@ -21,5 +21,12 @@ app.use('/api/daily-entry', require('./routes/dailyEntryRoutes'));
 // Test route
 app.get('/', (req, res) => res.send('Server is running...'));
 
-// Start the server
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// Export the app without starting the server
+module.exports = app;
+
+// Start the server only when the file is run directly (not during tests)
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}

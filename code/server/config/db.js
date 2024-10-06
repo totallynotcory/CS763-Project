@@ -13,12 +13,17 @@ const envFile = process.env.NODE_ENV === 'production' ? '../.env.production' : '
 dotenv.config({ path: path.resolve(__dirname, `../${envFile}`) })
 
 const connectDB = async () => {
+	if (process.env.NODE_ENV === 'test') {
+		console.log('Skipping MongoDB connection for testing');
+		return; // Don't connect to MongoDB during testing
+	}
+
 	try {
-	  const conn = await mongoose.connect(process.env.MONGO_URI);
-	  console.log(`MongoDB Connected: ${conn.connection.host}`);
-	} catch (error) {
-	  console.error(`Error: ${error.message}`);
-	  process.exit(1);
+			const conn = await mongoose.connect(process.env.MONGO_URI);
+			console.log(`MongoDB Connected: ${conn.connection.host}`);
+		} catch (error) {
+		console.error(`Error: ${error.message}`);
+		process.exit(1);
 	}
   };
   
