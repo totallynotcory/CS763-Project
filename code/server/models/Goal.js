@@ -15,6 +15,7 @@ const goalSchema = new Schema({
   unit: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   progress: { type: [progressSchema], default: [] },  // Array of progress entries
+  userId: { type: Number, required: false }
 }, {
   collection: 'goals',  // Specify the collection name
 });
