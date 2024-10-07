@@ -20,17 +20,14 @@ import {
   textField,
   inputLable,
   inputBackground,
-  menuPropsStyles,
   submitButton,
-  sideMenuBox,
-  sideMenuTitle,
   datePick,
   calendarStyle,
 } from "./style/styles.js";
+import { validateDailyDataForm } from "../utils/validateDailyDataForm.js";
 
 function DailyData() {
   const [formData, setFormData] = useState({
-    // entryDate: "",
     weight: "",
     steps: "",
     sleep: "",
@@ -49,11 +46,6 @@ function DailyData() {
       [name]: value,
     }));
   };
-
-  // const [mood, setMood] = useState(3);
-  // const [breakfast, setBreakfast] = useState("");
-  // const [lunch, setLunch] = useState("");
-  // const [dinner, setDinner] = useState("");
 
   // date
   const [date, setDate] = useState(null); //
@@ -74,10 +66,6 @@ function DailyData() {
   const formatDate = (date) => {
     return date ? date.toLocaleDateString("en-CA") : "";
   };
-
-  // const handleMoodChange = (event, newValue) => {
-  //   setMood(newValue);
-  // };
 
   const calendarRef = useRef(null);
 
@@ -110,6 +98,13 @@ function DailyData() {
       ...formData, // Include all the existing form data (weight, steps, sleep, etc.)
       entryDate: date ? date.toISOString().split('T')[0] : null, // Add the selected date
     };
+
+    // Validate form inputs
+    const validationResult = validateDailyDataForm(updatedFormData);
+    if (!validationResult.isValid) {
+      setErrorMessage(validationResult.message);
+      return; // Prevent form submission
+    }
   
     try {
       const token = authenticated()
@@ -138,6 +133,7 @@ function DailyData() {
           label="Select a date"
           value={formatDate(date)}
           onClick={handleTextFieldClick}
+          required
           readOnly
           variant="filled"
           sx={datePick}
@@ -171,6 +167,7 @@ function DailyData() {
               name="weight"
               value={formData.weight}
               onChange={handleChange}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -192,6 +189,7 @@ function DailyData() {
               name="steps"
               value={formData.steps}
               onChange={handleChange}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -213,6 +211,7 @@ function DailyData() {
               name="sleep"
               value={formData.sleep}
               onChange={handleChange}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -235,6 +234,7 @@ function DailyData() {
               name="water"
               value={formData.water}
               onChange={handleChange}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
