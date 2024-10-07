@@ -146,6 +146,30 @@ export const calendarStyle = {
   marginBottom: "4%",
 };
 
+
+//ManageDailyData
+export const dailyDataEntryCard = {
+  marginBottom: "1em",
+  padding: ".5em",
+  borderColor: "gray",
+  borderWidth: "1px",
+  borderStyle: "solid",
+  borderRadius: "10px",
+}
+
+export const dailyDataEntryCardHeader = {
+  fontWeight: "bold"
+}
+
+export const dailyDataEntryCardDelete = {
+  color: "red",
+  fontSize: ".6em",
+  fontWeight: "bold",
+  cursor: 'pointer',
+  marginBottom: '.5em',
+}
+
+
 // DailyData - side menu
 export const sideMenuBox = {
   position: "absolute",
@@ -204,3 +228,14 @@ export const bigTitle = {
   fontSize: "3rem",
   fontWeight: "600",
 };
+
+
+//Dashboard
+export const dashboardLineChartContainer = {
+  width: "600px",
+  height: "200px",
+  marginBottom: "50px"
+}
+
+
+

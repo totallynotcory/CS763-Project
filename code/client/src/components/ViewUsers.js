@@ -15,7 +15,7 @@ function ViewUsers() {
 
   useEffect(() => {
     apiClient
-      .get("/view-users")
+      .get("/api/users/view-users")
       .then((res) => {
         setData(res.data);
       })

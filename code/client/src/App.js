@@ -4,10 +4,14 @@ import Home from "./components/Home.js";
 import Login from "./components/Login.js";
 import CreateUser from "./components/CreateUser.js";
 import ViewUsers from "./components/ViewUsers.js";
+import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
+import ManageDailyData from "./components/ManageDailyData.js";
+
 import React, { useState, useEffect } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
+
 // Styling
 import {
   createTheme,
@@ -28,11 +32,14 @@ import {
 
 import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
-// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
+import TodayIcon from '@mui/icons-material/Today';
 import CloseIcon from "@mui/icons-material/Close";
+
 import { useNavigate } from 'react-router-dom';
+
 import "@fontsource/mulish";
 
 const sidebarWidth = "20vh";
@@ -74,7 +81,7 @@ function LogoutButton({ setIsAuthenticated }) {
 }
 
 
-function App() {
+function App({ RouterComponent = Router }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // On component mount, check if user is already logged in
@@ -85,7 +92,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <RouterComponent>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
 
@@ -169,6 +176,16 @@ function App() {
               </ListItem>
 
               <ListItem disablePadding>
+                <ListItemButton component={Link} to="/manage-daily-data">
+                  <ListItemIcon>
+                    {" "}
+                    <TodayIcon />{" "}
+                  </ListItemIcon>
+                  <ListItemText primary="Manage Daily Data" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
                 <ListItemButton component={Link} to="/create-goal">
                   <ListItemIcon>
                     {" "}
@@ -179,6 +196,16 @@ function App() {
               </ListItem>
 
               <ListItem disablePadding>
+                <ListItemButton component={Link} to="/manage-profile">
+                  <ListItemIcon>
+                    {" "}
+                    <AccountCircleIcon />{" "}
+                  </ListItemIcon>
+                  <ListItemText primary="Manage Profile" />
+                </ListItemButton>
+              </ListItem>
+
+              {/* <ListItem disablePadding>
                 <ListItemButton component={Link} to="/view-users">
                   <ListItemIcon>
                     {" "}
@@ -186,7 +213,7 @@ function App() {
                   </ListItemIcon>
                   <ListItemText primary="View Users (delete?)" />
                 </ListItemButton>
-              </ListItem>
+              </ListItem> */}
             </List>
           </Drawer>
 
@@ -196,7 +223,7 @@ function App() {
             sx={{
               flexGrow: 1,
               bgcolor: "#E2DDD5", // Background color applied here
-              height: "100vh", // Full viewport height for every page
+              minHeight: "100vh", // Full viewport height for every page
               display: "flex",
               flexDirection: "column",
             }}
@@ -210,14 +237,16 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/view-users" element={<ViewUsers />} />
+                <Route path="/manage-profile" element={<ManageProfile />} />
                 <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
                 <Route path="/enter-daily-data" element={<DailyData />} />
+                <Route path="/manage-daily-data" element={<ManageDailyData />} />
                 <Route path="/create-goal" element={<CreateGoal />} />
               </Routes>
             </Box>
           </Box>
         </Box>
-      </Router>
+      </RouterComponent>
     </ThemeProvider>
   );
 }
