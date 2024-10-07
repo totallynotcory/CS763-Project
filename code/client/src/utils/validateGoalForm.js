@@ -12,16 +12,25 @@ export function validateGoalForm(formData) {
       {
         return { isValid: false, message: 'Form field(s) missing' };
     }  
-    if  (
-        (sleepHours < 0 || sleepHours > 24)||
-        weightLbs <= 0 ||
-        stepsCounts < 0 ||
-        waterIntakeGlasses < 0 ||
-        exerciseMinutes < 0
-      )
-      {
-        return { isValid: false, message: 'Form field(s) must be greater than or equal to zero' };
-      }
+    if (isNaN(sleepHours) || sleepHours < 0 || sleepHours > 24) {
+      return { isValid: false, message: 'Sleep hours must be a number between 0 and 24' };
+    }
+  
+    if (isNaN(weightLbs) || weightLbs <= 0) {
+      return { isValid: false, message: 'Weight must be a positive number' };
+    }
+  
+    if (isNaN(stepsCounts) || stepsCounts < 0) {
+      return { isValid: false, message: 'Steps cannot be negative' };
+    }
+  
+    if (isNaN(waterIntakeGlasses) || waterIntakeGlasses < 0) {
+      return { isValid: false, message: 'Water intake cannot be negative' };
+    }
+  
+    if (isNaN(exerciseMinutes) || exerciseMinutes < 0) {
+      return { isValid: false, message: 'Exercise minutes cannot be negative' };
+    }
 
     return { isValid: true, message: 'Form is valid' };
 
