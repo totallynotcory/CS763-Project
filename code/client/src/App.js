@@ -8,6 +8,7 @@ import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
 import ManageDailyData from "./components/ManageDailyData.js";
+import LogoutButton from './components/Logout.js';
 
 import React, { useState, useEffect } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -56,29 +57,6 @@ const theme = createTheme({
   },
 });
 
-function LogoutButton({ setIsAuthenticated }) {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-  
-    localStorage.removeItem('authToken');
-
-    setIsAuthenticated(false);
-
-    navigate('/login');
-  };
-
-  return (
-    <ListItem disablePadding>
-      <ListItemButton onClick={handleLogout}>
-        <ListItemIcon>
-          <LogoutIcon />
-        </ListItemIcon>
-        <ListItemText primary="Logout" />
-      </ListItemButton>
-    </ListItem>
-  );
-}
 
 
 function App({ RouterComponent = Router }) {
@@ -153,17 +131,17 @@ function App({ RouterComponent = Router }) {
               </ListItem>
 
               {!isAuthenticated ? (
-                <ListItem disablePadding>
-                  <ListItemButton component={Link} to="/login">
-                    <ListItemIcon>
-                      <LoginIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Login" />
-                  </ListItemButton>
-                </ListItem>
-              ) : (
-                <LogoutButton setIsAuthenticated={setIsAuthenticated} />
-              )}
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/login">
+                  <ListItemIcon>
+                    <LoginIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Login" />
+                </ListItemButton>
+              </ListItem>
+            ) : (
+              <LogoutButton setIsAuthenticated={setIsAuthenticated} />
+            )}
             
               <ListItem disablePadding>
                 <ListItemButton component={Link} to="/enter-daily-data">
