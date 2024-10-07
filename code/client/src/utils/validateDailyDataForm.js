@@ -8,7 +8,7 @@ export function validateDailyDataForm(formData) {
 
     // Checking validity of integer inputs
     if (weight < 0 || steps < 0 || sleep < 0 || water < 0 || exercise < 0) {
-        return { isValid: false, message: 'You cannot enter negative values for health metrics.' };
+        return { isValid: false, message: 'Inputs must be positive values' };
     }
 
     // If all validations pass
