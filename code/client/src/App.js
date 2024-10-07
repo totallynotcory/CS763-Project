@@ -8,6 +8,7 @@ import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
 import ManageDailyData from "./components/ManageDailyData.js";
+import LogoutButton from './components/Logout.js';
 
 import React, { useState, useEffect } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -36,6 +37,9 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import TodayIcon from '@mui/icons-material/Today';
+import CloseIcon from "@mui/icons-material/Close";
+
+import { useNavigate } from 'react-router-dom';
 
 import "@fontsource/mulish";
 
@@ -64,14 +68,6 @@ function App({ RouterComponent = Router }) {
     setIsAuthenticated(!!token);
   }, []);
 
-  const handleLogout = () => {
-  
-    localStorage.removeItem('authToken');
-    
-    setIsAuthenticated(false);
-    
-    // navigate('/login');
-  };
   return (
     <ThemeProvider theme={theme}>
       <RouterComponent>
@@ -143,16 +139,9 @@ function App({ RouterComponent = Router }) {
                   <ListItemText primary="Login" />
                 </ListItemButton>
               </ListItem>
-              ) : (
-              <ListItem disablePadding>
-                <ListItemButton onClick={handleLogout}>
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Logout" />
-                </ListItemButton>
-              </ListItem>
-              )}
+            ) : (
+              <LogoutButton setIsAuthenticated={setIsAuthenticated} />
+            )}
             
               <ListItem disablePadding>
                 <ListItemButton component={Link} to="/enter-daily-data">
