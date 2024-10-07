@@ -38,6 +38,9 @@ function DailyData() {
     exercise: "",
   });
 
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
   // Handle input changes and update formData state
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,6 +102,10 @@ function DailyData() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
 
+    // Clear any existing messages before processing the form
+    setSuccessMessage('');
+    setErrorMessage('');
+
     const updatedFormData = {
       ...formData, // Include all the existing form data (weight, steps, sleep, etc.)
       entryDate: date ? date.toISOString() : null, // Add the selected date
@@ -112,9 +119,11 @@ function DailyData() {
           headers: { Authorization: `Bearer ${token}` }, // Pass token
         })
         console.log("Daily entry processed");
+        setSuccessMessage('Daily entry successful!');
       }
     } catch (err) {
       console.log("Error submitting daily entry", err);
+      setErrorMessage('Error: Failed to submit daily entry. Please try again');
     }
   };
 
@@ -270,6 +279,8 @@ function DailyData() {
           </Grid2>
         </Grid2>
       </form>
+      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
+      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
     </Box>
   );
 }
