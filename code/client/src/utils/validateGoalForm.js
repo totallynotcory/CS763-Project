@@ -1,19 +1,29 @@
 export function validateGoalForm(formData) {
-    const { type, targetValue } = formData;
+    const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = formData;
 
-    if (typeof type !== 'string' || type.trim() === '') {
-        console.log('Type is required and must be a non-empty string');
-        return { isValid: false, message: 'Type is required and must be a non-empty string' };
-    }
 
-    // Convert targetValue to a number
-    const numericValue = Number(targetValue);
+    if(
+        sleepHours === "" ||
+        weightLbs === "" ||
+        stepsCounts === "" ||
+        waterIntakeGlasses === "" ||
+        exerciseMinutes === ""
+      )
+      {
+        return { isValid: false, message: 'Form field(s) missing' };
+    }  
+    if  (
+        (sleepHours < 0 || sleepHours > 24)||
+        weightLbs <= 0 ||
+        stepsCounts < 0 ||
+        waterIntakeGlasses < 0 ||
+        exerciseMinutes < 0
+      )
+      {
+        return { isValid: false, message: 'Form field(s) must be greater than or equal to zero' };
+      }
 
-    if (typeof numericValue !== 'number' || isNaN(numericValue) || numericValue < 0) {
-        console.log('Target value must be a valid number greater than or equal to zero');
-        return { isValid: false, message: 'Target value must be a valid number greater than or equal to zero' };
-    }
-
-    // If all validations pass
     return { isValid: true, message: 'Form is valid' };
+
+  
 }
