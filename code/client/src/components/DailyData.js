@@ -108,7 +108,7 @@ function DailyData() {
 
     const updatedFormData = {
       ...formData, // Include all the existing form data (weight, steps, sleep, etc.)
-      entryDate: date ? date.toISOString() : null, // Add the selected date
+      entryDate: date ? date.toISOString().split('T')[0] : null, // Add the selected date
     };
   
     try {
