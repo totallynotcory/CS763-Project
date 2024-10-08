@@ -10,7 +10,7 @@ const goalSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   userId: { type: Number, required: false }
 }, {
-  collection: 'goals',  // Specify the collection name
+  collection: 'goals', 
 });
 
 module.exports = mongoose.model('Goal', goalSchema);
