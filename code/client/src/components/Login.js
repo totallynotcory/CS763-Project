@@ -59,10 +59,8 @@ function Login({ setIsAuthenticated }) {
       localStorage.setItem('userId', userId);
       // redirect to home page
       setIsAuthenticated(true);
-      //console.log('login success:', response.data);
       navigate("/");
     } catch (error) {
-      //console.error('login error:', error);
       // warn user
       if (
         error.response &&
