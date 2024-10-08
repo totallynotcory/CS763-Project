@@ -146,47 +146,6 @@ describe('User Controller Endpoints', () => {
     });
   });
 
- 
-
-  
-  // it('should update the user profile', async () => {
-  //   // Create the user before attempting to update
-  //   const user = await User.create({
-  //     userId: 10001,
-  //     name: 'John Doe',
-  //     email: 'john@example.com',
-  //     passwordHashed: 'hashedPassword',
-  //   });
-  
-  //   // Log the created user to make sure it was inserted correctly
-  //   console.log('Created user:', user);
-  //   console.log('Created user with userId:', user.userId, typeof user.userId);  // Check the type of userId
-  
-  //   // Send the update request
-  //   const res = await request(app)
-  //     .post('/api/users/manage-profile')
-  //     .send({
-  //       userId: 10001,  // Ensure this matches the userId in the database
-  //       name: 'John Updated',
-  //       gender: 'Male',
-  //       dob: { year: 1990, month: 1, day: 1 },
-  //       height: { feet: 6, inches: 2 },
-  //     });
-  
-  //   // Log the response for debugging
-  //   console.log('Response status code:', res.statusCode);
-  //   console.log('Response body:', res.body);
-  
-  //   // Assertions
-  //   expect(res.statusCode).toEqual(200);  // Expect a successful profile update
-  //   expect(res.body.message).toBe('Profile updated successfully');
-  //   expect(res.body.userProfile.name).toBe('John Updated');
-  // });
-  
-  
-  
-
-
   describe('POST /api/users/create-user', () => {
     it('should create a new user', async () => {
       const res = await request(app)
