@@ -253,3 +253,41 @@ export const updateProfile = {
     color: "#303030",
   },
 };
+
+// Sign up Page
+export const signUpBox = {
+  width: "90%",
+  display: "flex",
+  justifyContent: "center",
+  padding: "2%",
+  borderRadius: "10px",
+  height: "calc(100vh - 8rem)",
+  alignItems: "center",
+  flexDirection: "column",
+};
+
+export const signUptextField = {
+  backgroundColor: "#5E5E5E",
+  borderRadius: "10px",
+  "& .MuiInputBase-input": {
+    color: "#F4F4F4", // input color
+  },
+  "& .MuiInputLabel-root": {
+    color: "#CACACA", // label color
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "#F8DEBD", // focused label color
+  },
+  "& .MuiFilledInput-underline:before": {
+    borderBottom: "none", // no underline when unfocused
+  },
+  "& .MuiFilledInput-underline:after": {
+    borderBottomColor: "#F8DEBD", // underline color when focused
+  },
+  "& .MuiInputAdornment-root": {
+    color: "#F4F4F4", // hour color
+  },
+  "& .MuiFilledInput-root:hover:before": {
+    borderBottom: "none !important",
+  },
+};
