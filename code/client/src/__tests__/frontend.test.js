@@ -1,24 +1,34 @@
-import apiClient from '../services/apiClient.js'
+// frontend.test.js
 import { render, screen } from '@testing-library/react';
-import App from '../App';
+import { MemoryRouter } from 'react-router-dom';
+import App from '../App.js';
 
-// To be deleted later
-// test('simple math test', () => {
-//     expect(1 + 1).toBe(2);
-//   });
-  
-// test('simple math test 2', () => {
-//     expect(1 + 1).toBe(3); // expected fail
-// });
+// Mock the charts
+jest.mock('react-chartjs-2', () => ({
+  Line: () => <div>Mocked Line Chart</div>,
+}));
 
-// tests
-test('test connection to server', async () => {
-  const response = await apiClient.get('/check-connection');
-  expect(response.status).toBe(200);
-})
+// Mock the authenticated function to prevent redirection
+jest.mock('../utils/authenticate.js', () => ({
+  authenticated: jest.fn(),
+}));
 
-test('renders home text', () => {
-  render(<App />);
-  const homeElement = screen.getByText(/welcome to the home page/i); // case-insensitive due to the regular expression /i
-  expect(homeElement).toBeInTheDocument();
+beforeEach(() => {
+  // Simulate authenticated user
+  localStorage.setItem('authToken', 'mock-token');
+});
+
+afterEach(() => {
+  // Cleanup localStorage
+  localStorage.removeItem('authToken');
+});
+
+test('renders home page with mocked charts', () => {
+  render(
+    <App RouterComponent={MemoryRouter} /> 
+  );
+
+  const mockCharts = screen.getAllByText(/Mocked Line Chart/i);
+  expect(mockCharts[0]).toBeInTheDocument();
+  expect(mockCharts).toHaveLength(5); // Adjust based on the number of charts expected
 });

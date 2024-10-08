@@ -1,9 +1,7 @@
-name: peak-performance
-
 services:
   # MongoDB Service
   mongo:
-    image: mongo:7.0.12
+    image: mongo:latest
     ports:
       - 27017:27017
     volumes:
@@ -12,11 +10,11 @@ services:
       - peak-performance
 
   api: 
-    image: api-dev
-    env_file: ./server/.env.development
+    image: api-dev:latest
+    env_file: .env.development
     build:
-      context: ./server
-      dockerfile: Dockerfile.dev  # This is correct
+      context: .
+      dockerfile: ./server/Dockerfile.dev  # This is correct
     volumes:
       - ./server:/app
       - /app/node_modules     
@@ -29,10 +27,11 @@ services:
       - peak-performance
 
   client:
-    image: client-dev
+    image: client-dev:latest
+    env_file: .env.development
     build: 
-      context: ./client  # Specify context here
-      dockerfile: Dockerfile.dev 
+      context: .  # Specify context here
+      dockerfile: ./client/Dockerfile.dev 
     volumes:
       - ./client:/app
       - /app/node_modules   
@@ -40,12 +39,12 @@ services:
       - peak-performance
     ports:
       - "3000:3000"
-    # command: npm run start  # Run the development server with hot reloading
     depends_on: 
       - api
 
 volumes:
   mongo_data:
+    driver: local
 
 networks:
   peak-performance:
