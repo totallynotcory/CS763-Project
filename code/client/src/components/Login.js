@@ -50,7 +50,6 @@ function Login({ setIsAuthenticated }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
-    // setSuccess('');
     try {
       const response = await apiClient.post("/api/users/login", formData);
       const { token, userId } = response.data;
