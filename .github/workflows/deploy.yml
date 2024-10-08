@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dev
-      - AddServerTestsToPipeline
 
 jobs:
   # Step 1: Testing using Jest
