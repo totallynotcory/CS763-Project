@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+      - release/*
 
 jobs:
   # Step 1: Testing using Jest
