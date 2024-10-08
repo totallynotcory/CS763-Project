@@ -8,10 +8,10 @@ import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
 import CreateGoal from "./components/CreateGoal.js";
 import ManageDailyData from "./components/ManageDailyData.js";
-import LogoutButton from './components/Logout.js';
+import LogoutButton from "./components/Logout.js";
 
-import React, { useState, useEffect } from 'react';
-import LogoutIcon from '@mui/icons-material/Logout';
+import React, { useState, useEffect } from "react";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 // Styling
 import {
@@ -36,14 +36,14 @@ import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
-import TodayIcon from '@mui/icons-material/Today';
+import TodayIcon from "@mui/icons-material/Today";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import "@fontsource/mulish";
 
-const sidebarWidth = "20vh";
+const sidebarWidth = "10vw";
 const appBarHeight = "4rem";
 
 const theme = createTheme({
@@ -57,14 +57,12 @@ const theme = createTheme({
   },
 });
 
-
-
 function App({ RouterComponent = Router }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // On component mount, check if user is already logged in
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     setIsAuthenticated(!!token);
   }, []);
 
@@ -131,18 +129,18 @@ function App({ RouterComponent = Router }) {
               </ListItem>
 
               {!isAuthenticated ? (
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/login">
-                  <ListItemIcon>
-                    <LoginIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Login" />
-                </ListItemButton>
-              </ListItem>
-            ) : (
-              <LogoutButton setIsAuthenticated={setIsAuthenticated} />
-            )}
-            
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to="/login">
+                    <ListItemIcon>
+                      <LoginIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Login" />
+                  </ListItemButton>
+                </ListItem>
+              ) : (
+                <LogoutButton setIsAuthenticated={setIsAuthenticated} />
+              )}
+
               <ListItem disablePadding>
                 <ListItemButton component={Link} to="/enter-daily-data">
                   <ListItemIcon>
@@ -216,9 +214,15 @@ function App({ RouterComponent = Router }) {
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/view-users" element={<ViewUsers />} />
                 <Route path="/manage-profile" element={<ManageProfile />} />
-                <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+                <Route
+                  path="/login"
+                  element={<Login setIsAuthenticated={setIsAuthenticated} />}
+                />
                 <Route path="/enter-daily-data" element={<DailyData />} />
-                <Route path="/manage-daily-data" element={<ManageDailyData />} />
+                <Route
+                  path="/manage-daily-data"
+                  element={<ManageDailyData />}
+                />
                 <Route path="/create-goal" element={<CreateGoal />} />
               </Routes>
             </Box>

@@ -1,12 +1,30 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient.js";
-import { Box, Typography, TextField, MenuItem, Button } from "@mui/material";
-import { box, bigTitle, inputBackground, menuPropsStyles, submitButton } from "./style/styles.js";
+import {
+  Box,
+  Typography,
+  TextField,
+  MenuItem,
+  Button,
+  Grid,
+  FormControl,
+  InputLabel,
+  Select,
+} from "@mui/material";
+import {
+  box,
+  bigTitle,
+  inputBackground,
+  menuPropsStyles,
+  smallTitle,
+  inputLable,
+  updateProfile,
+  textField,
+} from "./style/styles.js";
 import { authenticated } from "../utils/authenticate.js";
 import { validateProfileForm } from "../utils/validateProfileForm.js";
 
 function ManageProfile() {
-
   const [profileData, setProfileData] = useState({
     userId: "",
     email: "",
@@ -14,40 +32,39 @@ function ManageProfile() {
     gender: "",
     dob: { year: 1900, month: 1, day: 1 },
     height: { feet: "", inches: "" },
-    });
+  });
 
   const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const token = authenticated()
+    const token = authenticated();
 
     if (token) {
       apiClient
         .get("/api/users/manage-profile", {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         }) // Fetch user profile data from the backend (e.g., /manage-profile)
         .then((res) => {
-          setProfileData(res.data); 
+          setProfileData(res.data);
         })
         .catch((err) => {
           setError("Error fetching profile data. Try refreshing.");
           console.log(err);
         });
     }
-    
   }, []);
 
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+      ...prevData,
+      [name]: value,
+    }));
   };
-  
+
   // Handle input change for height
   const handleHeightChange = (e) => {
     const { name, value } = e.target;
@@ -67,10 +84,10 @@ function ManageProfile() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
-    
+
     // Clear any existing messages before processing the form
-    setSuccessMessage('');
-    setErrorMessage('');
+    setSuccessMessage("");
+    setErrorMessage("");
 
     // Validate form
     const validationResult = validateProfileForm(profileData);
@@ -81,11 +98,11 @@ function ManageProfile() {
 
     try {
       await apiClient.post("/api/users/manage-profile", profileData);
-      console.log("Updating profile")
-      setSuccessMessage('Profile updated!');
+      console.log("Updating profile");
+      setSuccessMessage("Profile updated!");
     } catch (err) {
       console.log("Error updating profile", err);
-      setErrorMessage('Error: Failed to update profile. Please try again');
+      setErrorMessage("Error: Failed to update profile. Please try again");
     }
   };
 
@@ -99,139 +116,236 @@ function ManageProfile() {
         <p>{error}</p>
       ) : (
         <form>
-          <TextField
-            label="User ID"
-            name="userId"
-            value={profileData.userId}
-            fullWidth
-            margin="normal"
-            InputProps={{
-              readOnly: true, // Makes it non-editable
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                label="User ID"
+                name="userId"
+                value={profileData.userId}
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  readOnly: true, // Makes it non-editable
+                }}
+                sx={{
+                  pointerEvents: "none",
+                }}
+                // sx={inputBackground}
+                menuprops={menuPropsStyles}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                label="Email"
+                name="email"
+                value={profileData.email}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                InputProps={{
+                  readOnly: true, // Makes it non-editable
+                }}
+                sx={{
+                  pointerEvents: "none",
+                }}
+                // sx={inputBackground}
+                menuprops={menuPropsStyles}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                label="Name"
+                name="name"
+                value={profileData.name}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                sx={textField}
+                InputLabelProps={{
+                  sx: inputLable,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel sx={inputLable}>Gender</InputLabel>
+                <Select
+                  label="Gender"
+                  name="gender"
+                  value={profileData.gender}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                  sx={inputBackground}
+                  MenuProps={menuPropsStyles}
+                >
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="nonbinary">Non-Binary</MenuItem>
+                  <MenuItem value="na">Prefer not to disclose</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            {/* date of birth */}
+            <Grid item xs={12} md={3}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "left",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="subtitle1" gutterBottom sx={smallTitle}>
+                  Date of Birth
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth>
+                <TextField
+                  label="Year of Birth"
+                  name="year"
+                  type="number"
+                  value={profileData.dob.year}
+                  onChange={handleDobChange}
+                  margin="normal"
+                  InputLabelProps={{
+                    sx: inputLable,
+                  }}
+                  InputProps={{
+                    sx: inputBackground,
+                  }}
+                  fullWidth
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel sx={inputLable}>Month</InputLabel>
+                <Select
+                  label="Month of Birth"
+                  name="month"
+                  value={profileData.dob.month}
+                  onChange={handleDobChange}
+                  sx={inputBackground}
+                  MenuProps={menuPropsStyles}
+                  fullWidth
+                >
+                  {Array.from({ length: 12 }, (_, index) => {
+                    const monthNumber = index + 1; // Month numbers range from 1 to 12
+                    return (
+                      <MenuItem key={monthNumber} value={monthNumber}>
+                        {monthNumber < 10 ? `0${monthNumber}` : monthNumber}{" "}
+                        {/* Format month as 01, 02, ... */}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel sx={inputLable}>Day</InputLabel>
+                <Select
+                  label="Day of Birth"
+                  name="day"
+                  value={profileData.dob.day}
+                  onChange={handleDobChange}
+                  sx={inputBackground}
+                  MenuProps={menuPropsStyles}
+                  fullWidth
+                >
+                  {Array.from({ length: 31 }, (_, index) => {
+                    const dayNumber = index + 1; // Day numbers range from 1 to 31
+                    return (
+                      <MenuItem key={dayNumber} value={dayNumber}>
+                        {dayNumber < 10 ? `0${dayNumber}` : dayNumber}{" "}
+                        {/* Format day as 01, 02, ... */}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+            {/* <br></br> */}
+            {/* Height */}
+            <Grid item xs={12} md={3}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "left",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="subtitle1" gutterBottom sx={smallTitle}>
+                  Height
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4.5}>
+              <TextField
+                label="Height (Feet)"
+                name="feet"
+                value={profileData.height.feet}
+                onChange={handleHeightChange}
+                type="number"
+                margin="normal"
+                InputLabelProps={{
+                  sx: inputLable,
+                }}
+                InputProps={{
+                  sx: inputBackground,
+                }}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                label="Height (Inches)"
+                name="inches"
+                value={profileData.height.inches}
+                onChange={handleHeightChange}
+                type="number"
+                margin="normal"
+                InputLabelProps={{
+                  sx: inputLable,
+                }}
+                InputProps={{
+                  sx: inputBackground,
+                }}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-            // sx={inputBackground}
-            menuprops={menuPropsStyles}
-          />
-          <TextField
-            label="Email"
-            name="email"
-            value={profileData.email}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            InputProps={{
-              readOnly: true, // Makes it non-editable
-            }}
-            // sx={inputBackground}
-            menuprops={menuPropsStyles}
-          />
-          <TextField
-            label="Name"
-            name="name"
-            value={profileData.name}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            sx={inputBackground}
-            menuprops={menuPropsStyles}
-          />
-          <TextField
-            select
-            label="Gender"
-            name="gender"
-            value={profileData.gender}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            sx={inputBackground}
-            menuprops={menuPropsStyles}
           >
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-            <MenuItem value="nonbinary">Non-Binary</MenuItem>
-            <MenuItem value="na">Prefer not to disclose</MenuItem>
-          </TextField>
-          <TextField
-            label="Year of Birth"
-            name="year"
-            type="number"
-            value={profileData.dob.year}
-            onChange={handleDobChange}
-            margin="normal"
-            sx={inputBackground}
-            menuprops={menuPropsStyles}
-          />
-          <TextField
-            select
-            label="Month of Birth"
-            name="month"
-            value={profileData.dob.month}
-            onChange={handleDobChange}
-            margin="normal"
-            sx={inputBackground}
-            menuprops={menuPropsStyles}
-          >
-            {Array.from({ length: 12 }, (_, index) => {
-              const monthNumber = index + 1; // Month numbers range from 1 to 12
-              return (
-                <MenuItem key={monthNumber} value={monthNumber}>
-                  {monthNumber < 10 ? `0${monthNumber}` : monthNumber} {/* Format month as 01, 02, ... */}
-                </MenuItem>
-              );
-            })}
-          </TextField>
-          <TextField
-            select
-            label="Day of Birth"
-            name="day"
-            value={profileData.dob.day}
-            onChange={handleDobChange}
-            margin="normal"
-            sx={inputBackground}
-            menuprops={menuPropsStyles}
-          >
-            {Array.from({ length: 31 }, (_, index) => {
-              const dayNumber = index + 1; // Day numbers range from 1 to 31
-              return (
-                <MenuItem key={dayNumber} value={dayNumber}>
-                  {dayNumber < 10 ? `0${dayNumber}` : dayNumber} {/* Format day as 01, 02, ... */}
-                </MenuItem>
-              );
-            })}
-          </TextField>
-          <br></br>
-          <TextField
-            label="Height (Feet)"
-            name="feet"
-            value={profileData.height.feet}
-            onChange={handleHeightChange}
-            type="number"
-            margin="normal"
-            sx={inputBackground}
-            menuprops={menuPropsStyles}
-          />
-          <TextField
-            label="Height (Inches)"
-            name="inches"
-            value={profileData.height.inches}
-            onChange={handleHeightChange}
-            type="number"
-            margin="normal"
-            sx={inputBackground}
-            menuprops={menuPropsStyles}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            fullWidth
-            sx={submitButton}
-          >
-            Update Profile
-          </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              fullWidth
+              sx={updateProfile}
+              margin="normal"
+            >
+              Update Profile
+            </Button>
+          </Box>
         </form>
       )}
-      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
+      {errorMessage && (
+        <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>
+      )}
+      {successMessage && (
+        <p style={{ color: "#008000", fontWeight: "bold" }}>{successMessage}</p>
+      )}
     </Box>
   );
 }

@@ -146,7 +146,6 @@ export const calendarStyle = {
   marginBottom: "4%",
 };
 
-
 //ManageDailyData
 export const dailyDataEntryCard = {
   marginBottom: "1em",
@@ -155,20 +154,19 @@ export const dailyDataEntryCard = {
   borderWidth: "1px",
   borderStyle: "solid",
   borderRadius: "10px",
-}
+};
 
 export const dailyDataEntryCardHeader = {
-  fontWeight: "bold"
-}
+  fontWeight: "bold",
+};
 
 export const dailyDataEntryCardDelete = {
   color: "red",
   fontSize: ".6em",
   fontWeight: "bold",
-  cursor: 'pointer',
-  marginBottom: '.5em',
-}
-
+  cursor: "pointer",
+  marginBottom: ".5em",
+};
 
 // DailyData - side menu
 export const sideMenuBox = {
@@ -229,13 +227,29 @@ export const bigTitle = {
   fontWeight: "600",
 };
 
-
 //Dashboard
 export const dashboardLineChartContainer = {
   width: "600px",
   height: "200px",
-  marginBottom: "50px"
-}
+  marginBottom: "50px",
+};
+//Manage Profile - DOB & Height
+export const smallTitle = {
+  color: "#5B5753",
+  fontSize: "1.25rem",
+  fontWeight: "600",
+  padding: "6% 0%",
+};
 
-
-
+export const updateProfile = {
+  backgroundColor: "#3A3A3A",
+  color: "#CACACA",
+  borderRadius: "10px",
+  padding: "1% 4%",
+  marginTop: "3%",
+  width: "70%",
+  "&:hover": {
+    backgroundColor: "#F8DEBD",
+    color: "#303030",
+  },
+};
