@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react"; // Added useEffect import
 import apiClient from "../services/apiClient.js";
-import { validateGoalForm } from '../utils/validateGoalForm.js';
+import { validateGoalForm } from "../utils/validateGoalForm.js";
 import { authenticated } from "../utils/authenticate.js";
 import {
   Box,
   Typography,
   TextField,
-  Grid2,
+  Grid,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  Button
+  Button,
 } from "@mui/material";
 import {
   box,
@@ -38,8 +38,8 @@ function CreateGoal() {
     targetValue: 0,
   });
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(null); // State for managing error when fetching profile
 
   // useEffect to fetch profile data
@@ -82,8 +82,8 @@ function CreateGoal() {
 
   // Clear messages
   const clearMessages = () => {
-    setSuccessMessage('');
-    setErrorMessage('');
+    setSuccessMessage("");
+    setErrorMessage("");
   };
 
   // Validate form
@@ -107,7 +107,7 @@ function CreateGoal() {
       await apiClient.post("/api/goals/create-goal", formData, {
         headers: { Authorization: `Bearer ${token}` }, // Pass token
       });
-      
+
       handleGoalSuccess();
     } catch (error) {
       handleGoalError(error);
@@ -117,13 +117,13 @@ function CreateGoal() {
   // Handle success
   const handleGoalSuccess = () => {
     console.log("Goal created successfully!");
-    setSuccessMessage('New goal successful!');
+    setSuccessMessage("New goal successful!");
   };
 
   // Handle error
   const handleGoalError = (error) => {
     console.error("Error creating goal:", error);
-    setErrorMessage('Failed to create a new goal. Please try again.');
+    setErrorMessage("Failed to create a new goal. Please try again.");
   };
 
   return (
@@ -132,9 +132,9 @@ function CreateGoal() {
         Set up your goal here:
       </Typography>
       <form onSubmit={handleSubmit}>
-        <Grid2 container spacing={2}>
+        <Grid container spacing={2}>
           {/* Select a goal type */}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <InputLabel sx={inputLable}>Select a goal type</InputLabel>
               <Select
@@ -155,9 +155,9 @@ function CreateGoal() {
                 <MenuItem value="exercise">Exercise (Minutes)</MenuItem>
               </Select>
             </FormControl>
-          </Grid2>
+          </Grid>
           {/* Target value */}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 data-testid="goal-targetValue-select"
@@ -176,14 +176,14 @@ function CreateGoal() {
                 fullWidth
               />
             </FormControl>
-          </Grid2>
+          </Grid>
           {/* Submit Button */}
-          <Grid2 item xs={12}>
+          <Grid item xs={12}>
             <Button type="submit" variant="contained" sx={submitButton}>
               Submit
             </Button>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
       </form>
       {errorMessage && (
         <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>

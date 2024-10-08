@@ -3,20 +3,19 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../services/apiClient.js";
 import { validateRegistrationForm } from "../utils/validateRegistrationForm.js";
 
-
 import {
   Box,
   Typography,
   TextField,
-  Grid2,
+  Grid,
   FormControl,
   Button,
 } from "@mui/material";
 import {
-  box,
   title,
-  textField,
-  submitButton,
+  loginSubmitButton,
+  signUpBox,
+  signUptextField,
 } from "./style/styles.js";
 
 function CreateUser() {
@@ -80,14 +79,14 @@ function CreateUser() {
   };
 
   return (
-    <Box sx={box}>
+    <Box sx={signUpBox}>
       <Typography variant="h6" gutterBottom sx={title}>
         Sign up
       </Typography>
       <form onSubmit={handleSubmit}>
-        <Grid2 container spacing={2}>
+        <Grid container direction="column" spacing={2}>
           {/* Name (First & Last) -------------------------------------*/}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtName"
@@ -97,12 +96,12 @@ function CreateUser() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                sx={textField}
+                sx={signUptextField}
               />
             </FormControl>
-          </Grid2>
+          </Grid>
           {/* Email -------------------------------------*/}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={3}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtEmail"
@@ -112,12 +111,12 @@ function CreateUser() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                sx={textField}
+                sx={signUptextField}
               />
             </FormControl>
-          </Grid2>
+          </Grid>
           {/* Password -------------------------------------*/}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={3}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtPassword"
@@ -128,17 +127,17 @@ function CreateUser() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                sx={textField}
+                sx={signUptextField}
               />
             </FormControl>
-          </Grid2>
+          </Grid>
           {/* Submit Button -------------------------------------*/}
-          <Grid2 item xs={12}>
-            <Button type="submit" variant="contained" sx={submitButton}>
+          <Grid item xs={12} container justifyContent="center">
+            <Button type="submit" variant="contained" sx={loginSubmitButton}>
               Sign Up
             </Button>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
       </form>
       {errorMessage && (
         <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>

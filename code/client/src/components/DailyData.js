@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
   TextField,
-  Grid2,
+  Grid,
   FormControl,
   InputAdornment,
   Collapse,
@@ -35,8 +35,8 @@ function DailyData() {
     exercise: "",
   });
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Handle input changes and update formData state
   const handleChange = (e) => {
@@ -91,12 +91,12 @@ function DailyData() {
     event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
 
     // Clear any existing messages before processing the form
-    setSuccessMessage('');
-    setErrorMessage('');
+    setSuccessMessage("");
+    setErrorMessage("");
 
     const updatedFormData = {
       ...formData, // Include all the existing form data (weight, steps, sleep, etc.)
-      entryDate: date ? date.toISOString().split('T')[0] : null, // Add the selected date
+      entryDate: date ? date.toISOString().split("T")[0] : null, // Add the selected date
     };
 
     // Validate form inputs
@@ -105,20 +105,24 @@ function DailyData() {
       setErrorMessage(validationResult.message);
       return; // Prevent form submission
     }
-  
+
     try {
-      const token = authenticated()
+      const token = authenticated();
 
       if (token) {
-        await apiClient.post("/api/daily-entry/enter-daily-data", updatedFormData, {
-          headers: { Authorization: `Bearer ${token}` }, // Pass token
-        })
+        await apiClient.post(
+          "/api/daily-entry/enter-daily-data",
+          updatedFormData,
+          {
+            headers: { Authorization: `Bearer ${token}` }, // Pass token
+          }
+        );
         console.log("Daily entry processed");
-        setSuccessMessage('Daily entry successful!');
+        setSuccessMessage("Daily entry successful!");
       }
     } catch (err) {
       console.log("Error submitting daily entry", err);
-      setErrorMessage('Error: Failed to submit daily entry. Please try again');
+      setErrorMessage("Error: Failed to submit daily entry. Please try again");
     }
   };
 
@@ -157,9 +161,9 @@ function DailyData() {
           </Paper>
         </Collapse>
 
-        {/* Weight */}
-        <Grid2 container spacing={2}>
-          <Grid2 item xs={12} md={6}>
+        <Grid container spacing={2}>
+          {/* Weight */}
+          <Grid item xs={12} md={6}>
             <TextField
               label="Weight"
               variant="filled"
@@ -179,9 +183,9 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid2>
+          </Grid>
           {/* Steps Count */}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               label="Count"
               variant="filled"
@@ -201,9 +205,9 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid2>
+          </Grid>
           {/* Sleep hour */}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               label="Sleep"
               variant="filled"
@@ -223,10 +227,10 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid2>
+          </Grid>
 
           {/* water */}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <TextField
               label="Water"
               variant="filled"
@@ -246,10 +250,10 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid2>
+          </Grid>
 
           {/* How long did you exercise */}
-          <Grid2 item xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 data-testid="exerciseTime"
@@ -269,18 +273,22 @@ function DailyData() {
                 fullWidth
               />
             </FormControl>
-          </Grid2>
+          </Grid>
 
           {/* Submit Button */}
-          <Grid2 item xs={12}>
+          <Grid item xs={12}>
             <Button type="submit" variant="contained" sx={submitButton}>
               Submit
             </Button>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
       </form>
-      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
+      {errorMessage && (
+        <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>
+      )}
+      {successMessage && (
+        <p style={{ color: "#008000", fontWeight: "bold" }}>{successMessage}</p>
+      )}
     </Box>
   );
 }
