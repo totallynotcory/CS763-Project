@@ -1,5 +1,3 @@
-//will update this file with better error handling as per Mosh video
-
 import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient.js";
 import { authenticated } from "../utils/authenticate.js";
