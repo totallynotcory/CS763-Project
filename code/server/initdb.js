@@ -11,7 +11,12 @@ async function init() {
     try {
         // Connect to MongoDB
         await db.connectDB();
-
+        
+        // Option to delete existing data for full reset
+        // await User.deleteMany({})
+        // await Goal.deleteMany({})
+        // await DailyEntry.deleteMany({})
+        
         // hashing "password" to be used as default password for users created here
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash("password", saltRounds); 
