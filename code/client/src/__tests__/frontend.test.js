@@ -2,7 +2,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../App.js';
-// import { authenticated } from '../utils/authenticate.js';
 
 // Mock the charts
 jest.mock('react-chartjs-2', () => ({
