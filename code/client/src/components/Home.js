@@ -1,13 +1,25 @@
 import '../App.css';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { Typography } from "@mui/material";
+import { Typography, Grid2, Box } from "@mui/material";
 import { title, dashboardLineChartContainer } from "./style/styles.js";
 import { authenticated } from "../utils/authenticate.js";
 
 // Register the required components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
+const ChartBox = ({ title, chartData, chartOptions, dashboardLineChartContainer }) => (
+    <Box>
+      <Typography variant="h6" gutterBottom>
+        {title}
+      </Typography>
+      <Grid2 xs={12} sm={6}>
+        <div style={dashboardLineChartContainer}>
+          <Line data={chartData} options={chartOptions} />
+        </div>
+      </Grid2>
+    </Box>
+  );
 
 function Home() {
     authenticated();
@@ -134,24 +146,41 @@ function Home() {
 
     return (
         <div>
-            <Typography variant="h6" gutterBottom sx={title}>
+            <Typography variant="h6" gutterBottom sx={title} >
                 See your progress:
             </Typography>
-            <div style={dashboardLineChartContainer}>
-                <Line data={weightChart} options={options} />
-            </div>
-            <div style={dashboardLineChartContainer}>
-                <Line data={stepsChart} options={options} />
-            </div>
-            <div style={dashboardLineChartContainer}>
-                <Line data={sleepChart} options={options} />
-            </div>
-            <div style={dashboardLineChartContainer}>
-                <Line data={waterChart} options={options} />
-            </div>
-            <div style={dashboardLineChartContainer}>
-                <Line data={exerciseChart} options={options} />
-            </div>
+            <Grid2 container spacing={2} sx={{ paddingLeft: 2, paddingRight: 2 }}>
+                <ChartBox 
+                    title="Weight" 
+                    chartData={weightChart} 
+                    chartOptions={options} 
+                    dashboardLineChartContainer={dashboardLineChartContainer} 
+                />
+                <ChartBox 
+                    title="Steps" 
+                    chartData={stepsChart} 
+                    chartOptions={options} 
+                    dashboardLineChartContainer={dashboardLineChartContainer} 
+                />
+                <ChartBox 
+                    title="Sleep" 
+                    chartData={sleepChart} 
+                    chartOptions={options} 
+                    dashboardLineChartContainer={dashboardLineChartContainer} 
+                />
+                <ChartBox
+                    title="Water Intake" 
+                    chartData={waterChart} 
+                    chartOptions={options} 
+                    dashboardLineChartContainer={dashboardLineChartContainer} 
+                />
+                <ChartBox 
+                    title="Exercise" 
+                    chartData={exerciseChart} 
+                    chartOptions={options} 
+                    dashboardLineChartContainer={dashboardLineChartContainer} 
+                />
+            </Grid2>
         </div>
     )
 }

@@ -223,7 +223,7 @@ export const bigTitle = {
   marginTop: "4%",
   marginBottom: "2%",
   color: "#5B5753",
-  fontSize: "3rem",
+  fontSize: "2rem",
   fontWeight: "600",
 };
 
@@ -291,3 +291,4 @@ export const signUptextField = {
     borderBottom: "none !important",
   },
 };
+

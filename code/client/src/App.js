@@ -37,13 +37,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import TodayIcon from "@mui/icons-material/Today";
-import CloseIcon from "@mui/icons-material/Close";
-
-import { useNavigate } from "react-router-dom";
 
 import "@fontsource/mulish";
 
-const sidebarWidth = "10vw";
+const sidebarWidth = "16vw";
 const appBarHeight = "4rem";
 
 const theme = createTheme({
