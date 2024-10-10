@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // Added useEffect import
+import React, { useState, useEffect } from "react";
 import apiClient from "../services/apiClient.js";
 import { validateGoalForm } from "../utils/validateGoalForm.js";
 import { authenticated } from "../utils/authenticate.js";

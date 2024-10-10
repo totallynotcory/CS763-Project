@@ -10,7 +10,7 @@ export const box = {
 };
 
 export const title = {
-  marginTop: "4%",
+  marginTop: "2%",
   marginBottom: "2%",
   color: "#5B5753",
   fontSize: "1.4rem",
@@ -220,7 +220,7 @@ export const link = {
 
 // HomePage & ViewUsers
 export const bigTitle = {
-  marginTop: "4%",
+  marginTop: "2%",
   marginBottom: "2%",
   color: "#5B5753",
   fontSize: "2rem",
