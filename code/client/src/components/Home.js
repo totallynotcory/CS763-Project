@@ -9,17 +9,25 @@ import { authenticated } from "../utils/authenticate.js";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const ChartBox = ({ title, chartData, chartOptions, dashboardLineChartContainer }) => (
-    <Box>
-      <Typography variant="h6" gutterBottom>
-        {title}
-      </Typography>
-      <Grid2 xs={12} sm={6}>
-        <div style={dashboardLineChartContainer}>
-          <Line data={chartData} options={chartOptions} />
-        </div>
-      </Grid2>
-    </Box>
-  );
+    <Grid2 xs={12} sm={6}>
+        <Box
+            sx={{
+            backgroundColor: '#ffffff',
+            borderRadius: 2, //rounded corners
+            padding: 2, 
+            boxShadow: 2,
+            height: '100%'
+        }}
+        >
+        <Typography variant="h6" gutterBottom>
+            {title}
+        </Typography>
+            <div style={dashboardLineChartContainer}>
+            <Line data={chartData} options={chartOptions} />
+            </div>
+        </Box>
+    </Grid2>
+);
 
 function Home() {
     authenticated();
@@ -145,11 +153,11 @@ function Home() {
     };
 
     return (
-        <div>
-            <Typography variant="h6" gutterBottom sx={title} >
+        <Box sx={{ padding: 2 }}>
+            <Typography gutterBottom sx={{ ...title, paddingLeft: 5 }} >
                 See your progress:
             </Typography>
-            <Grid2 container spacing={2} sx={{ paddingLeft: 2, paddingRight: 2 }}>
+            <Grid2 container justifyContent="center" spacing={2}>
                 <ChartBox 
                     title="Weight" 
                     chartData={weightChart} 
@@ -181,7 +189,7 @@ function Home() {
                     dashboardLineChartContainer={dashboardLineChartContainer} 
                 />
             </Grid2>
-        </div>
+        </Box>
     )
 }
 
