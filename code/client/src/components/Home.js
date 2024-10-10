@@ -17,6 +17,7 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 // Register the required components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
+// Reusable component for charts
 const ChartBox = ({ title, chartData, chartOptions, dashboardLineChartContainer, IconComponent }) => (
     <Grid2 xs={12} sm={6}>
         <Box
