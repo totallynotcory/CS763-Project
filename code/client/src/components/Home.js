@@ -92,7 +92,7 @@ function Home() {
         labels: dayLabels, // X-axis labels
         datasets: [
             {
-                label: 'Weight in lbs',
+                label: 'Weight (lbs)',
                 data: weightData, // Y-axis values
                 borderColor: 'rgba(75,192,192,1)', // Teal
                 pointRadius: 4,
@@ -128,7 +128,7 @@ function Home() {
         labels: dayLabels, // X-axis labels
         datasets: [
             {
-                label: 'Sleep in hours',
+                label: 'Sleep (hours)',
                 data: sleepData, // Y-axis values
                 borderColor: 'rgba(54,162,235,1)', // Blue
                 pointRadius: 4,
@@ -146,7 +146,7 @@ function Home() {
         labels: dayLabels, // X-axis labels
         datasets: [
             {
-                label: 'Water in glasses',
+                label: 'Water (glasses)',
                 data: waterData, // Y-axis values
                 borderColor: 'rgba(255,205,86,1)', // Yellow
                 pointRadius: 4,
@@ -164,7 +164,7 @@ function Home() {
         labels: dayLabels, // X-axis labels
         datasets: [
             {
-                label: 'Exercise in minutes',
+                label: 'Exercise (minutes)',
                 data: exerciseData, // Y-axis values
                 borderColor: 'rgba(153,102,255,1)', // Purple
                 pointRadius: 4,
