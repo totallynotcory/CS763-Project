@@ -7,10 +7,17 @@ import { Typography, Grid2, Box } from "@mui/material";
 import { bigTitle, dashboardLineChartContainer } from "./style/styles.js";
 import { authenticated } from "../utils/authenticate.js";
 
+import MonitorWeightIcon from '@mui/icons-material/MonitorWeight';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import BedtimeIcon from '@mui/icons-material/Bedtime';
+import OpacityIcon from '@mui/icons-material/Opacity';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+
+
 // Register the required components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const ChartBox = ({ title, chartData, chartOptions, dashboardLineChartContainer }) => (
+const ChartBox = ({ title, chartData, chartOptions, dashboardLineChartContainer, IconComponent }) => (
     <Grid2 xs={12} sm={6}>
         <Box
             sx={{
@@ -21,7 +28,8 @@ const ChartBox = ({ title, chartData, chartOptions, dashboardLineChartContainer 
             height: '100%'
         }}
         >
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
+            {IconComponent && <IconComponent sx={{ marginRight: 1 }} />}
             {title}
         </Typography>
             <div style={dashboardLineChartContainer}>
@@ -191,30 +199,35 @@ function Home() {
                     chartData={weightChart} 
                     chartOptions={options} 
                     dashboardLineChartContainer={dashboardLineChartContainer} 
+                    IconComponent={MonitorWeightIcon}
                 />
                 <ChartBox 
                     title="Steps" 
                     chartData={stepsChart} 
                     chartOptions={options} 
                     dashboardLineChartContainer={dashboardLineChartContainer} 
+                    IconComponent={DirectionsWalkIcon}
                 />
                 <ChartBox 
                     title="Sleep" 
                     chartData={sleepChart} 
                     chartOptions={options} 
                     dashboardLineChartContainer={dashboardLineChartContainer} 
+                    IconComponent={BedtimeIcon}
                 />
                 <ChartBox
                     title="Water Intake" 
                     chartData={waterChart} 
                     chartOptions={options} 
                     dashboardLineChartContainer={dashboardLineChartContainer} 
+                    IconComponent={OpacityIcon}
                 />
                 <ChartBox 
                     title="Exercise" 
                     chartData={exerciseChart} 
                     chartOptions={options} 
                     dashboardLineChartContainer={dashboardLineChartContainer} 
+                    IconComponent={FitnessCenterIcon}
                 />
             </Grid2>
         </Box>
