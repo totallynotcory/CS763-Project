@@ -54,7 +54,7 @@ function Home() {
         apiClient
         .get("/api/users/manage-profile", {
             headers: { Authorization: `Bearer ${token}` },
-        }) // Fetch user profile data from the backend (e.g., /manage-profile)
+        })
         .then((res) => {
             const { name } = res.data;
             setUserData({
