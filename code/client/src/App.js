@@ -41,7 +41,7 @@ import TodayIcon from "@mui/icons-material/Today";
 import "@fontsource/mulish";
 
 const sidebarWidth = "10vw";
-const appBarHeight = "4rem";
+const appBarHeight = "5rem";
 
 const theme = createTheme({
   typography: {
@@ -50,6 +50,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#e2ddd5",
+      secondary: "#3A3A3A",
     },
   },
 });
@@ -73,17 +74,35 @@ function App({ RouterComponent = Router }) {
           <AppBar
             position="fixed"
             sx={{
-              width: `calc(100% - ${sidebarWidth})`,
-              ml: `${sidebarWidth}`,
+              // width: `calc(100% - ${sidebarWidth})`,
+              // ml: `${sidebarWidth}`,
               height: `${appBarHeight}`,
-              bgcolor: "primary.main",
+              bgcolor: "primary.secondary",
               boxShadow: theme.shadows[1],
             }}
           >
             <Toolbar
               sx={{ display: "flex", alignItems: "center", height: "100%" }}
             >
-              <Typography variant="h5" noWrap component="div">
+              <img
+                src="/app-logo.png"
+                alt="Logo"
+                style={{
+                  height: `calc(${appBarHeight} - 1rem)`,
+                  width: `calc(${appBarHeight} - 1rem)`,
+                  margin: "1%",
+                }}
+              />
+              <Typography
+                variant="h5"
+                noWrap
+                component="div"
+                sx={{
+                  padding: "3%",
+                  color: "primary.main",
+                  fontWeight: "bold",
+                }}
+              >
                 Health and Wellness Tracker
               </Typography>
             </Toolbar>
@@ -92,9 +111,12 @@ function App({ RouterComponent = Router }) {
           {/* Left side navigation drawer */}
           <Drawer
             sx={{
+              marginTop: appBarHeight,
+              height: `calc(100% - ${appBarHeight})`,
               width: sidebarWidth,
               flexShrink: 0,
               "& .MuiDrawer-paper": {
+                marginTop: appBarHeight,
                 width: sidebarWidth,
                 boxSizing: "border-box",
               },
@@ -102,7 +124,7 @@ function App({ RouterComponent = Router }) {
             variant="permanent"
             anchor="left"
           >
-            <img
+            {/* <img
               src="/app-logo.png"
               alt="Logo"
               style={{
@@ -110,8 +132,8 @@ function App({ RouterComponent = Router }) {
                 width: `${appBarHeight - "4rem"}`,
                 margin: "10%",
               }}
-            />
-            <Divider />
+            /> */}
+            {/* <Divider /> */}
 
             {/* Sidebar Navigation */}
             <List>
