@@ -1,7 +1,3 @@
-# Link to our website
-
-https://peak-performance-3c40e2c0ebea.herokuapp.com/
-
 ## Open up a split screen terminal:
 
     Change directory into the 'server' folder:

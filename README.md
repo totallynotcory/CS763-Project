@@ -16,21 +16,21 @@ Users can set goals for each of these areas and monitor their daily progress tow
 
 ### User Authentication
 
-- **Sign Up / Login:** Users can create accounts and log in to track their personal health data.
-- **Password Recovery:** Users can reset their passwords through a secure email-based process.
+- **Sign Up:** Users can create accounts with an email and password.
+- **Login / Logout:** Users can log in with their email and password to track their personal health data.
 
 ### Health Tracking
 
-- **Steps Tracking:** Users can log and view their daily steps.
-- **Water Intake Tracking:** Users can record their daily water intake.
-- **Sleep Tracking:** Users can track their sleep duration.
-- **Exercise Tracking:** Users can log their exercise time and view historical data.
-- **Weight Tracking:** Users can track their weight over time.
+- **Steps:** Users can log and view their daily steps.
+- **Water Intake (glasses):** Users can record their daily water intake.
+- **Sleep (hours):** Users can track their sleep duration.
+- **Exercise (minutes):** Users can log their exercise time and view historical data.
+- **Weight (lbs):** Users can track their weight over time.
 
 ### Goals and Progress Monitoring
 
 - **Daily Goals:** Users can set and track daily goals for steps, water intake, sleep, exercise, and weight.
-- **Progress Reports:** Users can view graphical reports of their progress towards their goals.
+- **Progress Reports:** Users can view graphical reports of their performance against their set goals.
 
 ## Technology Stack
 
@@ -42,3 +42,7 @@ Users can set goals for each of these areas and monitor their daily progress tow
 # How to run
 
 Refer to the [README in the code directory](https://github.com/BUMETCS673/seprojects-cs673olf24team3/blob/dev/code/README.md)
+
+# Link to the deployed website
+
+https://peak-performance-3c40e2c0ebea.herokuapp.com/
