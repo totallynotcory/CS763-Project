@@ -10,22 +10,21 @@
 
 ## Using docker to run all 3 services (mongodb, api, client)
 
-Make sure to start the docker engine by starting up Docker Desktop. Note make sure to log in.
+Make sure to start the docker engine by starting up Docker Desktop and logging in.
 
     docker login -u your_username -p your_password --This will log you in using bash
 
-### Make sure you're in the code folder
+### Useful docker commands (make sure you have navigated into the code folder):
 
-### This will stop all containers from running
+- This will stop all containers from running
 
     docker stop $(docker ps -aq)
 
-### This removes all containers (deletes them)
+- This removes all containers (deletes them)
 
     docker rm $(docker ps -aq)
 
-
-### This will remove all images
+- This will remove all images
 
     docker rmi $(docker images -q)
 

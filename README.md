@@ -43,6 +43,6 @@ Users can set goals for each of these areas and monitor their daily progress tow
 
 Refer to the [README in the code directory](https://github.com/BUMETCS673/seprojects-cs673olf24team3/blob/dev/code/README.md)
 
-# Link to the deployed website
+### Link to the deployed website
 
 https://peak-performance-3c40e2c0ebea.herokuapp.com/
