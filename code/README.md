@@ -16,20 +16,20 @@ Make sure to start the docker engine by starting up Docker Desktop and logging i
 
 ### Useful docker commands (make sure you have navigated into the code folder):
 
-- This will stop all containers from running
+This stops all containers from running
 
     docker stop $(docker ps -aq)
 
-- This removes all containers (deletes them)
+This removes all containers (deletes them)
 
     docker rm $(docker ps -aq)
 
-- This will remove all images
+This removes all images
 
     docker rmi $(docker images -q)
 
 
-# The commands below will build and run the server and client docker file for the development environment
+## The commands below will build and run the server and client docker file for the development environment
 
     To build:
         Step 1: Open a terminal and cd into the code folder
@@ -42,7 +42,7 @@ Make sure to start the docker engine by starting up Docker Desktop and logging i
         Open your browser and navigate to http://localhost:3000
 
  
-# The commands below will tag and upload the api and client images to Docker Hub
+## The commands below will tag and upload the api and client images to Docker Hub
 
     Step 1:  Tag the images
             - docker tag api-dev:latest cs673olf24team3/peak-performance:api-dev
