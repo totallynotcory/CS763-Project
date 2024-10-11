@@ -40,7 +40,7 @@ import TodayIcon from "@mui/icons-material/Today";
 
 import "@fontsource/mulish";
 
-const sidebarWidth = "10vw";
+const sidebarWidth = "16vw";
 const appBarHeight = "5rem";
 
 const theme = createTheme({
