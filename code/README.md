@@ -29,7 +29,7 @@ This removes all images
     docker rmi $(docker images -q)
 
 
-## The commands below will build and run the server and client docker file for the development environment
+## Build and run the server and client docker file for the development environment:
 
     To build:
         Step 1: Open a terminal and cd into the code folder
@@ -42,7 +42,7 @@ This removes all images
         Open your browser and navigate to http://localhost:3000
 
  
-## The commands below will tag and upload the api and client images to Docker Hub
+## Tag and upload the API and client images to Docker Hub:
 
     Step 1:  Tag the images
             - docker tag api-dev:latest cs673olf24team3/peak-performance:api-dev
