@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
+  Grid2,
   FormControl,
   InputAdornment,
   Collapse,
@@ -161,9 +161,9 @@ function DailyData() {
           </Paper>
         </Collapse>
 
-        <Grid container spacing={2}>
+        <Grid2 container spacing={2}>
           {/* Weight */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Weight"
               variant="filled"
@@ -183,9 +183,9 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid>
+          </Grid2>
           {/* Steps Count */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Count"
               variant="filled"
@@ -205,9 +205,9 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid>
+          </Grid2>
           {/* Sleep hour */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Sleep"
               variant="filled"
@@ -227,10 +227,10 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid>
+          </Grid2>
 
           {/* water */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Water"
               variant="filled"
@@ -250,10 +250,10 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid>
+          </Grid2>
 
           {/* How long did you exercise */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <FormControl fullWidth>
               <TextField
                 data-testid="exerciseTime"
@@ -273,15 +273,15 @@ function DailyData() {
                 fullWidth
               />
             </FormControl>
-          </Grid>
+          </Grid2>
 
           {/* Submit Button */}
-          <Grid item xs={12}>
+          <Grid2 item size={{ xs: 12 }}>
             <Button type="submit" variant="contained" sx={submitButton}>
               Submit
             </Button>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </form>
       {errorMessage && (
         <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>

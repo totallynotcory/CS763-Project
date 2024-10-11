@@ -7,7 +7,7 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
+  Grid2,
   FormControl,
   Button,
 } from "@mui/material";
@@ -84,9 +84,9 @@ function CreateUser() {
         Sign up
       </Typography>
       <form onSubmit={handleSubmit}>
-        <Grid container direction="column" spacing={2}>
+        <Grid2 container direction="column" spacing={2}>
           {/* Name (First & Last) -------------------------------------*/}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12 }}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtName"
@@ -99,9 +99,9 @@ function CreateUser() {
                 sx={signUptextField}
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Email -------------------------------------*/}
-          <Grid item xs={12} md={3}>
+          <Grid2 item size={{ xs: 12 }}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtEmail"
@@ -114,9 +114,9 @@ function CreateUser() {
                 sx={signUptextField}
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Password -------------------------------------*/}
-          <Grid item xs={12} md={3}>
+          <Grid2 item size={{ xs: 12 }}>
             <FormControl fullWidth>
               <TextField
                 data-testid="txtPassword"
@@ -130,14 +130,14 @@ function CreateUser() {
                 sx={signUptextField}
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Submit Button -------------------------------------*/}
-          <Grid item xs={12} container justifyContent="center">
+          <Grid2 item size={{ xs: 12 }} container justifyContent="center">
             <Button type="submit" variant="contained" sx={loginSubmitButton}>
               Sign Up
             </Button>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </form>
       {errorMessage && (
         <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>

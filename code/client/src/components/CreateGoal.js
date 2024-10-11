@@ -6,11 +6,11 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
+  Grid2,
   Button,
 } from "@mui/material";
 import {
@@ -132,9 +132,9 @@ function CreateGoal() {
         Set up your goal here:
       </Typography>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
+        <Grid2 container spacing={2}>
           {/* Select a goal type */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <FormControl fullWidth>
               <InputLabel sx={inputLable}>Select a goal type</InputLabel>
               <Select
@@ -155,9 +155,9 @@ function CreateGoal() {
                 <MenuItem value="exercise">Exercise (Minutes)</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Target value */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <FormControl fullWidth>
               <TextField
                 data-testid="goal-targetValue-select"
@@ -176,14 +176,14 @@ function CreateGoal() {
                 fullWidth
               />
             </FormControl>
-          </Grid>
+          </Grid2>
           {/* Submit Button */}
-          <Grid item xs={12}>
+          <Grid2 item size={{ xs: 12 }}>
             <Button type="submit" variant="contained" sx={submitButton}>
               Submit
             </Button>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </form>
       {errorMessage && (
         <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>
