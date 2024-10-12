@@ -47,7 +47,7 @@ describe('Goal Controller Endpoints', () => {
   // Test for successful goal creation
   it('should create a new goal successfully', async () => {
     const res = await request(app)
-      .post('/api/goals/create-goal')
+      .post('/api/goals')
       .set('Authorization', `Bearer ${token}`)  // Use the token obtained in beforeAll
       .send({  sleepHours: 8});
 
@@ -68,7 +68,7 @@ describe('Goal Controller Endpoints', () => {
 
   it('should create a new goal with the correct unit for type "water"', async () => {
     const res = await request(app)
-      .post('/api/goals/create-goal')
+      .post('/api/goals')
       .set('Authorization', `Bearer ${token}`)  // Use the same token here
       .send({ waterIntakeGlasses: 10 });
 
