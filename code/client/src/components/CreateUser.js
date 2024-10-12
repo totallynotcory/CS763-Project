@@ -37,34 +37,39 @@ function CreateUser() {
   const [errorMessage, setErrorMessage] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);  // State to track if passwords match
 
-// Handle input changes and update formData state
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  
-  // Set formData with the updated value
-  setFormData((prevData) => ({
-    ...prevData,
-    [name]: value,
-  }));
+  // Handle input changes and update formData state
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    // Set formData with the updated value
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
 
-  // Analyze password strength when user types in the password field
-  if (name === "password") {
-    const result = zxcvbn(value);
-    setPasswordStrength(result.score);  // Score ranges from 0 to 4
-    setPasswordFeedback(result.feedback.suggestions.join(" ") || "Strong password!");  // Provide feedback
-  }
+    // Analyze password strength when user types in the password field
+    if (name === "password") {
+      const result = zxcvbn(value);
+      setPasswordStrength(result.score);  // Score ranges from 0 to 4
 
-  // Check if passwords match
-  if (name === "confirmPassword" || name === "password") {
-    // Use value directly in the comparison for real-time check
-    setPasswordsMatch(
-      name === "password"
-        ? value === formData.confirmPassword
-        : formData.password === value
-    );
-  }
-};
+      // Update feedback based on strength level
+      if (result.score >= 2) {
+        setPasswordFeedback("Password is valid and strong enough.");
+      } else {
+        setPasswordFeedback(result.feedback.suggestions.join(" ") || "Password is too weak.");
+      }
+    }
 
+    // Check if passwords match
+    if (name === "confirmPassword" || name === "password") {
+      // Use value directly in the comparison for real-time check
+      setPasswordsMatch(
+        name === "password"
+          ? value === formData.confirmPassword
+          : formData.password === value
+      );
+    }
+  };
 
   // Handle form submission
   const handleSubmit = async (event) => {
@@ -73,9 +78,9 @@ const handleChange = (e) => {
     setSuccessMessage("");
     setErrorMessage("");
 
-    // Ensure the password strength is at least 3 (Good)
-    if (passwordStrength < 3) {
-      setErrorMessage("Password strength must be at least 'Good' (score of 3 or higher).");
+    // Ensure the password strength is at least 2 (Fair)
+    if (passwordStrength < 2) {
+      setErrorMessage("Password strength must be at least 'Fair' (score of 2 or higher).");
       return;  // Prevent form submission if password is too weak
     }
 
@@ -194,7 +199,6 @@ const handleChange = (e) => {
               sx={signUptextField}
             />
           </FormControl>
-
           </Grid2>
 
           {/* Confirm Password -------------------------------------*/}
@@ -256,7 +260,7 @@ const handleChange = (e) => {
             {passwordFeedback && (
               <Typography
                 variant="body2"
-                color="error"
+                color={passwordStrength >= 2 ? "success.main" : "error"} // Green feedback if strong enough
                 sx={{
                   maxWidth: "200px",      // Limit the width to 400px (adjustable)
                   maxHeight: "60px",      // Limit the height to 60px (adjustable)
@@ -277,7 +281,7 @@ const handleChange = (e) => {
               type="submit"
               variant="contained"
               sx={loginSubmitButton}
-              disabled={passwordStrength < 3 || !passwordsMatch} // Disable button if password is weak or passwords don't match
+              disabled={passwordStrength < 2 || !passwordsMatch} // Disable button if password is weak or passwords don't match
             >
               Sign Up
             </Button>
