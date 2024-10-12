@@ -18,7 +18,7 @@ import {
   box,
   title,
   textField,
-  inputLable,
+  inputLabel,
   inputBackground,
   submitButton,
   datePick,
@@ -96,7 +96,7 @@ function DailyData() {
 
     const updatedFormData = {
       ...formData, // Include all the existing form data (weight, steps, sleep, etc.)
-      entryDate: date ? date.toISOString().split("T")[0] : null, // Add the selected date
+      entryDate: date ? formatDate(date) : null, // Add the selected date
     };
 
     // Validate form inputs
@@ -264,7 +264,7 @@ function DailyData() {
                 onChange={handleChange}
                 required
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,
