@@ -37,13 +37,13 @@ test('targetValue is NaN', () => {
     expect(result).toEqual({ isValid: false, message: 'Target value must be a valid number greater than or equal to zero' });
 });
 
-test('sleep exceeds limits', () => {
+test('sleep exceeds limit', () => {
     const formData = { type: 'sleep', targetValue: 25 };
     const result = validateGoalForm(formData);
     expect(result).toEqual({ isValid: false, message: 'Sleep goal cannot exceed 24 hours' });
 });
 
-test('exercise exceeds limits', () => {
+test('exercise exceeds limit', () => {
     const formData = { type: 'exercise', targetValue: 2000 };
     const result = validateGoalForm(formData);
     expect(result).toEqual({ isValid: false, message: 'Exercise goal cannot exceed 1440 minutes (number of minutes in a day)' });

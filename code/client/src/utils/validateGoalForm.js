@@ -2,7 +2,7 @@ export function validateGoalForm(formData) {
     const { type, targetValue } = formData;
 
     if (typeof type !== 'string' || type.trim() === '') {
-        console.log('Goal type is required and must be a non-empty string');
+        console.log('Type is required and must be a non-empty string');
         return { isValid: false, message: 'Type is required and must be a non-empty string' };
     }
 

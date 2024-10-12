@@ -13,13 +13,13 @@ test('negative values', () => {
     expect(result.isValid).toBe(false);
 });
 
-test('sleep exceeds limits', () => {
+test('sleep exceeds limit', () => {
     const formData = { weight: 150, water: 4, steps: 10000, sleep: 30, exercise: 0, entryDate: '2024-10-11'};
     const result = validateDailyDataForm(formData);
     expect(result.isValid).toBe(false);
 });
 
-test('exercise exceeds limits', () => {
+test('exercise exceeds limit', () => {
     const formData = { weight: 150, water: 4, steps: 10000, sleep: 6, exercise: 10000, entryDate: '2024-10-11'};
     const result = validateDailyDataForm(formData);
     expect(result.isValid).toBe(false);
