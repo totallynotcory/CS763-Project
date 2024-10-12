@@ -213,7 +213,7 @@ function CreateUser() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              sx={signUptextField}
+              sx={textField}
               InputProps={{
                 sx: {
                   '& .MuiFilledInput-root': {
