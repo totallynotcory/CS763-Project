@@ -17,7 +17,7 @@ import {
   inputBackground,
   menuPropsStyles,
   smallTitle,
-  inputLable,
+  inputLabel,
   updateProfile,
   textField,
 } from "./style/styles.js";
@@ -162,13 +162,13 @@ function ManageProfile() {
                 margin="normal"
                 sx={textField}
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
               />
             </Grid2>
             <Grid2 item size={{ xs: 12, sm: 6 }}>
               <FormControl fullWidth margin="normal">
-                <InputLabel sx={inputLable}>Gender</InputLabel>
+                <InputLabel sx={inputLabel}>Gender</InputLabel>
                 <Select
                   label="Gender"
                   name="gender"
@@ -213,7 +213,7 @@ function ManageProfile() {
                   onChange={handleDobChange}
                   margin="normal"
                   InputLabelProps={{
-                    sx: inputLable,
+                    sx: inputLabel,
                   }}
                   InputProps={{
                     sx: inputBackground,
@@ -224,7 +224,7 @@ function ManageProfile() {
             </Grid2>
             <Grid2 item size={{ xs: 12, sm: 3 }}>
               <FormControl fullWidth margin="normal">
-                <InputLabel sx={inputLable}>Month</InputLabel>
+                <InputLabel sx={inputLabel}>Month</InputLabel>
                 <Select
                   label="Month of Birth"
                   name="month"
@@ -248,7 +248,7 @@ function ManageProfile() {
             </Grid2>
             <Grid2 item size={{ xs: 12, sm: 3 }}>
               <FormControl fullWidth margin="normal">
-                <InputLabel sx={inputLable}>Day</InputLabel>
+                <InputLabel sx={inputLabel}>Day</InputLabel>
                 <Select
                   label="Day of Birth"
                   name="day"
@@ -294,7 +294,7 @@ function ManageProfile() {
                 type="number"
                 margin="normal"
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,
@@ -311,7 +311,7 @@ function ManageProfile() {
                 type="number"
                 margin="normal"
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,

@@ -18,7 +18,7 @@ import {
   box,
   title,
   textField,
-  inputLable,
+  inputLabel,
   inputBackground,
   submitButton,
   datePick,
@@ -264,7 +264,7 @@ function DailyData() {
                 onChange={handleChange}
                 required
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,
