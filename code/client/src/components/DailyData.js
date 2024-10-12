@@ -18,19 +18,16 @@ import {
   box,
   title,
   textField,
-  inputLable,
+  inputLabel,
   inputBackground,
-  menuPropsStyles,
   submitButton,
-  sideMenuBox,
-  sideMenuTitle,
   datePick,
   calendarStyle,
 } from "./style/styles.js";
+import { validateDailyDataForm } from "../utils/validateDailyDataForm.js";
 
 function DailyData() {
   const [formData, setFormData] = useState({
-    // entryDate: "",
     weight: "",
     steps: "",
     sleep: "",
@@ -38,8 +35,8 @@ function DailyData() {
     exercise: "",
   });
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Handle input changes and update formData state
   const handleChange = (e) => {
@@ -49,11 +46,6 @@ function DailyData() {
       [name]: value,
     }));
   };
-
-  // const [mood, setMood] = useState(3);
-  // const [breakfast, setBreakfast] = useState("");
-  // const [lunch, setLunch] = useState("");
-  // const [dinner, setDinner] = useState("");
 
   // date
   const [date, setDate] = useState(null); //
@@ -74,10 +66,6 @@ function DailyData() {
   const formatDate = (date) => {
     return date ? date.toLocaleDateString("en-CA") : "";
   };
-
-  // const handleMoodChange = (event, newValue) => {
-  //   setMood(newValue);
-  // };
 
   const calendarRef = useRef(null);
 
@@ -103,27 +91,38 @@ function DailyData() {
     event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
 
     // Clear any existing messages before processing the form
-    setSuccessMessage('');
-    setErrorMessage('');
+    setSuccessMessage("");
+    setErrorMessage("");
 
     const updatedFormData = {
       ...formData, // Include all the existing form data (weight, steps, sleep, etc.)
-      entryDate: date ? date.toISOString() : null, // Add the selected date
+      entryDate: date ? formatDate(date) : null, // Add the selected date
     };
-  
+
+    // Validate form inputs
+    const validationResult = validateDailyDataForm(updatedFormData);
+    if (!validationResult.isValid) {
+      setErrorMessage(validationResult.message);
+      return; // Prevent form submission
+    }
+
     try {
-      const token = authenticated()
+      const token = authenticated();
 
       if (token) {
-        await apiClient.post("/api/daily-entry/enter-daily-data", updatedFormData, {
-          headers: { Authorization: `Bearer ${token}` }, // Pass token
-        })
+        await apiClient.post(
+          "/api/daily-entry/enter-daily-data",
+          updatedFormData,
+          {
+            headers: { Authorization: `Bearer ${token}` }, // Pass token
+          }
+        );
         console.log("Daily entry processed");
-        setSuccessMessage('Daily entry successful!');
+        setSuccessMessage("Daily entry successful!");
       }
     } catch (err) {
       console.log("Error submitting daily entry", err);
-      setErrorMessage('Error: Failed to submit daily entry. Please try again');
+      setErrorMessage("Error: Failed to submit daily entry. Please try again");
     }
   };
 
@@ -138,6 +137,7 @@ function DailyData() {
           label="Select a date"
           value={formatDate(date)}
           onClick={handleTextFieldClick}
+          required
           readOnly
           variant="filled"
           sx={datePick}
@@ -161,9 +161,9 @@ function DailyData() {
           </Paper>
         </Collapse>
 
-        {/* Weight */}
         <Grid2 container spacing={2}>
-          <Grid2 item xs={12} md={6}>
+          {/* Weight */}
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Weight"
               variant="filled"
@@ -171,6 +171,7 @@ function DailyData() {
               name="weight"
               value={formData.weight}
               onChange={handleChange}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -184,7 +185,7 @@ function DailyData() {
             />
           </Grid2>
           {/* Steps Count */}
-          <Grid2 item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Count"
               variant="filled"
@@ -192,6 +193,7 @@ function DailyData() {
               name="steps"
               value={formData.steps}
               onChange={handleChange}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -205,7 +207,7 @@ function DailyData() {
             />
           </Grid2>
           {/* Sleep hour */}
-          <Grid2 item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Sleep"
               variant="filled"
@@ -213,6 +215,7 @@ function DailyData() {
               name="sleep"
               value={formData.sleep}
               onChange={handleChange}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -227,7 +230,7 @@ function DailyData() {
           </Grid2>
 
           {/* water */}
-          <Grid2 item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Water"
               variant="filled"
@@ -235,6 +238,7 @@ function DailyData() {
               name="water"
               value={formData.water}
               onChange={handleChange}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -249,7 +253,7 @@ function DailyData() {
           </Grid2>
 
           {/* How long did you exercise */}
-          <Grid2 item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <FormControl fullWidth>
               <TextField
                 data-testid="exerciseTime"
@@ -260,7 +264,7 @@ function DailyData() {
                 onChange={handleChange}
                 required
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,
@@ -272,15 +276,19 @@ function DailyData() {
           </Grid2>
 
           {/* Submit Button */}
-          <Grid2 item xs={12}>
+          <Grid2 item size={{ xs: 12 }}>
             <Button type="submit" variant="contained" sx={submitButton}>
               Submit
             </Button>
           </Grid2>
         </Grid2>
       </form>
-      {errorMessage && <p style={{ color: '#E95D5C', fontWeight: "bold"}}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: '#008000', fontWeight: "bold" }}>{successMessage}</p>}
+      {errorMessage && (
+        <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>
+      )}
+      {successMessage && (
+        <p style={{ color: "#008000", fontWeight: "bold" }}>{successMessage}</p>
+      )}
     </Box>
   );
 }

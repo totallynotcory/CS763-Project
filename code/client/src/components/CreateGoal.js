@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react"; // Added useEffect import
+import React, { useState, useEffect } from "react";
 import apiClient from "../services/apiClient.js";
-import { validateGoalForm } from '../utils/validateGoalForm.js';
+import { validateGoalForm } from "../utils/validateGoalForm.js";
 import { authenticated } from "../utils/authenticate.js";
 import {
   Box,
   Typography,
   TextField,
-  Grid2,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  Button
+  Grid2,
+  Button,
 } from "@mui/material";
 import {
   box,

@@ -10,7 +10,7 @@ const goalSchema = new Schema({
   waterIntakeGlasses: { type: Number, default: 0 },
   exerciseMinutes: { type: Number, default: 0 },
 }, {
-  collection: 'goals',  // Specify the collection name
+  collection: 'goals', 
 });
 
 module.exports = mongoose.model('Goal', goalSchema);

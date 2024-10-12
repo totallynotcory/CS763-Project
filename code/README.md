@@ -1,7 +1,3 @@
-# Link to our website
-
-https://peak-performance-3c40e2c0ebea.herokuapp.com/
-
 ## Open up a split screen terminal:
 
     Change directory into the 'server' folder:
@@ -14,27 +10,26 @@ https://peak-performance-3c40e2c0ebea.herokuapp.com/
 
 ## Using docker to run all 3 services (mongodb, api, client)
 
-Make sure to start the docker engine by starting up Docker Desktop. Note make sure to log in.
+Make sure to start the docker engine by starting up Docker Desktop and logging in.
 
     docker login -u your_username -p your_password --This will log you in using bash
 
-### Make sure you're in the code folder
+### Useful docker commands (make sure you have navigated into the code folder):
 
-### This will stop all containers from running
+This stops all containers from running
 
     docker stop $(docker ps -aq)
 
-### This removes all containers (deletes them)
+This removes all containers (deletes them)
 
     docker rm $(docker ps -aq)
 
-
-### This will remove all images
+This removes all images
 
     docker rmi $(docker images -q)
 
 
-# The commands below will build and run the server and client docker file for the development environment
+## Build and run the server and client docker file for the development environment:
 
     To build:
         Step 1: Open a terminal and cd into the code folder
@@ -47,7 +42,7 @@ Make sure to start the docker engine by starting up Docker Desktop. Note make su
         Open your browser and navigate to http://localhost:3000
 
  
-# The commands below will tag and upload the api and client images to Docker Hub
+## Tag and upload the API and client images to Docker Hub:
 
     Step 1:  Tag the images
             - docker tag api-dev:latest cs673olf24team3/peak-performance:api-dev

@@ -50,7 +50,6 @@ function Login({ setIsAuthenticated }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
-    // setSuccess('');
     try {
       const response = await apiClient.post("/api/users/login", formData);
       const { token, userId } = response.data;
@@ -59,10 +58,8 @@ function Login({ setIsAuthenticated }) {
       localStorage.setItem('userId', userId);
       // redirect to home page
       setIsAuthenticated(true);
-      //console.log('login success:', response.data);
       navigate("/");
     } catch (error) {
-      //console.error('login error:', error);
       // warn user
       if (
         error.response &&
@@ -81,9 +78,9 @@ function Login({ setIsAuthenticated }) {
       <Typography variant="h6" gutterBottom sx={title}>
         Sign in Here!
       </Typography>
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         {/* Display error message if necessary */}
-        {error && <p className="error-message">{error}</p>}
+        {error && <p>{error}</p>}
 
         <Grid2 container direction="column" spacing={2}>
           {/* Email -------------------------------------*/}

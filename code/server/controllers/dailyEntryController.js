@@ -1,7 +1,4 @@
-// controllers/dailyEntryController.js
 const DailyEntry = require("../models/DailyEntry");
-const User = require('../models/User');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Enter daily data
@@ -31,13 +28,16 @@ exports.enterDailyData = async (req, res) => {
 
     const { weight, steps, sleep, water, exercise, entryDate } = req.body;
 
-
-
     //EITHER update data (if an entry exists with the given day) or create a new daily entry
-    
-    // Simplify entry date to the start of the day
-    const entryDateStart = new Date(entryDate ? entryDate : Date.now());
-    entryDateStart.setHours(0, 0, 0, 0);
+    if (!entryDate) {
+      return res.status(400).json({ message: 'Entry date is missing' });
+    }
+    // Split the "YYYY-MM-DD" date string
+    const [year, month, day] = entryDate.split('-').map(Number);
+
+    // Create a new Date in local time (months are 0-indexed in JavaScript)
+    const entryDateStart = new Date(Date.UTC(year, month - 1, day)); //month is zero indexed
+    entryDateStart.setUTCHours(0, 0, 0, 0); // Ensure time is set to 00:00:00
 
     // Check if an entry for this date already exists for this user
     const existingEntry = await DailyEntry.findOne({
@@ -78,6 +78,7 @@ exports.enterDailyData = async (req, res) => {
       return res.status(201).json({ message: "Daily entry created successfully!" });
     }
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: "Error creating or updating daily entry" });
   }
 };
