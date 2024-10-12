@@ -1,17 +1,8 @@
 import "../App.css";
-import React, { useState, useEffect } from "react"; // Added useEffect import
+import React, { useState, useEffect } from "react"; 
 import apiClient from "../services/apiClient.js";
 import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart, registerables } from "chart.js"; 
 import { Typography, Grid2, Box } from "@mui/material";
 import { bigTitle, dashboardLineChartContainer } from "./style/styles.js";
 import { authenticated } from "../utils/authenticate.js";
@@ -23,15 +14,27 @@ import OpacityIcon from "@mui/icons-material/Opacity";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
 // Register the required components for Chart.js
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+Chart.register(...registerables);
+
+// Factory function to create chart configuration
+const createChartConfig = (label, data, goal, icon, color, unit) => {
+  const minBuffer = 0.8; // Local scope for minBuffer
+  const maxBuffer = 1.2; // Local scope for maxBuffer
+
+  const suggestedMin = Math.min(...data.filter(val => val !== null)) * minBuffer; // Filter out null values
+  const suggestedMax = Math.max(...data.filter(val => val !== null)) * maxBuffer; // Filter out null values
+  
+  return {
+    label,
+    data,
+    goal,
+    icon,
+    color,
+    unit,
+    suggestedMin,
+    suggestedMax,
+  };
+};
 
 // Reusable component for charts
 const ChartBox = ({
@@ -45,7 +48,7 @@ const ChartBox = ({
     <Box
       sx={{
         backgroundColor: "#ffffff",
-        borderRadius: 2, //rounded corners
+        borderRadius: 2,
         padding: 2,
         boxShadow: 2,
         height: "100%",
@@ -85,7 +88,7 @@ function Home() {
           const { name } = res.data;
           setUserData({
             name: name || "",
-            firstName: name.split(" ")[0] || "", // get first name before space or set to empty string
+            firstName: name.split(" ")[0] || "",
           });
         })
         .catch((err) => {
@@ -95,124 +98,70 @@ function Home() {
     }
   }, []);
 
-  //update these constants with data from database
   const dayLabels = ["Day1", "Day2", "Day3", "Day4", "Day5", "Day6", "Day7"];
 
-  const weightData = [150, 152, 149, 151, 148, 147, 150];
-  const weightGoal = 150;
+  const dataConfig = [
+    createChartConfig("Weight", [null, null, null, null, null, null, 144], 140, MonitorWeightIcon, "75,192,192", "lbs"),
+    createChartConfig("Steps", [6000, 8000, 7500, 9000, 6500, 5000, 7000], 10000, DirectionsWalkIcon, "255,99,132", "steps"),
+    createChartConfig("Sleep", [6, 7, 5, 8, 6, 7, 5], 7, BedtimeIcon, "255,160,86", "hours"),
+    createChartConfig("Water Intake", [8, 6, 7, 5, 8, 7, 6], 8, OpacityIcon, "54,162,235", "glasses"),
+    createChartConfig("Exercise", [30, 45, 60, 20, 40, 30, 50], 40, FitnessCenterIcon, "153,102,255", "minutes"),
+  ];
 
-  const stepsData = [6000, 8000, 7500, 9000, 6500, 5000, 7000];
-  const stepsGoal = 10000;
+  // General settings
+  const borderWidth = 2;
+  const pointRadius = 5;
+  const pointBorderWidth = borderWidth;
 
-  const sleepData = [6, 7, 5, 8, 6, 7, 5];
-  const sleepGoal = 7;
+  const setTransparency = (color, value) => {
+    return `rgba(${color},${value})`;
+  };
 
-  const waterData = [8, 6, 7, 5, 8, 7, 6];
-  const waterGoal = 8;
-
-  const exerciseData = [30, 45, 60, 20, 40, 30, 50];
-  const exerciseGoal = 40;
-
-  // Fill in the chart data
-  const weightChart = {
-    labels: dayLabels, // X-axis labels
+  const getChartData = (config) => ({
+    labels: dayLabels,
     datasets: [
       {
-        label: "Weight (lbs)",
-        data: weightData, // Y-axis values
-        borderColor: "rgba(75,192,192,1)", // Teal
-        pointRadius: 4,
+        label: `Recorded ${config.label} (${config.unit})`,
+        data: config.data,
+        borderWidth: borderWidth,
+        borderColor: setTransparency(config.color, 1),
+        pointBackgroundColor: setTransparency(config.color, 1),
+        pointBorderColor: "white",
+        pointRadius: pointRadius,
+        pointBorderWidth: pointBorderWidth,
+        fill: false,
       },
       {
         label: "Goal",
-        data: Array(7).fill(weightGoal), // plot the goal if applicable
-        borderColor: "rgba(75,192,192,.25)", // Teal with 25% transparency
+        data: Array(7).fill(config.goal),
+        borderColor: setTransparency(config.color, 0.25),
         pointRadius: 0,
+        fill: 'start',
+        backgroundColor: setTransparency(config.color, 0.1),
       },
     ],
-  };
+  });
 
-  const stepsChart = {
-    labels: dayLabels, // X-axis labels
-    datasets: [
-      {
-        label: "Steps",
-        data: stepsData, // Y-axis values
-        borderColor: "rgba(255,99,132,1)", // Red
-        pointRadius: 4,
-      },
-      {
-        label: "Goal",
-        data: Array(7).fill(stepsGoal), // plot the goal if applicable
-        borderColor: "rgba(255,99,132,.25)", // Red with 25% transparency
-        pointRadius: 0,
-      },
-    ],
-  };
-
-  const sleepChart = {
-    labels: dayLabels, // X-axis labels
-    datasets: [
-      {
-        label: "Sleep (hours)",
-        data: sleepData, // Y-axis values
-        borderColor: "rgba(54,162,235,1)", // Blue
-        pointRadius: 4,
-      },
-      {
-        label: "Goal",
-        data: Array(7).fill(sleepGoal), // plot the goal if applicable
-        borderColor: "rgba(54,162,235,.25)", // Blue with 25% transparency
-        pointRadius: 0,
-      },
-    ],
-  };
-
-  const waterChart = {
-    labels: dayLabels, // X-axis labels
-    datasets: [
-      {
-        label: "Water (glasses)",
-        data: waterData, // Y-axis values
-        borderColor: "rgba(255,205,86,1)", // Yellow
-        pointRadius: 4,
-      },
-      {
-        label: "Goal",
-        data: Array(7).fill(waterGoal), // plot the goal if applicable
-        borderColor: "rgba(255,205,86,.25)", // Yellow with 25% transparency
-        pointRadius: 0,
-      },
-    ],
-  };
-
-  const exerciseChart = {
-    labels: dayLabels, // X-axis labels
-    datasets: [
-      {
-        label: "Exercise (minutes)",
-        data: exerciseData, // Y-axis values
-        borderColor: "rgba(153,102,255,1)", // Purple
-        pointRadius: 4,
-      },
-      {
-        label: "Goal",
-        data: Array(7).fill(exerciseGoal), // plot the goal if applicable
-        borderColor: "rgba(153,102,255,.25)", // Purple with 25% transparency
-        pointRadius: 0,
-      },
-    ],
-  };
-
-  // Set chart options
-  const options = {
-    maintainAspectRatio: false,
+  const dynamicOptions = (suggestedMin, suggestedMax) => ({
+    maintainAspectRatio: true,
+    responsive: true,
     scales: {
       y: {
-        min: 0,
+        suggestedMin: suggestedMin,
+        suggestedMax: suggestedMax,
       },
     },
-  };
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          usePointStyle: true,
+          boxWidth: pointRadius + pointBorderWidth,
+          boxHeight: pointRadius + pointBorderWidth,
+        },
+      },
+    },
+  });
 
   return (
     <Box sx={{ paddingBottom: 2 }}>
@@ -220,44 +169,19 @@ function Home() {
         {userData.firstName
           ? `Welcome, ${userData.firstName}!`
           : `Welcome, ${userData.name}`}{" "}
-        <br></br>
+        <br />
       </Typography>
       <Grid2 container justifyContent="center" spacing={2}>
-        <ChartBox
-          title="Weight"
-          chartData={weightChart}
-          chartOptions={options}
-          dashboardLineChartContainer={dashboardLineChartContainer}
-          IconComponent={MonitorWeightIcon}
-        />
-        <ChartBox
-          title="Steps"
-          chartData={stepsChart}
-          chartOptions={options}
-          dashboardLineChartContainer={dashboardLineChartContainer}
-          IconComponent={DirectionsWalkIcon}
-        />
-        <ChartBox
-          title="Sleep"
-          chartData={sleepChart}
-          chartOptions={options}
-          dashboardLineChartContainer={dashboardLineChartContainer}
-          IconComponent={BedtimeIcon}
-        />
-        <ChartBox
-          title="Water Intake"
-          chartData={waterChart}
-          chartOptions={options}
-          dashboardLineChartContainer={dashboardLineChartContainer}
-          IconComponent={OpacityIcon}
-        />
-        <ChartBox
-          title="Exercise"
-          chartData={exerciseChart}
-          chartOptions={options}
-          dashboardLineChartContainer={dashboardLineChartContainer}
-          IconComponent={FitnessCenterIcon}
-        />
+        {dataConfig.map((config) => (
+          <ChartBox
+            key={config.label}
+            title={config.label}
+            chartData={getChartData(config)}
+            chartOptions={dynamicOptions(config.suggestedMin, config.suggestedMax)}
+            dashboardLineChartContainer={dashboardLineChartContainer}
+            IconComponent={config.icon}
+          />
+        ))}
       </Grid2>
     </Box>
   );
