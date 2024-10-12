@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../services/apiClient.js";
 import { validateRegistrationForm } from "../utils/validateRegistrationForm.js";
+import zxcvbn from "zxcvbn";  // Import zxcvbn for password strength analysis
 
 import {
   Box,
@@ -10,6 +11,7 @@ import {
   Grid2,
   FormControl,
   Button,
+  LinearProgress,
 } from "@mui/material";
 import {
   title,
@@ -26,31 +28,68 @@ function CreateUser() {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",  // Add a field for confirming the password
   });
+  
+  const [passwordStrength, setPasswordStrength] = useState(0);  // State for password strength
+  const [passwordFeedback, setPasswordFeedback] = useState(""); // State for password feedback
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);  // State to track if passwords match
 
-  // Handle input changes and update formData state
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+// Handle input changes and update formData state
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  
+  // Set formData with the updated value
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+
+  // Analyze password strength when user types in the password field
+  if (name === "password") {
+    const result = zxcvbn(value);
+    setPasswordStrength(result.score);  // Score ranges from 0 to 4
+    setPasswordFeedback(result.feedback.suggestions.join(" ") || "Strong password!");  // Provide feedback
+  }
+
+  // Check if passwords match
+  if (name === "confirmPassword" || name === "password") {
+    // Use value directly in the comparison for real-time check
+    setPasswordsMatch(
+      name === "password"
+        ? value === formData.confirmPassword
+        : formData.password === value
+    );
+  }
+};
+
 
   // Handle form submission
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior (e.g. page reload)
+    event.preventDefault(); // Prevent default form submission behavior (e.g., page reload)
 
     setSuccessMessage("");
     setErrorMessage("");
+
+    // Ensure the password strength is at least 3 (Good)
+    if (passwordStrength < 3) {
+      setErrorMessage("Password strength must be at least 'Good' (score of 3 or higher).");
+      return;  // Prevent form submission if password is too weak
+    }
+
+    // Ensure the passwords match
+    if (!passwordsMatch) {
+      setErrorMessage("Passwords do not match.");
+      return;  // Prevent form submission if passwords do not match
+    }
 
     // Validate form inputs
     const validationResult = validateRegistrationForm(formData);
     if (!validationResult) {
       setErrorMessage("Error: Please review your inputs and try again");
-      return; // Prevent form submission
+      return;  // Prevent form submission
     }
 
     try {
@@ -63,6 +102,7 @@ function CreateUser() {
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",  // Reset the confirmPassword field as well
       });
 
       // Delay routing to the login page to allow the success message to be visible
@@ -75,6 +115,30 @@ function CreateUser() {
       } else {
         setErrorMessage("Registration failed. Please try again.");
       }
+    }
+  };
+
+  // Get password strength label
+  const getStrengthLabel = (score) => {
+    switch (score) {
+      case 0: return "Very Weak";
+      case 1: return "Weak";
+      case 2: return "Fair";
+      case 3: return "Good";
+      case 4: return "Strong";
+      default: return "";
+    }
+  };
+
+  // Dynamically set color for progress bar
+  const getProgressColor = () => {
+    switch (passwordStrength) {
+      case 0: return "#ff1744";  // Red (Very Weak)
+      case 1: return "#ff9100";  // Orange (Weak)
+      case 2: return "#ffc400";  // Yellow (Fair)
+      case 3: return "#00e676";  // Light Green (Good)
+      case 4: return "#00c853";  // Green (Strong)
+      default: return "#e0e0e0";  // Default Grey
     }
   };
 
@@ -117,28 +181,111 @@ function CreateUser() {
           </Grid2>
           {/* Password -------------------------------------*/}
           <Grid2 item size={{ xs: 12 }}>
-            <FormControl fullWidth>
-              <TextField
-                data-testid="txtPassword"
-                label="Password"
-                variant="filled"
-                fullWidth
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                sx={signUptextField}
-              />
-            </FormControl>
+          <FormControl fullWidth>
+            <TextField
+              data-testid="txtPassword"
+              label="Password"
+              variant="filled"
+              fullWidth
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              sx={signUptextField}
+            />
+          </FormControl>
+
           </Grid2>
+
+          {/* Confirm Password -------------------------------------*/}
+          <Grid2 item size={{ xs: 12 }}>
+          <FormControl fullWidth>
+            <TextField
+              data-testid="txtConfirmPassword"
+              label="Confirm Password"
+              variant="filled"
+              fullWidth
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              sx={signUptextField}
+              InputProps={{
+                sx: {
+                  '& .MuiFilledInput-root': {
+                    backgroundColor: '#424242', // Dark gray background color for the filled variant
+                    '&:hover': {
+                      backgroundColor: '#424242', // Keep dark gray on hover
+                    },
+                    '&.Mui-focused': {
+                      backgroundColor: '#424242', // Keep dark gray when focused
+                    },
+                  },
+                },
+              }}
+            />
+          </FormControl>
+
+            {!passwordsMatch && (
+              <Typography variant="body2" color="error">
+                Passwords do not match.
+              </Typography>
+            )}
+          </Grid2>
+
+          {/* Password Strength Meter */}
+          <Grid2 item xs={12}>
+            <LinearProgress
+              variant="determinate"
+              value={(passwordStrength / 4) * 100}  // Convert score to percentage (0-100)
+              sx={{
+                height: "10px",
+                borderRadius: "5px",
+                marginBottom: "10px",
+                backgroundColor: "#e0e0e0",  // Grey background for the progress bar
+                "& .MuiLinearProgress-bar": {
+                  backgroundColor: getProgressColor(),  // Dynamic color for the progress bar
+                },
+              }}
+            />
+            <Typography variant="body2">
+              Password Strength: {getStrengthLabel(passwordStrength)}
+            </Typography>
+
+            {/* Feedback Element with Wrapping */}
+            {passwordFeedback && (
+              <Typography
+                variant="body2"
+                color="error"
+                sx={{
+                  maxWidth: "200px",      // Limit the width to 400px (adjustable)
+                  maxHeight: "60px",      // Limit the height to 60px (adjustable)
+                  overflow: "hidden",     // Hide overflow if it exceeds the height
+                  textOverflow: "ellipsis", // Add ellipsis if text overflows
+                  wordWrap: "break-word", // Ensure words break properly
+                  whiteSpace: "normal",   // Enable text wrapping
+                }}
+              >
+                {passwordFeedback}
+              </Typography>
+            )}
+          </Grid2>
+
           {/* Submit Button -------------------------------------*/}
           <Grid2 item size={{ xs: 12 }} container justifyContent="center">
-            <Button type="submit" variant="contained" sx={loginSubmitButton}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={loginSubmitButton}
+              disabled={passwordStrength < 3 || !passwordsMatch} // Disable button if password is weak or passwords don't match
+            >
               Sign Up
             </Button>
           </Grid2>
         </Grid2>
       </form>
+
+      {/* Error & Success Messages */}
       {errorMessage && (
         <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>
       )}
