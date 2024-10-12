@@ -27,18 +27,27 @@ exports.createGoal = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
     const userId = decoded.userId;
 
-    // Goal creation logic
+
+    const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = req.body;
+
     let userGoal = await Goal.findOne({ userId });
 
     if (!userGoal) {
       userGoal = new Goal({ userId });
-      await userGoal.save();
     }
 
-    res.json(userGoal);
+    if (sleepHours !== undefined) userGoal.sleepHours = sleepHours;
+    if (weightLbs !== undefined) userGoal.weightLbs = weightLbs;
+    if (stepsCounts !== undefined) userGoal.stepsCounts = stepsCounts;
+    if (waterIntakeGlasses !== undefined) userGoal.waterIntakeGlasses = waterIntakeGlasses;
+    if (exerciseMinutes !== undefined) userGoal.exerciseMinutes = exerciseMinutes;
+
+    await userGoal.save();
+
+    res.status(201).json({ message: 'Goal updated successfully', userGoal });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error updating goal' });
   }
 };
 
@@ -79,7 +88,7 @@ exports.updateGoal = async (req, res) => {
     userGoal.exerciseMinutes = exerciseMinutes;
 
     await userGoal.save();
-    res.status(200).json({ message: 'Goal updated successfully', userGoal });
+    res.status(201).json({ message: 'Goal updated successfully', goalId: userGoal._id, userGoal });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error updating goal' });
