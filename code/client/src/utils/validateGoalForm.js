@@ -3,7 +3,7 @@ export function validateGoalForm(formData) {
 
     if (typeof type !== 'string' || type.trim() === '') {
         console.log('Goal type is required and must be a non-empty string');
-        return { isValid: false, message: 'Goal type is required and must be a non-empty string' };
+        return { isValid: false, message: 'Type is required and must be a non-empty string' };
     }
 
     // Convert targetValue to a number
