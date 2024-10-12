@@ -36,24 +36,28 @@ function ManageGoal() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // useEffect to fetch profile data
-  useEffect(() => {
+  const fetchGoalData = () => {
     const token = authenticated();
 
     if (token) {
       apiClient
-        .get("/api/goals/create-goal", {
+        .get("/api/goals", {
           headers: { Authorization: `Bearer ${token}` },
-        }) // Fetch user profile data from the backend
+        })
         .then((res) => {
-          setGoalData(res.data); // Set the fetched profile data
+          setGoalData(res.data); 
         })
         .catch((err) => {
           setError("Error fetching goal data. Try refreshing.");
           console.log(err);
         });
     }
-  }, []); // Empty dependency array to run only once after the component mounts
+  };
+
+  // useEffect to fetch profile data
+  useEffect(() => {
+    fetchGoalData();
+  }, []);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -80,11 +84,12 @@ function ManageGoal() {
 
   try {
     const token = authenticated();
-    await apiClient.post("/api/goals/create-goal", goalData, {
+    await apiClient.post("/api/goals", goalData, {
       headers: { Authorization: `Bearer ${token}` }
     });
     console.log("Updating goal");
     setSuccessMessage('Goal updated!');
+    fetchGoalData(); 
     } catch (err) {
       console.log("Error updating goal", err);
       setErrorMessage('Error: Failed to update goal. Please try again');

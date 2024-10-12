@@ -3,7 +3,7 @@ const Goal = require('../models/Goal');
 const jwt = require('jsonwebtoken');
 
 // Create a new goal
-exports.createGoal = async (req, res) => {
+exports.getGoal  = async (req, res) => {
   try {
     
 
@@ -19,7 +19,7 @@ exports.createGoal = async (req, res) => {
     }
 
     // Verify and decode the token
-    const secretKey = process.env.SECRET_KEY;
+    const secretKey = process.env.SECRET_KEY || 'mydevelopmentsecret';
     if (!secretKey) {
       return res.status(500).json({ message: 'Secret key is missing in the environment variables' });
     }
@@ -28,30 +28,36 @@ exports.createGoal = async (req, res) => {
     const userId = decoded.userId;
 
 
-    const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = req.body;
+    // const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = req.body;
 
     let userGoal = await Goal.findOne({ userId });
 
     if (!userGoal) {
-      userGoal = new Goal({ userId });
+      return res.status(200).json({
+        sleepHours: "",
+        weightLbs: "",
+        stepsCounts: "",
+        waterIntakeGlasses: "",
+        exerciseMinutes: ""
+      });
     }
 
-    if (sleepHours !== undefined) userGoal.sleepHours = sleepHours;
-    if (weightLbs !== undefined) userGoal.weightLbs = weightLbs;
-    if (stepsCounts !== undefined) userGoal.stepsCounts = stepsCounts;
-    if (waterIntakeGlasses !== undefined) userGoal.waterIntakeGlasses = waterIntakeGlasses;
-    if (exerciseMinutes !== undefined) userGoal.exerciseMinutes = exerciseMinutes;
+    // if (sleepHours !== undefined) userGoal.sleepHours = sleepHours;
+    // if (weightLbs !== undefined) userGoal.weightLbs = weightLbs;
+    // if (stepsCounts !== undefined) userGoal.stepsCounts = stepsCounts;
+    // if (waterIntakeGlasses !== undefined) userGoal.waterIntakeGlasses = waterIntakeGlasses;
+    // if (exerciseMinutes !== undefined) userGoal.exerciseMinutes = exerciseMinutes;
 
-    await userGoal.save();
+    // await userGoal.save();
 
-    res.status(201).json({ message: 'Goal updated successfully', userGoal });
+    res.status(200).json(userGoal);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error updating goal' });
+    console.error('Error fetching goal:', error);
+    res.status(500).json({ message: 'Error fetching goal' });
   }
 };
 
-exports.updateGoal = async (req, res) => {
+exports.createOrUpdateGoal  = async (req, res) => {
   try {
     // Get token from Authorization header
     const authHeader = req.headers['authorization'];
@@ -65,13 +71,13 @@ exports.updateGoal = async (req, res) => {
     }
 
     // Verify and decode the token
-    const secretKey = process.env.SECRET_KEY;
+    const secretKey = process.env.SECRET_KEY || 'mydevelopmentsecret';
     const decoded = jwt.verify(token, secretKey);
-
-    // Extract userId from the decoded token
     const userId = decoded.userId;
 
-    const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = req.body;
+    
+
+     const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = req.body;
 
     let userGoal = await Goal.findOne({ userId });
 
@@ -81,16 +87,16 @@ exports.updateGoal = async (req, res) => {
     }
 
     // Update the goal fields
-    userGoal.sleepHours = sleepHours;
-    userGoal.weightLbs = weightLbs;
-    userGoal.stepsCounts = stepsCounts;
-    userGoal.waterIntakeGlasses = waterIntakeGlasses;
-    userGoal.exerciseMinutes = exerciseMinutes;
+    if (sleepHours !== undefined) userGoal.sleepHours = sleepHours;
+    if (weightLbs !== undefined) userGoal.weightLbs = weightLbs;
+    if (stepsCounts !== undefined) userGoal.stepsCounts = stepsCounts;
+    if (waterIntakeGlasses !== undefined) userGoal.waterIntakeGlasses = waterIntakeGlasses;
+    if (exerciseMinutes !== undefined) userGoal.exerciseMinutes = exerciseMinutes;
 
     await userGoal.save();
-    res.status(201).json({ message: 'Goal updated successfully', goalId: userGoal._id, userGoal });
+    res.status(201).json({ message: 'Goal updated successfully', userGoal: userGoal });
   } catch (error) {
-    console.error(error);
+    console.error('Error updating goal:', error);
     res.status(500).json({ message: 'Error updating goal' });
   }
 };
