@@ -78,9 +78,9 @@ function Login({ setIsAuthenticated }) {
       <Typography variant="h6" gutterBottom sx={title}>
         Sign in Here!
       </Typography>
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         {/* Display error message if necessary */}
-        {error && <p className="error-message">{error}</p>}
+        {error && <p>{error}</p>}
 
         <Grid2 container direction="column" spacing={2}>
           {/* Email -------------------------------------*/}

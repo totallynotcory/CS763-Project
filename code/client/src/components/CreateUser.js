@@ -14,8 +14,8 @@ import {
 import {
   title,
   loginSubmitButton,
-  signUpBox,
-  signUptextField,
+  loginBox,
+  textField,
 } from "./style/styles.js";
 
 function CreateUser() {
@@ -79,7 +79,7 @@ function CreateUser() {
   };
 
   return (
-    <Box sx={signUpBox}>
+    <Box sx={loginBox}>
       <Typography variant="h6" gutterBottom sx={title}>
         Sign up
       </Typography>
@@ -96,7 +96,7 @@ function CreateUser() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                sx={signUptextField}
+                sx={textField}
               />
             </FormControl>
           </Grid2>
@@ -111,7 +111,7 @@ function CreateUser() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                sx={signUptextField}
+                sx={textField}
               />
             </FormControl>
           </Grid2>
@@ -127,7 +127,7 @@ function CreateUser() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                sx={signUptextField}
+                sx={textField}
               />
             </FormControl>
           </Grid2>
