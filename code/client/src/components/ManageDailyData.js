@@ -36,15 +36,20 @@ function ManageDailyData() {
 
 
   const formatDate = (dateString) => {
-    const dateObj = new Date(dateString)
-    const formattedDate = dateObj.toLocaleDateString('en-US', {
-      month: 'long',   // Full month name (like "October")
-      day: 'numeric',  // Day of the month (no leading zero needed)
-      year: 'numeric'  // Full year
-    });
-    return formattedDate
-  }
-
+    console.log(dateString);
+    const dateObj = new Date(dateString);
+    
+    const options = {
+      timeZone: 'UTC', // Ensures formatting considers the UTC timezone
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    };
+  
+    const formattedDate = dateObj.toLocaleDateString('en-US', options);
+    console.log(formattedDate);
+    return formattedDate;
+  };
 
   const deleteEntry = (dailyEntryId) => {
     if (token) {
