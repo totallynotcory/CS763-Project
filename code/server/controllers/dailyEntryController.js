@@ -164,3 +164,66 @@ exports.deleteEntry = async (req, res) => {
     res.status(500).json({ message: 'Error deleting daily entry' });
   }
 };
+
+exports.lastSevenDays = async (req, res) => {
+  try {
+    // Get token from Authorization header
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+      return res.status(401).json({ message: 'Authorization header is missing' });
+    }
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'Token is missing' });
+    }
+
+    // Verify and decode the token
+    const secretKey = process.env.SECRET_KEY;
+    const decoded = jwt.verify(token, secretKey);
+
+    // Extract userId from the decoded token
+    const userId = decoded.userId;
+
+    // Initialize the array for the last seven days of data
+    const lastSevenDaysData = [];
+
+    // Get the current date in UTC
+    const today = new Date();
+
+    // Loop over the last seven days
+    for (let i = 0; i < 7; i++) {
+      // Calculate the date for i days ago in UTC
+      const date = new Date(today);
+      date.setUTCDate(today.getUTCDate() - i); // Subtract i days
+
+      // Define the start and end of the day in UTC
+      const startOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0));
+      const endOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 23, 59, 59, 999));
+
+      // Create a query to find the entry for the current day and user, based on UTC time
+      const entry = await DailyEntry.findOne({
+        userId: userId,
+        entryDate: {
+          $gte: startOfDay, // Start of the day in UTC
+          $lt: endOfDay     // End of the day in UTC
+        }
+      });
+
+      // If an entry exists, push it to the array, otherwise push null
+      if (entry) {
+        lastSevenDaysData.push(entry);
+      } else {
+        lastSevenDaysData.push(null);
+      }
+    }
+
+    // Send the array of data to the client
+    return res.status(200).json({
+      data: lastSevenDaysData
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error getting last seven days of data' });
+  }
+};
