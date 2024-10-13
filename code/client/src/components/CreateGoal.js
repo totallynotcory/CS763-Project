@@ -16,7 +16,7 @@ import {
 import {
   box,
   title,
-  inputLable,
+  inputLabel,
   inputBackground,
   menuPropsStyles,
   submitButton,
@@ -136,7 +136,7 @@ function CreateGoal() {
           {/* Select a goal type */}
           <Grid2 item size={{ xs: 12, sm: 6 }}>
             <FormControl fullWidth>
-              <InputLabel sx={inputLable}>Select a goal type</InputLabel>
+              <InputLabel sx={inputLabel}>Select a goal type</InputLabel>
               <Select
                 data-testid="goal-type-select"
                 name="type"
@@ -168,7 +168,7 @@ function CreateGoal() {
                 onChange={handleChange}
                 required
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,

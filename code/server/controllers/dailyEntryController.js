@@ -36,8 +36,8 @@ exports.enterDailyData = async (req, res) => {
     const [year, month, day] = entryDate.split('-').map(Number);
 
     // Create a new Date in local time (months are 0-indexed in JavaScript)
-    const entryDateStart = new Date(year, month - 1, day);
-    entryDateStart.setHours(0, 0, 0, 0); // Ensure time is set to 00:00:00
+    const entryDateStart = new Date(Date.UTC(year, month - 1, day)); //month is zero indexed
+    entryDateStart.setUTCHours(0, 0, 0, 0); // Ensure time is set to 00:00:00
 
     // Check if an entry for this date already exists for this user
     const existingEntry = await DailyEntry.findOne({
