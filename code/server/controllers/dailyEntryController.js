@@ -1,5 +1,6 @@
 const DailyEntry = require("../models/DailyEntry");
 const jwt = require('jsonwebtoken');
+const getLastSevenDays = require('../utils/getLastSevenDays');
 
 // Enter daily data
 exports.enterDailyData = async (req, res) => {
@@ -108,7 +109,7 @@ exports.viewDailyData = async (req,res) => {
     // Extract userId from the decoded token
     const userId = decoded.userId;
 
-    const userDailyData = await DailyEntry.find({ userId: userId });
+    const userDailyData = await DailyEntry.find({ userId: userId }).sort({ entryDate: -1 });;
 
     if (!userDailyData) {
       return res.status(404).json({ message: 'User daiy data not found' });
@@ -184,42 +185,37 @@ exports.lastSevenDays = async (req, res) => {
     // Extract userId from the decoded token
     const userId = decoded.userId;
 
-    // Initialize the array for the last seven days of data
-    const lastSevenDaysData = [];
+    // Get the dateString from the request body
+    const { dateString } = req.body;
+    if (!dateString) {
+      return res.status(400).json({ message: 'dateString is required' });
+    }
 
-    // Get the current date in UTC
-    const today = new Date();
+    // Get the last seven days using the helper function
+    const lastSevenDays = getLastSevenDays(dateString);
+    const responseData = [];
 
-    // Loop over the last seven days
-    for (let i = 0; i < 7; i++) {
-      // Calculate the date for i days ago in UTC
-      const date = new Date(today);
-      date.setUTCDate(today.getUTCDate() - i); // Subtract i days
+    // Loop through the last seven days and fetch entries
+    for (let d = 0; d < lastSevenDays.length; d++) {
+      const day = lastSevenDays[d];
 
-      // Define the start and end of the day in UTC
-      const startOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0));
-      const endOfDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 23, 59, 59, 999));
-
-      // Create a query to find the entry for the current day and user, based on UTC time
+      // Find entry for the current day with exact match
       const entry = await DailyEntry.findOne({
-        userId: userId,
-        entryDate: {
-          $gte: startOfDay, // Start of the day in UTC
-          $lt: endOfDay     // End of the day in UTC
-        }
+        userId: userId, // Ensure the userId is included in the query
+        entryDate: day, // Match the exact entryDate
       });
 
-      // If an entry exists, push it to the array, otherwise push null
+      // Push entry or null if not found
       if (entry) {
-        lastSevenDaysData.push(entry);
+        responseData.push({day: day, data: entry});
       } else {
-        lastSevenDaysData.push(null);
+        responseData.push({day: day, data: null});
       }
     }
 
     // Send the array of data to the client
     return res.status(200).json({
-      data: lastSevenDaysData
+      data: responseData
     });
 
   } catch (error) {
