@@ -36,7 +36,9 @@ import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
-import TodayIcon from "@mui/icons-material/Today";
+import TodayIcon from '@mui/icons-material/Today';
+import CloseIcon from "@mui/icons-material/Close";
+
 
 import "@fontsource/mulish";
 
@@ -186,7 +188,7 @@ function App({ RouterComponent = Router }) {
                     {" "}
                     <TrackChangesIcon />{" "}
                   </ListItemIcon>
-                  <ListItemText primary="Create Goal" />
+                  <ListItemText primary="Manage Goal" />
                 </ListItemButton>
               </ListItem>
 
