@@ -128,8 +128,6 @@ test('sleepHours exceeds limit', () => {
       });
   });    
 
-
-
 test('All fields have valid values', () => {
         const formData = {
           sleepHours: 8,
