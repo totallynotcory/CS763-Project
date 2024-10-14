@@ -12,7 +12,6 @@ import LogoutButton from "./components/Logout.js";
 
 import React, { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
-import LogoutIcon from "@mui/icons-material/Logout";
 
 // Styling
 import {
