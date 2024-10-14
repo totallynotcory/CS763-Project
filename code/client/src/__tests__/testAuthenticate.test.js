@@ -1,9 +1,12 @@
 import { authenticated } from "../utils/authenticate";
 import jwt from 'jsonwebtoken'
+import Cookies from 'js-cookie';
+import { destroyCookie } from 'nookies';
 
 describe('Testing authentication', () => {
     beforeEach(() => {
-        res.clearCookie('authToken');
+        //Clear cookie and return to default page
+        destroyCookie(null, 'authToken');
         delete window.location;
         window.location = { href: '' };
     });
@@ -14,11 +17,7 @@ describe('Testing authentication', () => {
             "mocksecret",
             { expiresIn: '1h' }
         );
-        res.cookie('authToken', valid, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 3600000
-          });
+        Cookies.set('authToken', valid);
         expect(window.location.href).toBe('');
         authenticated();
         expect(window.location.href).toBe('');
@@ -35,11 +34,7 @@ describe('Testing authentication', () => {
             "mocksecret",
             { expiresIn: '0h' }
         );
-        res.cookie('authToken', expired, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 0
-          });
+        Cookies.set('authToken', expired);
         authenticated();
         expect(window.location.href).toBe('/login');
     });

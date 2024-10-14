@@ -4,6 +4,8 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import LogoutButton from '../components/Logout.js';
 import { BrowserRouter } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { destroyCookie } from 'nookies';
 
 //  Mock the useNavigate function
 jest.mock('react-router-dom', () => ({
@@ -14,12 +16,12 @@ jest.mock('react-router-dom', () => ({
 describe('LogoutButton Component', () => {
   beforeEach(() => {
     //  Set up any necessary mocks before each test
-    res.cookie('authToken', 'test-token');
+    Cookies.set('authToken', 'test-token');
   });
 
   afterEach(() => {
     
-    res.clearCookie('authToken')
+    destroyCookie(null, 'authToken');
     jest.clearAllMocks();
   });
 
