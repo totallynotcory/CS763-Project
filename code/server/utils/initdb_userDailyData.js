@@ -13,8 +13,8 @@ async function init() {
         const userId = 10003
         
         // Option to delete existing data for full reset (uncomment if needed)
-        await Goal.deleteMany({ userId: userId });
-        await DailyEntry.deleteMany({ userId: userId });
+        // await Goal.deleteMany({ userId: userId });
+        // await DailyEntry.deleteMany({ userId: userId });
 
         // Hardcoded goal data for user 10003
         let goal = new Goal({
