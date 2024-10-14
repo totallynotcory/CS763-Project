@@ -229,8 +229,7 @@ export const bigTitle = {
 
 //Dashboard
 export const dashboardLineChartContainer = {
-  width: "550px",
-  height: "200px",
+  width: "400px",
   marginBottom: "50px",
 };
 

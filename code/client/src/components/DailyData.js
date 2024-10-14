@@ -27,6 +27,8 @@ import {
 import { validateDailyDataForm } from "../utils/validateDailyDataForm.js";
 
 function DailyData() {
+  const token = authenticated()
+
   const [formData, setFormData] = useState({
     weight: "",
     steps: "",
@@ -107,7 +109,6 @@ function DailyData() {
     }
 
     try {
-      const token = authenticated();
 
       if (token) {
         await apiClient.post(
