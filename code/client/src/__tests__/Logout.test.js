@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 import LogoutButton from '../components/Logout.js';
 import { BrowserRouter } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { destroyCookie } from 'nookies';
+import { destroyCookie, parseCookies } from 'nookies';
 
 //  Mock the useNavigate function
 jest.mock('react-router-dom', () => ({
@@ -51,8 +51,8 @@ describe('LogoutButton Component', () => {
     // Click on the Logout button
     fireEvent.click(getByText('Logout'));
 
-    //  Check if res.cookies.authToken is null
-    expect(res.cookies.authToken).toBeNull();
+    //  Check if authToken is null
+    expect(parseCookies().authToken).toBeNull();
 
     //  Check if setIsAuthenticated is called with false
     expect(mockSetIsAuthenticated).toHaveBeenCalledWith(false);
