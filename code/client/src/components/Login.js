@@ -55,8 +55,7 @@ function Login({ setIsAuthenticated }) {
       const response = await apiClient.post("/api/users/login", formData);
       const { token, userId } = response.data;
       // store token in cookie
-      Cookies.set('token', token)
-      Cookies.set('userId', userId)
+      Cookies.set('authToken', token)
       // redirect to home page
       setIsAuthenticated(true);
       navigate("/");

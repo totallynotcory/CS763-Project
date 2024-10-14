@@ -8,7 +8,7 @@ function LogoutButton({ setIsAuthenticated }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    destroyCookie(null, 'token');
+    destroyCookie(null, 'authToken');
     setIsAuthenticated(false);
     navigate('/login');
   };

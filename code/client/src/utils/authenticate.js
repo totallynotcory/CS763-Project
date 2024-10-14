@@ -5,7 +5,7 @@ import { parseCookies } from 'nookies';
 
 export function authenticated() {
     const cookies = parseCookies();
-    const token = cookies.token
+    const token = cookies.authToken
     if (!token) {
         window.location.href = '/login';
     }

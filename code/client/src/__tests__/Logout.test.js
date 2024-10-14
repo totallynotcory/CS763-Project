@@ -14,12 +14,12 @@ jest.mock('react-router-dom', () => ({
 describe('LogoutButton Component', () => {
   beforeEach(() => {
     //  Set up any necessary mocks before each test
-    res.cookie('token', 'test-token');
+    res.cookie('authToken', 'test-token');
   });
 
   afterEach(() => {
     
-    res.clearCookie('token')
+    res.clearCookie('authToken')
     jest.clearAllMocks();
   });
 
@@ -49,8 +49,8 @@ describe('LogoutButton Component', () => {
     // Click on the Logout button
     fireEvent.click(getByText('Logout'));
 
-    //  Check if res.cookies.token is null
-    expect(res.cookies.token).toBeNull();
+    //  Check if res.cookies.authToken is null
+    expect(res.cookies.authToken).toBeNull();
 
     //  Check if setIsAuthenticated is called with false
     expect(mockSetIsAuthenticated).toHaveBeenCalledWith(false);

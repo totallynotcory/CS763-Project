@@ -60,7 +60,7 @@ function App({ RouterComponent = Router }) {
 
   // On component mount, check if user is already logged in
   useEffect(() => {
-    const token = Cookies.get('token')
+    const token = Cookies.get('authToken')
     setIsAuthenticated(!!token);
   }, []);
 

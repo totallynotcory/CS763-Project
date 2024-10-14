@@ -5,7 +5,7 @@ on:
     branches:
       - dev
       - release/*
-      - elee*
+      - elee/*
 
 jobs:
   # Step 1: Testing using Jest

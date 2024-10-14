@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 describe('Testing authentication', () => {
     beforeEach(() => {
-        res.clearCookie('token');
+        res.clearCookie('authToken');
         delete window.location;
         window.location = { href: '' };
     });
@@ -14,7 +14,7 @@ describe('Testing authentication', () => {
             "mocksecret",
             { expiresIn: '1h' }
         );
-        res.cookie('token', valid, {
+        res.cookie('authToken', valid, {
             httpOnly: true,
             secure: true,
             maxAge: 3600000
@@ -35,7 +35,7 @@ describe('Testing authentication', () => {
             "mocksecret",
             { expiresIn: '0h' }
         );
-        res.cookie('token', expired, {
+        res.cookie('authToken', expired, {
             httpOnly: true,
             secure: true,
             maxAge: 0
