@@ -13,6 +13,7 @@ import LogoutButton from "./components/Logout.js";
 import React, { useState, useEffect } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 
+
 // Styling
 import {
   createTheme,
@@ -231,7 +232,7 @@ function App({ RouterComponent = Router }) {
             >
               {/* Routes need to be outside of the Drawer, so that they render in the main content area */}
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home initialData={[]}/>} />
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/view-users" element={<ViewUsers />} />
                 <Route path="/manage-profile" element={<ManageProfile />} />

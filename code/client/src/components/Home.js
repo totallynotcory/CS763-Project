@@ -1,7 +1,7 @@
 import "../App.css";
 import React, { useState, useEffect } from "react"; 
 import apiClient from "../services/apiClient.js";
-import { Line } from "react-chartjs-2";
+import ChartBox from "./ChartBox.js";
 import { Chart, registerables } from "chart.js"; 
 import { Typography, Grid2, Box } from "@mui/material";
 import { bigTitle, title, dashboardLineChartContainer } from "./style/styles.js";
@@ -16,13 +16,13 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 // Register the required components for Chart.js
 Chart.register(...registerables);
 
-function Home() {
+function Home({ initialData = [] }) {
   const [userData, setUserData] = useState({
     name: "",
     firstName: "",
   });
   const [error, setError] = useState(null);
-  const [lastSevenDaysData, setLastSevenDaysData] = useState([]);
+  const [lastSevenDaysData, setLastSevenDaysData] = useState(initialData);
   const [goalData, setGoalData] = useState([]);
   const [dayLabels, setDayLabels] = useState([]);
 
@@ -46,22 +46,28 @@ function Home() {
           setError("Error fetching profile data. Try refreshing.");
           console.log(err);
         });
-
-      // Fetch last seven days of data 
-      apiClient
-        .post("/api/daily-entry/last-seven-days", { dateString: new Date().toLocaleDateString('en-CA') }, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          setLastSevenDaysData(res.data.data);
+      
+        if (initialData.length === 0) {
+          // Fetch last seven days of data 
+          apiClient
+            .post("/api/daily-entry/last-seven-days", { dateString: new Date().toLocaleDateString('en-CA') }, {
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((res) => {
+              setLastSevenDaysData(res.data.data);
+              var days = []
+              res.data.data.map(entry => days.push(new Date(entry.day).toUTCString().split(',')[0]))
+              setDayLabels(days)
+            })
+            .catch((err) => {
+              console.error(err);
+              setError("Error fetching last seven days data.");
+            });
+        } else {
           var days = []
-          res.data.data.map(entry => days.push(new Date(entry.day).toUTCString().split(',')[0]))
-          setDayLabels(days)
-        })
-        .catch((err) => {
-          console.error(err);
-          setError("Error fetching last seven days data.");
-        });
+          initialData.map(entry => days.push(new Date(entry.day).toUTCString().split(',')[0]));
+          setDayLabels(days);
+        }  
 
       // Fetch goal
       apiClient
@@ -76,7 +82,7 @@ function Home() {
           setError("Error fetching goal data.");
         });
     }
-  }, []);
+  }, [initialData]);
 
   // Factory function to create chart configuration
   const createChartConfig = (label, data, goal, icon, color, unit) => {
@@ -98,38 +104,38 @@ function Home() {
     };
   };
 
-  // Reusable component for charts
-  const ChartBox = ({
-    title,
-    chartData,
-    chartOptions,
-    style,
-    IconComponent,
-  }) => (
-    <Grid2 xs={12} sm={6}>
-      <Box
-        sx={{
-          backgroundColor: "#ffffff",
-          borderRadius: 2,
-          padding: 2,
-          boxShadow: 2,
-          height: "100%",
-        }}
-      >
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{ display: "flex", alignItems: "center" }}
-        >
-          {IconComponent && <IconComponent sx={{ marginRight: 1 }} />}
-          {title}
-        </Typography>
-        <div style={style}>
-          <Line data={chartData} options={chartOptions} />
-        </div>
-      </Box>
-    </Grid2>
-  );
+  // // Reusable component for charts
+  // const ChartBox = ({
+  //   title,
+  //   chartData,
+  //   chartOptions,
+  //   style,
+  //   IconComponent,
+  // }) => (
+  //   <Grid2 xs={12} sm={6}>
+  //     <Box
+  //       sx={{
+  //         backgroundColor: "#ffffff",
+  //         borderRadius: 2,
+  //         padding: 2,
+  //         boxShadow: 2,
+  //         height: "100%",
+  //       }}
+  //     >
+  //       <Typography
+  //         variant="h6"
+  //         gutterBottom
+  //         sx={{ display: "flex", alignItems: "center" }}
+  //       >
+  //         {IconComponent && <IconComponent sx={{ marginRight: 1 }} />}
+  //         {title}
+  //       </Typography>
+  //       <div style={style}>
+  //         <Line data={chartData} options={chartOptions} />
+  //       </div>
+  //     </Box>
+  //   </Grid2>
+  // );
 
   const dataConfig = [
     createChartConfig(
