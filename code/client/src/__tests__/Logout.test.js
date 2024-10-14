@@ -51,7 +51,7 @@ describe('LogoutButton Component', () => {
     // Click on the Logout button
     fireEvent.click(getByText('Logout'));
 
-    //  Check if authToken is null
+    //  Check if authToken is undefined
     expect(parseCookies().authToken).toBeUndefined();
 
     //  Check if setIsAuthenticated is called with false
