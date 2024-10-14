@@ -38,8 +38,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import TodayIcon from '@mui/icons-material/Today';
-import CloseIcon from "@mui/icons-material/Close";
-
 
 import "@fontsource/mulish";
 
@@ -77,8 +75,6 @@ function App({ RouterComponent = Router }) {
           <AppBar
             position="fixed"
             sx={{
-              // width: `calc(100% - ${sidebarWidth})`,
-              // ml: `${sidebarWidth}`,
               height: `${appBarHeight}`,
               bgcolor: "primary.secondary",
               boxShadow: theme.shadows[1],
@@ -127,17 +123,6 @@ function App({ RouterComponent = Router }) {
             variant="permanent"
             anchor="left"
           >
-            {/* <img
-              src="/app-logo.png"
-              alt="Logo"
-              style={{
-                height: `${appBarHeight - "4rem"}`,
-                width: `${appBarHeight - "4rem"}`,
-                margin: "10%",
-              }}
-            /> */}
-            {/* <Divider /> */}
-
             {/* Sidebar Navigation */}
             <List>
               <ListItem disablePadding>
@@ -202,16 +187,6 @@ function App({ RouterComponent = Router }) {
                   <ListItemText primary="Manage Profile" />
                 </ListItemButton>
               </ListItem>
-
-              {/* <ListItem disablePadding>
-                <ListItemButton component={Link} to="/view-users">
-                  <ListItemIcon>
-                    {" "}
-                    <CloseIcon />{" "}
-                  </ListItemIcon>
-                  <ListItemText primary="View Users (delete?)" />
-                </ListItemButton>
-              </ListItem> */}
             </List>
           </Drawer>
 
@@ -232,7 +207,7 @@ function App({ RouterComponent = Router }) {
             >
               {/* Routes need to be outside of the Drawer, so that they render in the main content area */}
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home initialData={[]}/>} />
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/view-users" element={<ViewUsers />} />
                 <Route path="/manage-profile" element={<ManageProfile />} />

@@ -1,4 +1,3 @@
-// controllers/goalController.js
 const Goal = require('../models/Goal');
 const jwt = require('jsonwebtoken');
 
@@ -6,7 +5,6 @@ const jwt = require('jsonwebtoken');
 exports.getGoal  = async (req, res) => {
   try {
     
-
     // Get token from Authorization header
     const authHeader = req.headers['authorization'];
     if (!authHeader) {
@@ -27,9 +25,6 @@ exports.getGoal  = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
     const userId = decoded.userId;
 
-
-    // const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = req.body;
-
     let userGoal = await Goal.findOne({ userId });
 
     if (!userGoal) {
@@ -41,14 +36,6 @@ exports.getGoal  = async (req, res) => {
         exerciseMinutes: ""
       });
     }
-
-    // if (sleepHours !== undefined) userGoal.sleepHours = sleepHours;
-    // if (weightLbs !== undefined) userGoal.weightLbs = weightLbs;
-    // if (stepsCounts !== undefined) userGoal.stepsCounts = stepsCounts;
-    // if (waterIntakeGlasses !== undefined) userGoal.waterIntakeGlasses = waterIntakeGlasses;
-    // if (exerciseMinutes !== undefined) userGoal.exerciseMinutes = exerciseMinutes;
-
-    // await userGoal.save();
 
     res.status(200).json(userGoal);
   } catch (error) {
@@ -75,9 +62,7 @@ exports.createOrUpdateGoal  = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
     const userId = decoded.userId;
 
-    
-
-     const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = req.body;
+    const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = req.body;
 
     let userGoal = await Goal.findOne({ userId });
 

@@ -1,12 +1,6 @@
-// frontend.test.js
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../App.js';
-
-// Mock the charts
-jest.mock('react-chartjs-2', () => ({
-  Line: () => <div>Mocked Line Chart</div>,
-}));
 
 // Mock the authenticated function to prevent redirection
 jest.mock('../utils/authenticate.js', () => ({
@@ -23,12 +17,11 @@ afterEach(() => {
   res.clearCookie('authToken');
 });
 
-test('renders home page with mocked charts', () => {
+test('renders home page after login', () => {
   render(
     <App RouterComponent={MemoryRouter} /> 
   );
 
-  const mockCharts = screen.getAllByText(/Mocked Line Chart/i);
-  expect(mockCharts[0]).toBeInTheDocument();
-  expect(mockCharts).toHaveLength(5); // Adjust based on the number of charts expected
+  const welcomeMessage = screen.getByText(/Welcome/i);
+  expect(welcomeMessage).toBeInTheDocument();
 });

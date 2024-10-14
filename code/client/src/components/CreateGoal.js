@@ -114,7 +114,6 @@ function ManageGoal() {
             margin="normal"
             type="number"
             sx={inputBackground}
-            InputProps={{ inputProps: { min: 0 } }}
           />
           <TextField
             label="Steps (counts)"
@@ -125,7 +124,6 @@ function ManageGoal() {
             margin="normal"
             type="number"
             sx={inputBackground}
-            InputProps={{ inputProps: { min: 0 } }}
           />
           <TextField
             label="Sleep (Hours)"
@@ -136,7 +134,6 @@ function ManageGoal() {
             margin="normal"
             type="number"
             sx={inputBackground}
-            InputProps={{ inputProps: { min: 0, max: 24 } }}
           />
           
           
@@ -149,7 +146,6 @@ function ManageGoal() {
             margin="normal"
             type="number"
             sx={inputBackground}
-            InputProps={{ inputProps: { min: 0 } }}
           />
           <TextField
             label="Exercise (minutes)"
@@ -160,7 +156,6 @@ function ManageGoal() {
             margin="normal"
             type="number"
             sx={inputBackground}
-            InputProps={{ inputProps: { min: 0 } }}
           />
           <Button
             variant="contained"

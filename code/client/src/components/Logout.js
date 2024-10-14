@@ -1,5 +1,3 @@
-// LogoutButton.js
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { destroyCookie } from 'nookies';
@@ -10,11 +8,8 @@ function LogoutButton({ setIsAuthenticated }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
- 
     destroyCookie(null, 'token');
-
     setIsAuthenticated(false);
-
     navigate('/login');
   };
 

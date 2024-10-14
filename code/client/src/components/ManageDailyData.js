@@ -14,9 +14,8 @@ function ManageDailyData() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchDailyData(); // Fetch daily data on component mount
-  }, [token]); // Add token as a dependency
-
+    fetchDailyData();
+  }, [token]);
 
   const fetchDailyData = () => {
     if (token) {
@@ -26,6 +25,7 @@ function ManageDailyData() {
         })
         .then((res) => {
           setData(res.data);
+          console.log(data)
         })
         .catch((err) => {
           setError("Error fetching data. Try refreshing.");
@@ -36,18 +36,18 @@ function ManageDailyData() {
 
 
   const formatDate = (dateString) => {
-    console.log(dateString);
+    
     const dateObj = new Date(dateString);
     
     const options = {
-      timeZone: 'UTC', // Ensures formatting considers the UTC timezone
+      timeZone: 'UTC',
       month: 'long',
       day: 'numeric',
       year: 'numeric'
     };
   
     const formattedDate = dateObj.toLocaleDateString('en-US', options);
-    console.log(formattedDate);
+    
     return formattedDate;
   };
 
@@ -73,8 +73,8 @@ function ManageDailyData() {
       <Typography variant="h6" gutterBottom sx={bigTitle}>
         Manage Daily Data
       </Typography>
-      {typeof data === "undefined" ? (
-        <p>Loading...</p>
+      {Object.keys(data).length === 0 ? (
+        <p>No data entered yet</p>
       ) : (
         data.map((dailyData, i) => (
           <div style={dailyDataEntryCard} key={i}>

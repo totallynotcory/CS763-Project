@@ -27,7 +27,6 @@ import {
 import { validateDailyDataForm } from "../utils/validateDailyDataForm.js";
 
 function DailyData() {
-  console.log("check token")
   const token = authenticated()
 
   const [formData, setFormData] = useState({
