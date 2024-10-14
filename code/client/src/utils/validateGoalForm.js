@@ -1,17 +1,16 @@
 export function validateGoalForm(formData) {
     const { sleepHours, weightLbs, stepsCounts, waterIntakeGlasses, exerciseMinutes } = formData;
 
-
-    if(
-        sleepHours === "" ||
+    if (sleepHours === "" ||
         weightLbs === "" ||
         stepsCounts === "" ||
         waterIntakeGlasses === "" ||
         exerciseMinutes === ""
-      )
+        ) 
       {
         return { isValid: false, message: 'Form field(s) missing' };
     }  
+    
     if (isNaN(sleepHours) || sleepHours < 0 || sleepHours > 24) {
       return { isValid: false, message: 'Sleep hours must be a number between 0 and 24' };
     }
@@ -28,11 +27,9 @@ export function validateGoalForm(formData) {
       return { isValid: false, message: 'Water intake cannot be negative' };
     }
   
-    if (isNaN(exerciseMinutes) || exerciseMinutes < 0) {
-      return { isValid: false, message: 'Exercise minutes cannot be negative' };
+    if (isNaN(exerciseMinutes) || exerciseMinutes < 0 || exerciseMinutes > 1440) {
+      return { isValid: false, message: 'Exercise minutes must be a number between 0 and 1440 (number of minutes in a day)' };
     }
 
     return { isValid: true, message: 'Form is valid' };
-
-  
 }

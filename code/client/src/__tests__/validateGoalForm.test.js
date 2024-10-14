@@ -1,9 +1,4 @@
 import { validateGoalForm } from '../utils/validateGoalForm';
-import { getByRole, render, screen, waitFor, fireEvent } from '@testing-library/react';
-
-import App from '../App'; 
-
-
 
 test('All fields are empty strings', () => {
     const formData = {
@@ -99,9 +94,39 @@ test('exerciseMinutes is negative', () => {
       const result = validateGoalForm(formData);
       expect(result).toEqual({
         isValid: false,
-        message: 'Exercise minutes cannot be negative'
+        message: 'Exercise minutes must be a number between 0 and 1440 (number of minutes in a day)'
       });
     });
+
+test('exerciseMinutes exceeds limit', () => {
+    const formData = {
+        sleepHours: 7,
+        weightLbs: 100,
+        stepsCounts: 5000,
+        waterIntakeGlasses: 5,
+        exerciseMinutes: 5000
+      };
+      const result = validateGoalForm(formData);
+      expect(result).toEqual({
+        isValid: false,
+        message: 'Exercise minutes must be a number between 0 and 1440 (number of minutes in a day)'
+      });
+    });
+
+test('sleepHours exceeds limit', () => {
+    const formData = {
+        sleepHours: 50,
+        weightLbs: 100,
+        stepsCounts: 7800,
+        waterIntakeGlasses: 6,
+        exerciseMinutes: 60
+      };
+      const result = validateGoalForm(formData);
+      expect(result).toEqual({
+        isValid: false,
+        message: 'Sleep hours must be a number between 0 and 24'
+      });
+  });    
 
 test('All fields have valid values', () => {
         const formData = {
@@ -114,4 +139,3 @@ test('All fields have valid values', () => {
         const result = validateGoalForm(formData);
         expect(result).toEqual({ isValid: true, message: 'Form is valid' });
 });
-
