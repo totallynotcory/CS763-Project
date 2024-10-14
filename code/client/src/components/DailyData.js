@@ -109,7 +109,6 @@ function DailyData() {
     }
 
     try {
-
       if (token) {
         await apiClient.post(
           "/api/daily-entry/enter-daily-data",

@@ -11,6 +11,7 @@ import ManageDailyData from "./components/ManageDailyData.js";
 import LogoutButton from "./components/Logout.js";
 
 import React, { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
 
 // Styling
 import {
@@ -59,7 +60,7 @@ function App({ RouterComponent = Router }) {
 
   // On component mount, check if user is already logged in
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
+    const token = Cookies.get('authToken')
     setIsAuthenticated(!!token);
   }, []);
 

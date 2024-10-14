@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { destroyCookie } from 'nookies';
 import App from '../App.js';
 
 // Mock the authenticated function to prevent redirection
@@ -9,12 +11,12 @@ jest.mock('../utils/authenticate.js', () => ({
 
 beforeEach(() => {
   // Simulate authenticated user
-  localStorage.setItem('authToken', 'mock-token');
+  Cookies.set('authToken', 'mock-token');
 });
 
 afterEach(() => {
-  // Cleanup localStorage
-  localStorage.removeItem('authToken');
+  // Cleanup cookie
+  destroyCookie(null, 'authToken');
 });
 
 test('renders home page after login', () => {

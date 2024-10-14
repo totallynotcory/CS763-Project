@@ -4,6 +4,8 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import LogoutButton from '../components/Logout.js';
 import { BrowserRouter } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { destroyCookie, parseCookies } from 'nookies';
 
 //  Mock the useNavigate function
 jest.mock('react-router-dom', () => ({
@@ -14,12 +16,12 @@ jest.mock('react-router-dom', () => ({
 describe('LogoutButton Component', () => {
   beforeEach(() => {
     //  Set up any necessary mocks before each test
-    localStorage.setItem('authToken', 'test-token');
+    Cookies.set('authToken', 'test-token');
   });
 
   afterEach(() => {
     
-    localStorage.clear();
+    destroyCookie(null, 'authToken');
     jest.clearAllMocks();
   });
 
@@ -49,8 +51,8 @@ describe('LogoutButton Component', () => {
     // Click on the Logout button
     fireEvent.click(getByText('Logout'));
 
-    //  Check if localStorage.getItem('authToken') is null
-    expect(localStorage.getItem('authToken')).toBeNull();
+    //  Check if authToken is undefined
+    expect(parseCookies().authToken).toBeUndefined();
 
     //  Check if setIsAuthenticated is called with false
     expect(mockSetIsAuthenticated).toHaveBeenCalledWith(false);
