@@ -9,7 +9,7 @@ exports.viewUsers = async (req, res) => {
     const allUsers = await User.find({});
     res.json(allUsers);
   } catch (error) {
-    console.error(error); // Log for debugging
+    console.error(error);
     res.status(500).json({ message: 'Error retrieving users' });
   }
 };

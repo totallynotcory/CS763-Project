@@ -1,5 +1,4 @@
 //This file is for defining the schema and retrieving data
-//May turn this into two files moving forward (schema for one file, connection for another)
 
 const mongoose = require('mongoose')
 const dotenv = require('dotenv');
@@ -9,7 +8,6 @@ const path = require('path')
 const envFile = process.env.NODE_ENV === 'production' ? '../.env.production' : '../.env.development';
 
 // Load the appropriate .env file
-// dotenv.config({ path: `../${envFile}` }); 
 dotenv.config({ path: path.resolve(__dirname, `../${envFile}`) })
 
 const connectDB = async () => {

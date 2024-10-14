@@ -130,7 +130,6 @@ function ManageProfile() {
                 sx={{
                   pointerEvents: "none",
                 }}
-                // sx={inputBackground}
                 menuprops={menuPropsStyles}
               />
             </Grid2>
@@ -148,7 +147,6 @@ function ManageProfile() {
                 sx={{
                   pointerEvents: "none",
                 }}
-                // sx={inputBackground}
                 menuprops={menuPropsStyles}
               />
             </Grid2>
@@ -270,7 +268,6 @@ function ManageProfile() {
                 </Select>
               </FormControl>
             </Grid2>
-            {/* <br></br> */}
             {/* Height */}
             <Grid2 item size={{ xs: 12, sm: 3 }}>
               <Box

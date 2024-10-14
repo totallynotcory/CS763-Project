@@ -1,5 +1,5 @@
-// This function can be called to ensure the user is logged in before viewing a page. If they are not, or their session has expired,
-// they will be redirected to the login page.
+// This function can be called to ensure the user is logged in before viewing a page
+// If they are not, or their session has expired, they will be redirected to the login page.
 
 export function authenticated() {
     const token = localStorage.getItem('authToken');

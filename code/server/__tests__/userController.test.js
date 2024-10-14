@@ -54,8 +54,6 @@ describe('User Controller Endpoints', () => {
   });
 
 
-
-
   describe('GET /api/users/manage-profile', () => {
 
     const createAndLoginUser = async () => {

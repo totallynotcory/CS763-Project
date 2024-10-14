@@ -60,9 +60,7 @@ describe('Goal Controller Endpoints', () => {
     const goal = await Goal.findById(res.body.userGoal._id);
 
     expect(goal).toBeDefined();
-    //expect(goal.type).toBe('sleep');
     expect(goal.sleepHours).toBe(8);
-    //expect(goal.unit).toBe('hours');  // 'sleep' should have 'hours' as unit
   });
 
 
@@ -82,6 +80,4 @@ describe('Goal Controller Endpoints', () => {
     expect(goal.waterIntakeGlasses).toBe(10);
   });
   
-
-  // Other tests that require token...
 });

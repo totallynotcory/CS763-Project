@@ -1,5 +1,3 @@
-// LogoutButton.js
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -9,11 +7,8 @@ function LogoutButton({ setIsAuthenticated }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
- 
     localStorage.removeItem('authToken');
-
     setIsAuthenticated(false);
-
     navigate('/login');
   };
 
