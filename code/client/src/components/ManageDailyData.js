@@ -17,7 +17,6 @@ function ManageDailyData() {
     fetchDailyData();
   }, [token]);
 
-
   const fetchDailyData = () => {
     if (token) {
       apiClient

@@ -143,7 +143,7 @@ exports.deleteEntry = async (req, res) => {
     const userId = decoded.userId;
 
     // Extract dailyEntryId from the request (passed in body, params, or query)
-    const { dailyEntryId } = req.body; // or req.params.dailyEntryId
+    const { dailyEntryId } = req.body;
 
     if (!dailyEntryId) {
       return res.status(400).json({ message: 'dailyEntryId is required' });
