@@ -15,12 +15,12 @@ jest.mock('../utils/authenticate.js', () => ({
 
 beforeEach(() => {
   // Simulate authenticated user
-  localStorage.setItem('authToken', 'mock-token');
+  res.cookie('authToken', 'mock-token');
 });
 
 afterEach(() => {
-  // Cleanup localStorage
-  localStorage.removeItem('authToken');
+  // Cleanup cookie
+  res.clearCookie('authToken');
 });
 
 test('renders home page with mocked charts', () => {

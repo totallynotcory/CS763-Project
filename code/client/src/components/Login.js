@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Cookies from "js-cookie";
 import apiClient from "../services/apiClient.js";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -53,9 +54,8 @@ function Login({ setIsAuthenticated }) {
     try {
       const response = await apiClient.post("/api/users/login", formData);
       const { token, userId } = response.data;
-      // store token
-      localStorage.setItem("authToken", token);
-      localStorage.setItem('userId', userId);
+      // store token in cookie
+      Cookies.set('token', token)
       // redirect to home page
       setIsAuthenticated(true);
       navigate("/");

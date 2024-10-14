@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { destroyCookie } from 'nookies';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
@@ -10,7 +11,7 @@ function LogoutButton({ setIsAuthenticated }) {
 
   const handleLogout = () => {
  
-    localStorage.removeItem('authToken');
+    destroyCookie(null, 'token');
 
     setIsAuthenticated(false);
 
