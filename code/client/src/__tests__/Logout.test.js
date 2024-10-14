@@ -52,7 +52,7 @@ describe('LogoutButton Component', () => {
     fireEvent.click(getByText('Logout'));
 
     //  Check if authToken is null
-    expect(parseCookies().authToken).toBeNull();
+    expect(parseCookies().authToken).toBeNil();
 
     //  Check if setIsAuthenticated is called with false
     expect(mockSetIsAuthenticated).toHaveBeenCalledWith(false);
