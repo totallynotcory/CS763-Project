@@ -56,6 +56,7 @@ function Login({ setIsAuthenticated }) {
       const { token, userId } = response.data;
       // store token in cookie
       Cookies.set('token', token)
+      Cookies.set('userId', userId)
       // redirect to home page
       setIsAuthenticated(true);
       navigate("/");
