@@ -18,4 +18,3 @@ function getLastSevenDaysFormatted() {
 
 // Example usage
 const lastSevenDays = getLastSevenDaysFormatted();
-console.log(lastSevenDays);

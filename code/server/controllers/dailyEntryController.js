@@ -79,7 +79,6 @@ exports.enterDailyData = async (req, res) => {
       return res.status(201).json({ message: "Daily entry created successfully!" });
     }
   } catch (error) {
-    console.log(error)
     res.status(500).json({ message: "Error creating or updating daily entry" });
   }
 };
@@ -117,7 +116,6 @@ exports.viewDailyData = async (req,res) => {
 
     res.json(userDailyData);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 }
@@ -219,7 +217,6 @@ exports.lastSevenDays = async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error getting last seven days of data' });
   }
 };

@@ -52,7 +52,6 @@ function ManageProfile() {
         })
         .catch((err) => {
           setError("Error fetching profile data. Try refreshing.");
-          console.log(err);
         });
     }
   }, []);
@@ -99,10 +98,8 @@ function ManageProfile() {
 
     try {
       await apiClient.post("/api/users/manage-profile", profileData);
-      console.log("Updating profile");
       setSuccessMessage("Profile updated!");
     } catch (err) {
-      console.log("Error updating profile", err);
       setErrorMessage("Error: Failed to update profile. Please try again");
     }
   };

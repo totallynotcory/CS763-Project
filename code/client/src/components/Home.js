@@ -44,7 +44,6 @@ function Home({ initialData = [] }) {
         })
         .catch((err) => {
           setError("Error fetching profile data. Try refreshing.");
-          console.log(err);
         });
       
         if (initialData.length === 0) {
@@ -60,7 +59,6 @@ function Home({ initialData = [] }) {
               setDayLabels(days)
             })
             .catch((err) => {
-              console.error(err);
               setError("Error fetching last seven days data.");
             });
         } else {
@@ -78,7 +76,6 @@ function Home({ initialData = [] }) {
           setGoalData(res.data);
         })
         .catch((err) => {
-          console.error(err);
           setError("Error fetching goal data.");
         });
     }

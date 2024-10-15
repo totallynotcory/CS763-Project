@@ -39,7 +39,6 @@ exports.getGoal  = async (req, res) => {
 
     res.status(200).json(userGoal);
   } catch (error) {
-    console.error('Error fetching goal:', error);
     res.status(500).json({ message: 'Error fetching goal' });
   }
 };
@@ -81,7 +80,6 @@ exports.createOrUpdateGoal  = async (req, res) => {
     await userGoal.save();
     res.status(201).json({ message: 'Goal updated successfully', userGoal: userGoal });
   } catch (error) {
-    console.error('Error updating goal:', error);
     res.status(500).json({ message: 'Error updating goal' });
   }
 };

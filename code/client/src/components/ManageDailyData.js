@@ -25,11 +25,9 @@ function ManageDailyData() {
         })
         .then((res) => {
           setData(res.data);
-          console.log(data)
         })
         .catch((err) => {
           setError("Error fetching data. Try refreshing.");
-          console.log(err);
         });
     }
   };
@@ -63,7 +61,6 @@ function ManageDailyData() {
         })
         .catch((err) => {
           setError("Error fetching data. Try refreshing.");
-          console.log(err);
         });
     }
   }

@@ -117,11 +117,9 @@ function DailyData() {
             headers: { Authorization: `Bearer ${token}` }, // Pass token
           }
         );
-        console.log("Daily entry processed");
         setSuccessMessage("Daily entry successful!");
       }
     } catch (err) {
-      console.log("Error submitting daily entry", err);
       setErrorMessage("Error: Failed to submit daily entry. Please try again");
     }
   };

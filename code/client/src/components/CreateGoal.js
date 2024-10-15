@@ -38,7 +38,6 @@ function ManageGoal() {
         })
         .catch((err) => {
           setError("Error fetching goal data. Try refreshing.");
-          console.log(err);
         });
     }
   };
@@ -75,11 +74,9 @@ function ManageGoal() {
       await apiClient.post("/api/goals", goalData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("Updating goal");
       setSuccessMessage("Goal updated!");
       fetchGoalData();
     } catch (err) {
-      console.log("Error updating goal", err);
       setErrorMessage("Error: Failed to update goal. Please try again");
     }
   };
