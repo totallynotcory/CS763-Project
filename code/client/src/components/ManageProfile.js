@@ -20,6 +20,7 @@ import {
   inputLabel,
   updateProfile,
   textField,
+  inputLabel2,
 } from "./style/styles.js";
 import { authenticated } from "../utils/authenticate.js";
 import { validateProfileForm } from "../utils/validateProfileForm.js";
@@ -158,9 +159,9 @@ function ManageProfile() {
                 onChange={handleChange}
                 fullWidth
                 margin="normal"
-                sx={textField}
-                InputLabelProps={{
-                  sx: inputLabel,
+                sx={{
+                  ...textField,
+                  ...inputLabel2,
                 }}
               />
             </Grid2>

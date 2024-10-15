@@ -31,6 +31,16 @@ export const inputLabel = {
     borderRadius: "10px",
   },
 };
+export const inputLabel2 = {
+  "& .MuiInputLabel-root": {
+    marginLeft: "-1%",
+    backgroundColor: "#5E5E5E",
+    padding: "0 3%",
+    color: "#CACACA",
+    borderRadius: "10px",
+    fontWeight: "bold",
+  },
+};
 
 export const inputBackground = {
   backgroundColor: "#5E5E5E",
@@ -69,6 +79,7 @@ export const submitButton = {
   backgroundColor: "#3A3A3A",
   color: "#CACACA",
   borderRadius: "10px",
+  marginTop: "2%",
   padding: "1% 4%",
   "&:hover": {
     backgroundColor: "#F8DEBD",
