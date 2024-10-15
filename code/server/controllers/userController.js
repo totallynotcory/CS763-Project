@@ -5,11 +5,9 @@ const jwt = require('jsonwebtoken');
 // View all users
 exports.viewUsers = async (req, res) => {
   try {
-    console.log('Fetching all users...');
     const allUsers = await User.find({});
     res.json(allUsers);
   } catch (error) {
-    console.error(error); // Log for debugging
     res.status(500).json({ message: 'Error retrieving users' });
   }
 };
@@ -43,7 +41,6 @@ exports.manageProfile = async (req, res) => {
 
     res.json(userProfile);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -55,7 +52,6 @@ exports.updateProfile = async (req, res) => {
       const userProfile = await User.findOne({ userId: Number(userId) });
   
       if (!userProfile) {
-        console.log('User not found for userId:', userId);
         return res.status(404).json({ message: 'User not found' });
       }  
  
@@ -79,7 +75,6 @@ exports.updateProfile = async (req, res) => {
       await userProfile.save();
       res.status(200).json({ message: 'Profile updated successfully', userProfile });
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: 'Error updating profile' });
     }
   };
@@ -111,7 +106,6 @@ exports.createUser = async (req, res) => {
     await newUser.save();
     res.status(201).json({ message: 'User created successfully!' });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error creating user' });
   }
 };
@@ -133,7 +127,6 @@ exports.loginUser = async (req, res) => {
 
     const secretKey = process.env.SECRET_KEY;
     if (!secretKey) {
-      console.error('SECRET_KEY is not defined');
       return res.status(500).json({ message: 'Internal server error' });
     }
 
@@ -145,7 +138,6 @@ exports.loginUser = async (req, res) => {
 
     res.json({ token, message: 'Login successful' });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

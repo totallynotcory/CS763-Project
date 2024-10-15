@@ -1,21 +1,23 @@
 import { authenticated } from "../utils/authenticate";
 import jwt from 'jsonwebtoken'
+import Cookies from 'js-cookie';
+import { destroyCookie } from 'nookies';
 
 describe('Testing authentication', () => {
     beforeEach(() => {
-        localStorage.clear();
+        //Clear cookie and return to default page
+        destroyCookie(null, 'authToken');
         delete window.location;
         window.location = { href: '' };
     });
 
     test('User is logged in', () => {
-        const secretKey = process.env.SECRET_KEY;
         const valid = jwt.sign(
             { userId: "mock", email: "mock@mail.com" },
             "mocksecret",
             { expiresIn: '1h' }
         );
-        localStorage.setItem("authToken", valid);
+        Cookies.set('authToken', valid);
         expect(window.location.href).toBe('');
         authenticated();
         expect(window.location.href).toBe('');
@@ -27,13 +29,12 @@ describe('Testing authentication', () => {
     });
 
     test('Token has expired', () => {
-        const secretKey = process.env.SECRET_KEY;
         const expired = jwt.sign(
             { userId: "mock", email: "mock@mail.com" },
             "mocksecret",
             { expiresIn: '0h' }
         );
-        localStorage.setItem("authToken", expired);
+        Cookies.set('authToken', expired);
         authenticated();
         expect(window.location.href).toBe('/login');
     });

@@ -10,14 +10,14 @@ export const box = {
 };
 
 export const title = {
-  marginTop: "4%",
+  marginTop: "2%",
   marginBottom: "2%",
   color: "#5B5753",
   fontSize: "1.4rem",
   fontWeight: "600",
 };
 
-export const inputLable = {
+export const inputLabel = {
   marginLeft: "-1%",
   backgroundColor: "#5E5E5E", // question font background color
   padding: "0 3%",
@@ -29,6 +29,16 @@ export const inputLable = {
     color: "#F8DEBD",
     fontWeight: "bold",
     borderRadius: "10px",
+  },
+};
+export const inputLabel2 = {
+  "& .MuiInputLabel-root": {
+    marginLeft: "-1%",
+    backgroundColor: "#5E5E5E",
+    padding: "0 3%",
+    color: "#CACACA",
+    borderRadius: "10px",
+    fontWeight: "bold",
   },
 };
 
@@ -69,6 +79,7 @@ export const submitButton = {
   backgroundColor: "#3A3A3A",
   color: "#CACACA",
   borderRadius: "10px",
+  marginTop: "2%",
   padding: "1% 4%",
   "&:hover": {
     backgroundColor: "#F8DEBD",
@@ -191,9 +202,9 @@ export const sideMenuTitle = {
   fontWeight: "600",
 };
 
-// Login Page
+// Login Page (also used for Create User)
 export const loginBox = {
-  width: "80%",
+  width: "90%",
   display: "flex",
   justifyContent: "center",
   padding: "2%",
@@ -220,19 +231,19 @@ export const link = {
 
 // HomePage & ViewUsers
 export const bigTitle = {
-  marginTop: "4%",
+  marginTop: "2%",
   marginBottom: "2%",
   color: "#5B5753",
-  fontSize: "3rem",
+  fontSize: "2rem",
   fontWeight: "600",
 };
 
 //Dashboard
 export const dashboardLineChartContainer = {
-  width: "600px",
-  height: "200px",
+  width: "400px",
   marginBottom: "50px",
 };
+
 //Manage Profile - DOB & Height
 export const smallTitle = {
   color: "#5B5753",
@@ -251,43 +262,5 @@ export const updateProfile = {
   "&:hover": {
     backgroundColor: "#F8DEBD",
     color: "#303030",
-  },
-};
-
-// Sign up Page
-export const signUpBox = {
-  width: "90%",
-  display: "flex",
-  justifyContent: "center",
-  padding: "2%",
-  borderRadius: "10px",
-  height: "calc(100vh - 8rem)",
-  alignItems: "center",
-  flexDirection: "column",
-};
-
-export const signUptextField = {
-  backgroundColor: "#5E5E5E",
-  borderRadius: "10px",
-  "& .MuiInputBase-input": {
-    color: "#F4F4F4", // input color
-  },
-  "& .MuiInputLabel-root": {
-    color: "#CACACA", // label color
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    color: "#F8DEBD", // focused label color
-  },
-  "& .MuiFilledInput-underline:before": {
-    borderBottom: "none", // no underline when unfocused
-  },
-  "& .MuiFilledInput-underline:after": {
-    borderBottomColor: "#F8DEBD", // underline color when focused
-  },
-  "& .MuiInputAdornment-root": {
-    color: "#F4F4F4", // hour color
-  },
-  "& .MuiFilledInput-root:hover:before": {
-    borderBottom: "none !important",
   },
 };

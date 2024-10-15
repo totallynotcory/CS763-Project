@@ -6,7 +6,7 @@ import {
   TextField,
   MenuItem,
   Button,
-  Grid,
+  Grid2,
   FormControl,
   InputLabel,
   Select,
@@ -17,9 +17,10 @@ import {
   inputBackground,
   menuPropsStyles,
   smallTitle,
-  inputLable,
+  inputLabel,
   updateProfile,
   textField,
+  inputLabel2,
 } from "./style/styles.js";
 import { authenticated } from "../utils/authenticate.js";
 import { validateProfileForm } from "../utils/validateProfileForm.js";
@@ -51,7 +52,6 @@ function ManageProfile() {
         })
         .catch((err) => {
           setError("Error fetching profile data. Try refreshing.");
-          console.log(err);
         });
     }
   }, []);
@@ -98,10 +98,8 @@ function ManageProfile() {
 
     try {
       await apiClient.post("/api/users/manage-profile", profileData);
-      console.log("Updating profile");
       setSuccessMessage("Profile updated!");
     } catch (err) {
-      console.log("Error updating profile", err);
       setErrorMessage("Error: Failed to update profile. Please try again");
     }
   };
@@ -116,8 +114,8 @@ function ManageProfile() {
         <p>{error}</p>
       ) : (
         <form>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+          <Grid2 container spacing={2}>
+            <Grid2 item size={{ xs: 12, sm: 6 }}>
               <TextField
                 label="User ID"
                 name="userId"
@@ -130,11 +128,10 @@ function ManageProfile() {
                 sx={{
                   pointerEvents: "none",
                 }}
-                // sx={inputBackground}
                 menuprops={menuPropsStyles}
               />
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 6 }}>
               <TextField
                 label="Email"
                 name="email"
@@ -148,11 +145,10 @@ function ManageProfile() {
                 sx={{
                   pointerEvents: "none",
                 }}
-                // sx={inputBackground}
                 menuprops={menuPropsStyles}
               />
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 6 }}>
               <TextField
                 label="Name"
                 name="name"
@@ -160,15 +156,15 @@ function ManageProfile() {
                 onChange={handleChange}
                 fullWidth
                 margin="normal"
-                sx={textField}
-                InputLabelProps={{
-                  sx: inputLable,
+                sx={{
+                  ...textField,
+                  ...inputLabel2,
                 }}
               />
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 6 }}>
               <FormControl fullWidth margin="normal">
-                <InputLabel sx={inputLable}>Gender</InputLabel>
+                <InputLabel sx={inputLabel}>Gender</InputLabel>
                 <Select
                   label="Gender"
                   name="gender"
@@ -185,11 +181,11 @@ function ManageProfile() {
                   <MenuItem value="na">Prefer not to disclose</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container spacing={2}>
+            </Grid2>
+          </Grid2>
+          <Grid2 container spacing={2}>
             {/* date of birth */}
-            <Grid item xs={12} md={3}>
+            <Grid2 item size={{ xs: 12, sm: 3 }}>
               <Box
                 sx={{
                   display: "flex",
@@ -201,9 +197,9 @@ function ManageProfile() {
                   Date of Birth
                 </Typography>
               </Box>
-            </Grid>
+            </Grid2>
 
-            <Grid item xs={12} md={3}>
+            <Grid2 item size={{ xs: 12, sm: 3 }}>
               <FormControl fullWidth>
                 <TextField
                   label="Year of Birth"
@@ -213,7 +209,7 @@ function ManageProfile() {
                   onChange={handleDobChange}
                   margin="normal"
                   InputLabelProps={{
-                    sx: inputLable,
+                    sx: inputLabel,
                   }}
                   InputProps={{
                     sx: inputBackground,
@@ -221,10 +217,10 @@ function ManageProfile() {
                   fullWidth
                 />
               </FormControl>
-            </Grid>
-            <Grid item xs={12} md={3}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 3 }}>
               <FormControl fullWidth margin="normal">
-                <InputLabel sx={inputLable}>Month</InputLabel>
+                <InputLabel sx={inputLabel}>Month</InputLabel>
                 <Select
                   label="Month of Birth"
                   name="month"
@@ -245,10 +241,10 @@ function ManageProfile() {
                   })}
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xs={12} md={3}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 3 }}>
               <FormControl fullWidth margin="normal">
-                <InputLabel sx={inputLable}>Day</InputLabel>
+                <InputLabel sx={inputLabel}>Day</InputLabel>
                 <Select
                   label="Day of Birth"
                   name="day"
@@ -269,10 +265,9 @@ function ManageProfile() {
                   })}
                 </Select>
               </FormControl>
-            </Grid>
-            {/* <br></br> */}
+            </Grid2>
             {/* Height */}
-            <Grid item xs={12} md={3}>
+            <Grid2 item size={{ xs: 12, sm: 3 }}>
               <Box
                 sx={{
                   display: "flex",
@@ -284,8 +279,8 @@ function ManageProfile() {
                   Height
                 </Typography>
               </Box>
-            </Grid>
-            <Grid item xs={12} md={4.5}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 4.5 }}>
               <TextField
                 label="Height (Feet)"
                 name="feet"
@@ -294,15 +289,15 @@ function ManageProfile() {
                 type="number"
                 margin="normal"
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,
                 }}
                 fullWidth
               />
-            </Grid>
-            <Grid item xs={12} md={4}>
+            </Grid2>
+            <Grid2 item size={{ xs: 12, sm: 4.5 }}>
               <TextField
                 label="Height (Inches)"
                 name="inches"
@@ -311,15 +306,15 @@ function ManageProfile() {
                 type="number"
                 margin="normal"
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,
                 }}
                 fullWidth
               />
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
           <Box
             sx={{
               display: "flex",
