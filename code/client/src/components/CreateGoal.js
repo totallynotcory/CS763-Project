@@ -6,19 +6,12 @@ import {
   Box,
   Typography,
   TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid2,
   Button,
 } from "@mui/material";
 import {
   box,
   bigTitle,
-  inputLable,
   inputBackground,
-  menuPropsStyles,
   submitButton,
 } from "./style/styles.js";
 
