@@ -11,7 +11,7 @@ import ManageDailyData from "./components/ManageDailyData.js";
 import LogoutButton from "./components/Logout.js";
 
 import React, { useState, useEffect } from "react";
-import LogoutIcon from "@mui/icons-material/Logout";
+import Cookies from 'js-cookie';
 
 // Styling
 import {
@@ -24,7 +24,6 @@ import {
   Toolbar,
   List,
   Typography,
-  Divider,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -36,15 +35,12 @@ import LoginIcon from "@mui/icons-material/Login";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
-import TodayIcon from "@mui/icons-material/Today";
-import CloseIcon from "@mui/icons-material/Close";
-
-import { useNavigate } from "react-router-dom";
+import TodayIcon from '@mui/icons-material/Today';
 
 import "@fontsource/mulish";
 
-const sidebarWidth = "10vw";
-const appBarHeight = "4rem";
+const sidebarWidth = "16vw";
+const appBarHeight = "5rem";
 
 const theme = createTheme({
   typography: {
@@ -53,6 +49,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#e2ddd5",
+      secondary: "#3A3A3A",
     },
   },
 });
@@ -62,7 +59,7 @@ function App({ RouterComponent = Router }) {
 
   // On component mount, check if user is already logged in
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
+    const token = Cookies.get('authToken')
     setIsAuthenticated(!!token);
   }, []);
 
@@ -76,17 +73,33 @@ function App({ RouterComponent = Router }) {
           <AppBar
             position="fixed"
             sx={{
-              width: `calc(100% - ${sidebarWidth})`,
-              ml: `${sidebarWidth}`,
               height: `${appBarHeight}`,
-              bgcolor: "primary.main",
+              bgcolor: "primary.secondary",
               boxShadow: theme.shadows[1],
             }}
           >
             <Toolbar
               sx={{ display: "flex", alignItems: "center", height: "100%" }}
             >
-              <Typography variant="h5" noWrap component="div">
+              <img
+                src="/app-logo.png"
+                alt="Logo"
+                style={{
+                  height: `calc(${appBarHeight} - 1rem)`,
+                  width: `calc(${appBarHeight} - 1rem)`,
+                  margin: "1%",
+                }}
+              />
+              <Typography
+                variant="h5"
+                noWrap
+                component="div"
+                sx={{
+                  padding: "3%",
+                  color: "primary.main",
+                  fontWeight: "bold",
+                }}
+              >
                 Health and Wellness Tracker
               </Typography>
             </Toolbar>
@@ -95,9 +108,12 @@ function App({ RouterComponent = Router }) {
           {/* Left side navigation drawer */}
           <Drawer
             sx={{
+              marginTop: appBarHeight,
+              height: `calc(100% - ${appBarHeight})`,
               width: sidebarWidth,
               flexShrink: 0,
               "& .MuiDrawer-paper": {
+                marginTop: appBarHeight,
                 width: sidebarWidth,
                 boxSizing: "border-box",
               },
@@ -105,17 +121,6 @@ function App({ RouterComponent = Router }) {
             variant="permanent"
             anchor="left"
           >
-            <img
-              src="/app-logo.png"
-              alt="Logo"
-              style={{
-                height: `${appBarHeight - "4rem"}`,
-                width: `${appBarHeight - "4rem"}`,
-                margin: "10%",
-              }}
-            />
-            <Divider />
-
             {/* Sidebar Navigation */}
             <List>
               <ListItem disablePadding>
@@ -167,7 +172,7 @@ function App({ RouterComponent = Router }) {
                     {" "}
                     <TrackChangesIcon />{" "}
                   </ListItemIcon>
-                  <ListItemText primary="Create Goal" />
+                  <ListItemText primary="Manage Goal" />
                 </ListItemButton>
               </ListItem>
 
@@ -180,16 +185,6 @@ function App({ RouterComponent = Router }) {
                   <ListItemText primary="Manage Profile" />
                 </ListItemButton>
               </ListItem>
-
-              {/* <ListItem disablePadding>
-                <ListItemButton component={Link} to="/view-users">
-                  <ListItemIcon>
-                    {" "}
-                    <CloseIcon />{" "}
-                  </ListItemIcon>
-                  <ListItemText primary="View Users (delete?)" />
-                </ListItemButton>
-              </ListItem> */}
             </List>
           </Drawer>
 
@@ -210,7 +205,7 @@ function App({ RouterComponent = Router }) {
             >
               {/* Routes need to be outside of the Drawer, so that they render in the main content area */}
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home initialData={[]}/>} />
                 <Route path="/create-user" element={<CreateUser />} />
                 <Route path="/view-users" element={<ViewUsers />} />
                 <Route path="/manage-profile" element={<ManageProfile />} />

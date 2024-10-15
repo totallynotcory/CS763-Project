@@ -5,7 +5,7 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
+  Grid2,
   FormControl,
   InputAdornment,
   Collapse,
@@ -18,7 +18,7 @@ import {
   box,
   title,
   textField,
-  inputLable,
+  inputLabel,
   inputBackground,
   submitButton,
   datePick,
@@ -27,6 +27,8 @@ import {
 import { validateDailyDataForm } from "../utils/validateDailyDataForm.js";
 
 function DailyData() {
+  const token = authenticated()
+
   const [formData, setFormData] = useState({
     weight: "",
     steps: "",
@@ -96,7 +98,7 @@ function DailyData() {
 
     const updatedFormData = {
       ...formData, // Include all the existing form data (weight, steps, sleep, etc.)
-      entryDate: date ? date.toISOString().split("T")[0] : null, // Add the selected date
+      entryDate: date ? formatDate(date) : null, // Add the selected date
     };
 
     // Validate form inputs
@@ -107,8 +109,6 @@ function DailyData() {
     }
 
     try {
-      const token = authenticated();
-
       if (token) {
         await apiClient.post(
           "/api/daily-entry/enter-daily-data",
@@ -161,9 +161,9 @@ function DailyData() {
           </Paper>
         </Collapse>
 
-        <Grid container spacing={2}>
+        <Grid2 container spacing={2}>
           {/* Weight */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Weight"
               variant="filled"
@@ -183,9 +183,9 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid>
+          </Grid2>
           {/* Steps Count */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Count"
               variant="filled"
@@ -205,9 +205,9 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid>
+          </Grid2>
           {/* Sleep hour */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Sleep"
               variant="filled"
@@ -227,10 +227,10 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid>
+          </Grid2>
 
           {/* water */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <TextField
               label="Water"
               variant="filled"
@@ -250,10 +250,10 @@ function DailyData() {
               }}
               sx={textField}
             />
-          </Grid>
+          </Grid2>
 
           {/* How long did you exercise */}
-          <Grid item xs={12} md={6}>
+          <Grid2 item size={{ xs: 12, sm: 6 }}>
             <FormControl fullWidth>
               <TextField
                 data-testid="exerciseTime"
@@ -264,7 +264,7 @@ function DailyData() {
                 onChange={handleChange}
                 required
                 InputLabelProps={{
-                  sx: inputLable,
+                  sx: inputLabel,
                 }}
                 InputProps={{
                   sx: inputBackground,
@@ -273,15 +273,15 @@ function DailyData() {
                 fullWidth
               />
             </FormControl>
-          </Grid>
+          </Grid2>
 
           {/* Submit Button */}
-          <Grid item xs={12}>
+          <Grid2 item size={{ xs: 12 }}>
             <Button type="submit" variant="contained" sx={submitButton}>
               Submit
             </Button>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </form>
       {errorMessage && (
         <p style={{ color: "#E95D5C", fontWeight: "bold" }}>{errorMessage}</p>

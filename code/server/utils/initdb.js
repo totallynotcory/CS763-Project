@@ -1,38 +1,34 @@
 // This file is for initializing data to the MongoDB database 
 
 const bcrypt = require('bcrypt');
-const db = require("./config/db.js")
+const db = require("../config/db.js")
 
-const User = require("./models/User");
-const Goal = require("./models/Goal");
-const DailyEntry = require("./models/DailyEntry");
+const User = require("../models/User.js");
+const Goal = require("../models/Goal.js");
+const DailyEntry = require("../models/DailyEntry.js");
 
 async function init() {
     try {
         // Connect to MongoDB
         await db.connectDB();
-
+        
+        // Option to delete existing data for full reset
+        // await User.deleteMany({})
+        // await Goal.deleteMany({})
+        // await DailyEntry.deleteMany({})
+        
         // hashing "password" to be used as default password for users created here
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash("password", saltRounds); 
 
 
         let goal1 = new Goal({
-            goalId: 50001,
-            type: "sleep",
-            targetValue: 8,
-            unit: "hours",
-            createdAt: "2024-09-10",
-            userId: 10001
-        })
-        
-        let goal2 = new Goal({
-            goalId: 50002,
-            type: "steps",
-            targetValue: 9000,
-            unit: "steps",
-            userId: 10001
-            // will use default for createdAt
+            userId: 10001,
+            weightLbs: 140,
+            stepsCounts: 10000,
+            sleepHours: 7,
+            waterIntakeGlasses: 8,
+            exerciseMinutes: 40
         })
 
         let user1 = new User({
@@ -92,7 +88,7 @@ async function init() {
         await Promise.all([
             user1.save(), user2.save(), user3.save(),
             user4.save(), user5.save(), user6.save(),
-            goal1.save(), goal2.save(),
+            goal1.save(),
             dailyEntry1.save()
         ])
     
