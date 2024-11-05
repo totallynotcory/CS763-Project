@@ -100,7 +100,7 @@ function App({ RouterComponent = Router }) {
                   fontWeight: "bold",
                 }}
               >
-                Health and Wellness Tracker
+                Health and Wellness Tracker - Forked by Cory Potwin
               </Typography>
             </Toolbar>
           </AppBar>
