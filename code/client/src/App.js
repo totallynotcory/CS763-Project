@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./components/Home.js";
 import Login from "./components/Login.js";
 import CreateUser from "./components/CreateUser.js";
+import ResetPasswordRequest from "./components/ResetPasswordRequest.js";
+import OneTimePassword from "./components/OneTimePassword.js";
+import PasswordReset from "./components/PasswordReset.js";
 import ViewUsers from "./components/ViewUsers.js";
 import ManageProfile from "./components/ManageProfile.js";
 import DailyData from "./components/DailyData.js";
@@ -207,6 +210,9 @@ function App({ RouterComponent = Router }) {
               <Routes>
                 <Route path="/" element={<Home initialData={[]}/>} />
                 <Route path="/create-user" element={<CreateUser />} />
+                <Route path="/reset-password-request" element={<ResetPasswordRequest />} />
+                <Route path="/one-time-password" element={<OneTimePassword setIsAuthenticated={setIsAuthenticated} />} />
+                <Route path="/password-reset" element={<PasswordReset />} />
                 <Route path="/view-users" element={<ViewUsers />} />
                 <Route path="/manage-profile" element={<ManageProfile />} />
                 <Route

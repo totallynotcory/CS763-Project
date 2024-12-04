@@ -149,6 +149,9 @@ function Login({ setIsAuthenticated }) {
       <Link to="/create-user" style={link}>
         Create an account
       </Link>
+      <Link to="/reset-password-request" style={link}>
+        Forgot your Password?
+      </Link>
     </Box>
   );
 }
