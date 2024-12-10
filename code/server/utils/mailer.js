@@ -12,7 +12,6 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendResetEmail(formattedToken, email, link) {
-  console.table({formattedToken, email, link });
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: 'trialsize@gmail.com',
